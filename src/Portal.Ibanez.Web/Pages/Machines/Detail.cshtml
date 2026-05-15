@@ -2,15 +2,16 @@
 @using Portal.Ibanez.Web.Pages.Machines
 @model DetailModel
 @{
-    ViewBag.Title = "Detalle de Máquina";
+    ViewBag.Title = "Gestión Técnica de Máquina";
 
     var customerName = string.IsNullOrWhiteSpace(Model.Machine.CustomerCommercialName) ? "Cliente" : Model.Machine.CustomerCommercialName;
-    var machineName = string.IsNullOrWhiteSpace(Model.Machine.MachineTypeName) ? "Detalle de Máquina" : Model.Machine.MachineTypeName;
+    var machineName = string.IsNullOrWhiteSpace(Model.Machine.MachineTypeName) ? "Máquina" : Model.Machine.MachineTypeName;
 }
 
 @section scripts {
     <script>
         $(function () {
+            // Inicialización de gestores de modales de ABP
             var editMachineModal = new abp.ModalManager(abp.appPath + 'Machines/EditModal');
             var createDocModal = new abp.ModalManager(abp.appPath + 'MachineDocuments/CreateModal');
             var editDocModal = new abp.ModalManager(abp.appPath + 'MachineDocuments/EditModal');
@@ -21,27 +22,30 @@
             $('#NewDocumentButton').click(function () { createDocModal.open({ machineId: '@Model.Id' }); });
             $('#NewQrButton').click(function () { createQrModal.open({ machineId: '@Model.Id' }); });
 
-            $('.edit-doc-btn').click(function () {
-                editDocModal.open({ id: $(this).data('id') });
-            });
+            $('.edit-doc-btn').click(function () { editDocModal.open({ id: $(this).data('id') }); });
+            $('.edit-qr-btn').click(function () { editQrModal.open({ id: $(this).data('id') }); });
 
-            $('.edit-qr-btn').click(function () {
-                editQrModal.open({ id: $(this).data('id') });
-            });
+            // Recarga tras operaciones en modales
+            const reload = () => window.location.reload();
+            editMachineModal.onResult(reload);
+            createDocModal.onResult(reload);
+            editDocModal.onResult(reload);
+            createQrModal.onResult(reload);
+            editQrModal.onResult(reload);
 
-            editMachineModal.onResult(function () { window.location.reload(); });
-            createDocModal.onResult(function () { window.location.reload(); });
-            editDocModal.onResult(function () { window.location.reload(); });
-            createQrModal.onResult(function () { window.location.reload(); });
-            editQrModal.onResult(function () { window.location.reload(); });
-
-            // Abrir automáticamente la pestaña correcta si venimos de añadir/quitar enlace
+            // Gestión de estado visual (Tabs y Acordeones) tras redirección
             var hash = window.location.hash;
-            if (hash) {
-                var triggerEl = document.querySelector('.nav-tabs-custom a[href="' + hash + '"]');
-                if (triggerEl) {
-                    var tab = new bootstrap.Tab(triggerEl);
-                    tab.show();
+            if (hash && hash.startsWith("#collapse-")) {
+                // Activar pestaña de vinculación
+                var tabTrigger = document.querySelector('.nav-tabs-custom a[href="#tab-links"]');
+                if (tabTrigger) { new bootstrap.Tab(tabTrigger).show(); }
+
+                // Expandir acordeón específico
+                var accordionBody = document.querySelector(hash);
+                if (accordionBody) {
+                    var collapseInstance = new bootstrap.Collapse(accordionBody, { toggle: false });
+                    collapseInstance.show();
+                    setTimeout(() => { accordionBody.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 200);
                 }
             }
         });
@@ -50,74 +54,56 @@
 
 <style>
     body {
-        background-color: #f3f4f6;
+        background-color: #f8fafc;
     }
 
     .sidebar-info {
         background: white;
         border-radius: 1rem;
-        border: 1px solid #e5e7eb;
+        border: 1px solid #e2e8f0;
     }
 
     .nav-tabs-custom .nav-link {
         border: none;
-        color: #6b7280;
-        font-weight: 500;
-        padding: 1rem 1.5rem;
+        color: #64748b;
+        font-weight: 600;
+        padding: 1rem 1.25rem;
         border-bottom: 3px solid transparent;
-        cursor: pointer;
     }
 
         .nav-tabs-custom .nav-link.active {
             color: #c71712;
-            border-bottom: 3px solid #c71712;
-            background: white;
-        }
-
-        .nav-tabs-custom .nav-link:hover:not(.active) {
-            border-bottom: 3px solid #e5e7eb;
+            border-bottom-color: #c71712;
+            background: #fff;
         }
 
     .item-card {
         background: white;
-        border: 1px solid #e5e7eb;
+        border: 1px solid #e2e8f0;
         border-radius: 0.75rem;
-        transition: all 0.2s;
+        transition: all 0.2s ease;
         height: 100%;
     }
 
         .item-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             border-color: #e8a09e;
         }
 
-    .status-pill {
-        font-size: 0.7rem;
-        padding: 0.2rem 0.6rem;
-        border-radius: 1rem;
-        font-weight: 600;
-    }
-
-    /* Estilos Acordeón de Enlaces */
     .accordion-button:not(.collapsed) {
-        background-color: #fef2f2;
+        background-color: #fff1f2;
         color: #c71712;
-        box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
-    }
-
-    .accordion-button:focus {
-        box-shadow: none;
-        border-color: rgba(0,0,0,.125);
+        font-weight: 700;
     }
 </style>
 
 <div class="d-flex justify-content-between align-items-center mb-4 px-2">
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0" style="font-size: 0.9rem;">
+        <ol class="breadcrumb mb-0 bg-transparent p-0">
             <li class="breadcrumb-item"><a href="/Customers" class="text-decoration-none text-muted">Clientes</a></li>
             <li class="breadcrumb-item"><a href="/Machines?customerId=@Model.Machine.CustomerId" class="text-decoration-none text-muted">Máquinas de @customerName</a></li>
-            <li class="breadcrumb-item active fw-bold text-dark">@machineName</li>
+            <li class="breadcrumb-item active fw-bold text-dark">Detalle de Máquina</li>
         </ol>
     </nav>
     <div class="badge bg-white text-dark border p-2 font-monospace shadow-sm">REF: @Model.Machine.OrderNumber</div>
@@ -125,104 +111,62 @@
 
 <div class="row g-4">
     <div class="col-lg-3">
-        <div class="sidebar-info p-4 shadow-sm">
-            <div class="d-flex align-items-center gap-2 mb-3">
-                <div class="bg-success rounded-circle" style="width: 10px; height: 10px;"></div>
-                <span class="text-success fw-bold small text-uppercase">Operativa</span>
+        <div class="sidebar-info p-4 shadow-sm h-100">
+            <div class="d-flex align-items-center gap-2 mb-3 text-success fw-bold small text-uppercase">
+                <span class="rounded-circle bg-success" style="width: 8px; height: 8px;"></span> Operativa
             </div>
-
-            <h1 class="h4 fw-bold mb-4">@machineName</h1>
-
+            <h4 class="fw-bold mb-4 text-dark">@machineName</h4>
             <div class="mb-4">
-                <div class="mb-3">
-                    <label class="text-muted small fw-bold text-uppercase">Nº Pedido / Armario</label>
-                    <div class="bg-light p-2 rounded border font-monospace mt-1 text-dark">
-                        @Model.Machine.OrderNumber <span class="text-muted mx-1">/</span> @Model.Machine.CabinetNumber
+                <label class="text-muted small fw-bold text-uppercase d-block mb-1">Identificación</label>
+                <div class="bg-light p-2 rounded border font-monospace text-dark mb-3">
+                    @Model.Machine.OrderNumber / @Model.Machine.CabinetNumber
+                </div>
+                <div class="row g-2">
+                    <div class="col-6">
+                        <label class="text-muted small fw-bold text-uppercase d-block">Fabricación</label>
+                        <span class="text-dark small">@(Model.Machine.ManufacturingDate?.ToShortDateString() ?? "-")</span>
+                    </div>
+                    <div class="col-6 text-end">
+                        <label class="text-muted small fw-bold text-uppercase d-block">Entrega</label>
+                        <span class="text-dark small">@(Model.Machine.DeliveryDate?.ToShortDateString() ?? "-")</span>
                     </div>
                 </div>
-
-                <div class="row g-2 mb-3">
-                    <div class="col-6">
-                        <label class="text-muted small fw-bold text-uppercase">Fabricación</label>
-                        <div class="text-dark small">@(Model.Machine.ManufacturingDate?.ToShortDateString() ?? "-")</div>
-                    </div>
-                    <div class="col-6">
-                        <label class="text-muted small fw-bold text-uppercase">Entrega</label>
-                        <div class="text-dark small">@(Model.Machine.DeliveryDate?.ToShortDateString() ?? "-")</div>
-                    </div>
-                </div>
-
-                @if (!string.IsNullOrWhiteSpace(Model.Machine.Observations))
-                {
-                    <div class="mt-3">
-                        <label class="text-muted small fw-bold text-uppercase">Observaciones</label>
-                        <p class="small text-muted mb-0 mt-1">@Model.Machine.Observations</p>
-                    </div>
-                }
             </div>
-
-            <button id="EditMachineButton" class="btn btn-light border shadow-sm w-100 mt-2 btn-sm fw-bold text-secondary">
-                Editar Detalles
-            </button>
+            <button id="EditMachineButton" class="btn btn-outline-secondary w-100 btn-sm fw-bold mt-2">Editar Ficha</button>
         </div>
     </div>
 
     <div class="col-lg-9">
         <div class="bg-white rounded-4 shadow-sm border overflow-hidden">
-
             <ul class="nav nav-tabs nav-tabs-custom border-bottom bg-light bg-opacity-50" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#tab-docs">Documentación (PDF)</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#tab-qr">Códigos QR</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-primary fw-bold" data-bs-toggle="tab" href="#tab-links">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-1 mb-1" viewBox="0 0 16 16"><path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" /><path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z" /></svg>
-                        Vincular QR ➔ Archivos
-                    </a>
-                </li>
+                <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab-docs">Documentos</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-qr">Códigos QR</a></li>
+                <li class="nav-item"><a class="nav-link text-primary" data-bs-toggle="tab" href="#tab-links"><i class="fa fa-link me-1"></i> Vincular</a></li>
             </ul>
 
             <div class="tab-content p-4">
-
                 <div class="tab-pane fade show active" id="tab-docs">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2 class="h5 fw-bold mb-0 text-dark">Archivos Subidos</h2>
-                        <button id="NewDocumentButton" class="btn btn-sm px-3 shadow-sm text-white" style="background: #c71712;">
-                            Subir Documento
-                        </button>
+                        <h5 class="fw-bold mb-0">Archivos Asociados</h5>
+                        <button id="NewDocumentButton" class="btn btn-sm px-3 text-white" style="background: #c71712;">Nuevo PDF</button>
                     </div>
-
                     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
-                        @if (Model.Documents != null && Model.Documents.Count > 0)
+                        @foreach (var doc in Model.Documents)
                         {
-                            foreach (var doc in Model.Documents)
-                            {
-                                <div class="col">
-                                    <div class="item-card p-3 d-flex flex-column">
-                                        <div class="d-flex align-items-start gap-3 mb-3">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#c71712" viewBox="0 0 16 16"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" /><path d="M4.603 14.087a.81.81 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.68 7.68 0 0 1 1.482-.645 19.697 19.697 0 0 0 1.062-2.227 7.269 7.269 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .471.236c.089.1.146.25.15.41.015.533-.184 1.168-.423 1.83a20.5 20.5 0 0 1-.144.382c.045.08.093.16.14.238.4.675.8 1.25 1.21 1.71.41.46.81.82 1.15 1.06.34.24.62.38.8.44.18.06.35.08.5.06.25-.03.45-.15.58-.33.13-.18.2-.4.18-.65-.02-.25-.13-.48-.33-.63a1.47 1.47 0 0 0-.84-.28c-.3 0-.6.08-.87.23-.27.15-.5.35-.7.6l-.15.2c-.2-.24-.46-.48-.77-.73a11.58 11.58 0 0 0-1.08-.8 25.5 25.5 0 0 0-.48-1.07c-.16-.38-.3-.77-.42-1.17-.12-.4-.2-.8-.24-1.2a4.3 4.3 0 0 0-.2-1.06c-.05-.18-.1-.36-.2-.5l-.1-.15c-.1.08-.18.18-.24.3-.06.12-.1.25-.13.4-.05.3.02.6.17.88.15.28.38.54.67.78.3.24.64.45 1.03.62l.18.08c-.12.3-.25.6-.38.9-.13.3-.28.6-.43.9-.15.3-.32.6-.5.9-.18.3-.38.6-.6.9-.22.3-.46.6-.72.9-.26.3-.54.6-.84.9-.3.3-.64.6-.98.9-.34.3-.7.58-1.08.85l-.23.15c-.24.16-.48.3-.74.43-.26.13-.53.24-.82.32-.3.08-.6.13-.93.15h-.15z" /></svg>
-                                            <div class="overflow-hidden">
-                                                <h3 class="h6 fw-bold mb-1 text-dark text-truncate" title="@doc.Title">@doc.Title</h3>
-                                                <div class="text-muted small text-truncate">@doc.FileName</div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-auto">
-                                            <div class="btn-group w-100 shadow-sm rounded-2 overflow-hidden mt-3">
-                                                <button class="btn btn-light btn-sm fw-bold border-end edit-doc-btn" data-id="@doc.Id">Editar</button>
-                                                <a href="/MachineDocuments/Download/@doc.Id" class="btn btn-light btn-sm fw-bold text-danger">Descargar</a>
-                                            </div>
+                            <div class="col">
+                                <div class="item-card p-3 d-flex flex-column">
+                                    <div class="d-flex align-items-start gap-3 mb-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#c71712" viewBox="0 0 16 16"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" /></svg>
+                                        <div class="overflow-hidden">
+                                            <h6 class="fw-bold mb-1 text-truncate text-dark">@doc.Title</h6>
+                                            <div class="text-muted extra-small text-truncate" style="font-size: 0.7rem;">@doc.FileName</div>
                                         </div>
                                     </div>
+                                    <div class="mt-auto btn-group w-100 shadow-sm">
+                                        <button class="btn btn-light btn-sm fw-bold border-end edit-doc-btn" data-id="@doc.Id">Editar</button>
+                                        <a href="/MachineDocuments/Download/@doc.Id" class="btn btn-light btn-sm fw-bold text-danger">Bajar</a>
+                                    </div>
                                 </div>
-                            }
-                        }
-                        else
-                        {
-                            <div class="col-12 text-center py-5 text-muted">
-                                <p>No hay documentos técnicos subidos.</p>
                             </div>
                         }
                     </div>
@@ -230,42 +174,36 @@
 
                 <div class="tab-pane fade" id="tab-qr">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2 class="h5 fw-bold mb-0 text-dark">Códigos Generados</h2>
-                        <button id="NewQrButton" class="btn btn-dark btn-sm px-3 shadow-sm border-0">
-                            Nuevo QR
-                        </button>
+                        <h5 class="fw-bold mb-0">Códigos QR Generados</h5>
+                        <button id="NewQrButton" class="btn btn-dark btn-sm px-3">Nuevo QR</button>
                     </div>
-
                     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
-                        @if (Model.QrCodes != null && Model.QrCodes.Count > 0)
+                        @foreach (var qr in Model.QrCodes)
                         {
-                            foreach (var qr in Model.QrCodes)
-                            {
-                                <div class="col">
-                                    <div class="item-card p-3 d-flex align-items-center gap-3">
-                                        <div class="bg-light p-2 rounded border">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#374151" viewBox="0 0 16 16"><path d="M2 2h2v2H2V2Z" /><path d="M6 0v6H0V0h6ZM5 1H1v4h4V1ZM4 12H2v2h2v-2Z" /><path d="M6 10v6H0v-6h6Zm-5 1v4h4v-4H1Zm11-9h2v2h-2V2Z" /><path d="M10 0v6h6V0h-6Zm5 1v4h-4V1h4ZM8 1V0h1v2H8v2H7V1h1Zm0 5V4h1v2H8ZM6 8V7h1V6h1v2h1V7h5v1h-4v1H7V8H6Zm0 0v1H2V8H1v1H0V7h3v1h3Zm10 1h-1V7h1v2Zm-1 0h-1v2h2v-1h-1V9Zm-4 0h2v1h-1v1h-1V9Zm2 3v-1h-1v1h1Zm-1 0v1h2v-1h-2Zm-4 0h1v2h-1v-2Zm1 0h1v-1h-1v1Zm0 2h1v1h-1v-1Zm-1 0v-1h-1v2h2v-1Zm-1 0H8v-1h1v1Zm-2 0H6v1h1v-1Zm-1 0v-1H4v1h1Zm0 1V9h-1v2h1Zm-1 0v1H2v-1h1Zm0 1v1H1v-1h1Zm0 1H1v-1H0v2h2v-1Zm2 0v-1H3v1h1Zm0-1v1h1v-1H4Zm1-1V9h1v1H5Zm1 0v1h1v-1H6Zm1-1H6v1h1v-1Zm0 1v1h-1v-1h1Zm0 1v1h1v-1H7Zm1 1H7v1h2v-1H8Zm1-1h1v1h-1v-1Zm0-1h-1v1h1v-1Zm0-1v-1h1v1h-1Zm1 0v1h1v-1h-1Zm1 0v-1h1v1h-1Zm1 0v1h1v-1h-1Zm1 0v-1h1v1h-1Zm0 1h1v1h-1v-1Zm-1 0v1h-1v-1h1Zm-1 0h1v-1h-1v1Zm0 1v1h1v-1h-1Zm-1 0h1v-1h-1v1Zm0 1h1v1h-1v-1Zm-1 0v1h-1v-1h1Z" /></svg>
-                                        </div>
-                                        <div class="flex-grow-1 overflow-hidden">
-                                            <h3 class="h6 fw-bold mb-1 text-dark text-truncate">@qr.Name</h3>
-                                            <div class="font-monospace text-muted small bg-light px-2 py-1 rounded d-inline-block">@qr.Code</div>
-                                        </div>
-                                        <div class="d-flex gap-1">
-                                            <a href="/q/@qr.Code" target="_blank" class="btn btn-outline-dark btn-sm d-flex align-items-center justify-content-center" title="Ver QR Público" style="width: 32px; height: 32px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" /><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" /></svg>
-                                            </a>
-                                            <button class="btn btn-outline-secondary btn-sm edit-qr-btn d-flex align-items-center justify-content-center" data-id="@qr.Id" title="Editar QR" style="width: 32px; height: 32px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" /></svg>
-                                            </button>
-                                        </div>
+                            <div class="col">
+                                <div class="item-card p-3 d-flex align-items-center gap-3">
+                                    <div class="bg-light p-2 rounded border">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#334155" viewBox="0 0 16 16"><path d="M2 2h2v2H2V2Z" /><path d="M6 0v6H0V0h6ZM5 1H1v4h4V1ZM4 12H2v2h2v-2Z" /><path d="M6 10v6H0v-6h6Zm-5 1v4h4v-4H1Zm11-9h2v2h-2V2Z" /><path d="M10 0v6h6V0h-6Zm5 1v4h-4V1h4ZM8 1V0h1v2H8v2H7V1h1Zm0 5V4h1v2H8ZM6 8V7h1V6h1v2h1V7h5v1h-4v1H7V8H6Zm0 0v1H2V8H1v1H0V7h3v1h3Zm10 1h-1V7h1v2Zm-1 0h-1v2h2v-1h-1V9Zm-4 0h2v1h-1v1h-1V9Zm2 3v-1h-1v1h1Zm-1 0v1h2v-1h-2Zm-4 0h1v2h-1v-2Zm1 0h1v-1h-1v1Zm0 2h1v1h-1v-1Zm-1 0v-1h-1v2h2v-1Zm-1 0H8v-1h1v1Zm-2 0H6v1h1v-1Zm-1 0v-1H4v1h1Zm0 1V9h-1v2h1Zm-1 0v1H2v-1h1Zm0 1v1H1v-1h1Zm0 1H1v-1H0v2h2v-1Zm2 0v-1H3v1h1Zm0-1v1h1v-1H4Zm1-1V9h1v1H5Zm1 0v1h1v-1H6Zm1-1H6v1h1v-1Zm0 1v1h-1v-1h1Zm0 1v1h1v-1H7Zm1 1H7v1h2v-1H8Zm1-1h1v1h-1v-1Zm0-1h-1v1h1v-1Zm0-1v-1h1v1h-1Zm1 0v1h1v-1h-1Zm1 0v-1h1v1h-1Zm1 0v1h1v-1h-1Zm1 0v-1h1v1h-1Zm0 1h1v1h-1v-1Zm-1 0v1h-1v-1h1Zm-1 0h1v-1h-1v1Zm0 1v1h1v-1h-1Zm-1 0h1v-1h-1v1Zm0 1h1v1h-1v-1Zm-1 0v1h-1v-1h1Z" /></svg>
+                                    </div>
+                                    <div class="flex-grow-1 overflow-hidden">
+                                        <h6 class="fw-bold mb-0 text-dark text-truncate">@qr.Name</h6>
+                                        <small class="font-monospace text-muted">@qr.Code</small>
+                                    </div>
+                                    <div class="d-flex gap-1">
+                                        <a href="/q/@qr.Code" target="_blank" class="btn btn-outline-dark btn-sm p-1" title="Previsualizar">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+
+                                        <a asp-page-handler="DownloadQr" asp-route-id="@Model.Id" asp-route-qrId="@qr.Id"
+                                           class="btn btn-outline-primary btn-sm p-1" title="Descargar para Cliente">
+                                            <i class="fa fa-download"></i>
+                                        </a>
+
+                                        <button class="btn btn-outline-secondary btn-sm p-1 edit-qr-btn" data-id="@qr.Id" title="Editar">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
                                     </div>
                                 </div>
-                            }
-                        }
-                        else
-                        {
-                            <div class="col-12 text-center py-5 text-muted">
-                                <p>No hay códigos QR generados para esta máquina.</p>
                             </div>
                         }
                     </div>
@@ -273,94 +211,60 @@
 
                 <div class="tab-pane fade" id="tab-links">
                     <div class="mb-4">
-                        <h2 class="h5 fw-bold mb-1 text-dark">Gestión de Accesos</h2>
-                        <p class="text-muted small mb-0">Selecciona un código QR para decidir qué documentos verá el cliente al escanearlo.</p>
+                        <h5 class="fw-bold mb-1">Configuración de Accesos</h5>
+                        <p class="text-muted small">Define qué documentos son accesibles desde cada código QR.</p>
                     </div>
-
-                    @if (Model.QrCodes == null || Model.QrCodes.Count == 0 || Model.Documents == null || Model.Documents.Count == 0)
-                    {
-                        <div class="alert alert-warning border-warning border-opacity-50 bg-warning bg-opacity-10 d-flex align-items-center gap-3">
-                            <i class="fa fa-info-circle fa-2x text-warning"></i>
-                            <div>
-                                <strong>Faltan elementos</strong><br />
-                                Para vincular información, asegúrate de haber creado al menos <strong>un Código QR</strong> y haber subido al menos <strong>un Documento</strong>.
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="accordion" id="qrLinkAccordion">
-                            @foreach (var qr in Model.QrCodes)
-                            {
-                                var linkedDocsForThisQr = Model.QrLinkedDocuments[qr.Id];
-
-                                <div class="accordion-item mb-3 border rounded shadow-sm overflow-hidden">
-                                    <h2 class="accordion-header" id="heading-@qr.Id">
-                                        <button class="accordion-button collapsed fw-bold py-3" type="button" data-bs-toggle="collapse" data-bs-toggle="#collapse-@qr.Id">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="me-3 text-secondary" viewBox="0 0 16 16"><path d="M2 2h2v2H2V2Z" /><path d="M6 0v6H0V0h6ZM5 1H1v4h4V1ZM4 12H2v2h2v-2Z" /><path d="M6 10v6H0v-6h6Zm-5 1v4h4v-4H1Zm11-9h2v2h-2V2Z" /><path d="M10 0v6h6V0h-6Zm5 1v4h-4V1h4ZM8 1V0h1v2H8v2H7V1h1Zm0 5V4h1v2H8ZM6 8V7h1V6h1v2h1V7h5v1h-4v1H7V8H6Zm0 0v1H2V8H1v1H0V7h3v1h3Zm10 1h-1V7h1v2Zm-1 0h-1v2h2v-1h-1V9Zm-4 0h2v1h-1v1h-1V9Zm2 3v-1h-1v1h1Zm-1 0v1h2v-1h-2Zm-4 0h1v2h-1v-2Zm1 0h1v-1h-1v1Zm0 2h1v1h-1v-1Zm-1 0v-1h-1v2h2v-1Zm-1 0H8v-1h1v1Zm-2 0H6v1h1v-1Zm-1 0v-1H4v1h1Zm0 1V9h-1v2h1Zm-1 0v1H2v-1h1Zm0 1v1H1v-1h1Zm0 1H1v-1H0v2h2v-1Zm2 0v-1H3v1h1Zm0-1v1h1v-1H4Zm1-1V9h1v1H5Zm1 0v1h1v-1H6Zm1-1H6v1h1v-1Zm0 1v1h-1v-1h1Zm0 1v1h1v-1H7Zm1 1H7v1h2v-1H8Zm1-1h1v1h-1v-1Zm0-1h-1v1h1v-1Zm0-1v-1h1v1h-1Zm1 0v1h1v-1h-1Zm1 0v-1h1v1h-1Zm1 0v1h1v-1h-1Zm1 0v-1h1v1h-1Zm0 1h1v1h-1v-1Zm-1 0v1h-1v-1h1Zm-1 0h1v-1h-1v1Zm0 1v1h1v-1h-1Zm-1 0h1v-1h-1v1Zm0 1h1v1h-1v-1Zm-1 0v1h-1v-1h1Z" /></svg>
-                                            QR: @qr.Name
-                                            <span class="badge bg-primary ms-3 rounded-pill">@linkedDocsForThisQr.Count Documentos Visibles</span>
-                                        </button>
-                                    </h2>
-                                    <div id="collapse-@qr.Id" class="accordion-collapse collapse" data-bs-parent="#qrLinkAccordion">
-                                        <div class="accordion-body bg-light p-3">
-
-                                            <div class="table-responsive bg-white border rounded shadow-sm">
-                                                <table class="table table-hover mb-0 align-middle text-start">
-                                                    <thead class="table-light">
-                                                        <tr>
-                                                            <th class="py-3 px-4 text-secondary small text-uppercase fw-bold">Nombre del Documento</th>
-                                                            <th class="py-3 px-4 text-center text-secondary small text-uppercase fw-bold" style="width: 150px;">Estado en este QR</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var doc in Model.Documents)
-                                                        {
-                                                            // Comprobamos si ESTE documento específico está enlazado a ESTE qr específico
-                                                            var existingLink = linkedDocsForThisQr.FirstOrDefault(x => x.MachineDocumentId == doc.Id);
-
-                                                            <tr>
-                                                                <td class="py-3 px-4">
-                                                                    <div class="fw-bold text-dark">@doc.Title</div>
-                                                                    <div class="small text-muted font-monospace">@doc.FileName</div>
-                                                                </td>
-                                                                <td class="py-3 px-4 text-center">
-                                                                    @if (existingLink != null)
-                                                                    {
-                                                                        <form method="post" asp-page-handler="RemoveLink" class="m-0">
-                                                                            <input type="hidden" name="linkId" value="@existingLink.Id" />
-                                                                            <input type="hidden" name="machineId" value="@Model.Id" />
-                                                                            <button type="submit" class="btn btn-sm btn-outline-danger w-100 fw-bold">
-                                                                                <i class="fa fa-times me-1"></i> Desvincular
-                                                                            </button>
-                                                                        </form>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <form method="post" asp-page-handler="AddLink" class="m-0">
-                                                                            <input type="hidden" name="qrId" value="@qr.Id" />
-                                                                            <input type="hidden" name="docId" value="@doc.Id" />
-                                                                            <input type="hidden" name="machineId" value="@Model.Id" />
-                                                                            <button type="submit" class="btn btn-sm btn-outline-success w-100 fw-bold">
-                                                                                <i class="fa fa-plus me-1"></i> Vincular
-                                                                            </button>
-                                                                        </form>
-                                                                    }
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-
-                                        </div>
+                    <div class="accordion shadow-sm border rounded" id="qrLinkAccordion">
+                        @foreach (var qr in Model.QrCodes)
+                        {
+                            var linked = Model.QrLinkedDocuments[qr.Id];
+                            <div class="accordion-item border-0 border-bottom last-child-border-0">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed py-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@qr.Id">
+                                        <span class="fw-bold me-2">QR: @qr.Name</span>
+                                        <span class="badge bg-primary rounded-pill fw-normal" style="font-size: 0.7rem;">@linked.Count documentos</span>
+                                    </button>
+                                </h2>
+                                <div id="collapse-@qr.Id" class="accordion-collapse collapse" data-bs-parent="#qrLinkAccordion">
+                                    <div class="accordion-body bg-light p-0">
+                                        <table class="table table-sm table-hover bg-white mb-0 text-start align-middle">
+                                            <thead class="table-light"><tr><th class="ps-4 py-2">Documento</th><th class="text-center py-2">Acción</th></tr></thead>
+                                            <tbody>
+                                                @foreach (var doc in Model.Documents)
+                                                {
+                                                    var link = linked.FirstOrDefault(x => x.MachineDocumentId == doc.Id);
+                                                    <tr>
+                                                        <td class="ps-4 py-3"><div class="fw-bold small">@doc.Title</div><div class="extra-small text-muted font-monospace">@doc.FileName</div></td>
+                                                        <td class="text-center pe-4">
+                                                            @if (link != null)
+                                                            {
+                                                                <form method="post" asp-page-handler="RemoveLink" asp-route-id="@Model.Id">
+                                                                    <input type="hidden" name="qrId" value="@qr.Id" />
+                                                                    <input type="hidden" name="linkId" value="@link.Id" />
+                                                                    <input type="hidden" name="machineId" value="@Model.Id" />
+                                                                    <button type="submit" class="btn btn-sm btn-outline-danger px-3 fw-bold" style="font-size: 0.7rem;">Quitar</button>
+                                                                </form>
+                                                            }
+                                                            else
+                                                            {
+                                                                <form method="post" asp-page-handler="AddLink" asp-route-id="@Model.Id">
+                                                                    <input type="hidden" name="qrId" value="@qr.Id" />
+                                                                    <input type="hidden" name="docId" value="@doc.Id" />
+                                                                    <input type="hidden" name="machineId" value="@Model.Id" />
+                                                                    <button type="submit" class="btn btn-sm btn-outline-success px-3 fw-bold" style="font-size: 0.7rem;">Vincular</button>
+                                                                </form>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
-                            }
-                        </div>
-                    }
+                            </div>
+                        }
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
