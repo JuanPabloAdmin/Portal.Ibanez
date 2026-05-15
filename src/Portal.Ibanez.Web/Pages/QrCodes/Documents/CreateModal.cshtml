@@ -1,0 +1,31 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Portal.Ibanez.Localization
+@using Portal.Ibanez.Web.Pages.QrCodes.Documents
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model CreateModalModel
+@inject IHtmlLocalizer<IbanezResource> L
+
+<form method="post" asp-page="/QrCodes/Documents/CreateModal">
+
+    <abp-modal>
+        <abp-modal-header title="Añadir documento al QR"></abp-modal-header>
+
+        <abp-modal-body>
+
+            <input type="hidden" asp-for="Input.QrCodeId" />
+
+            <abp-select asp-for="Input.MachineDocumentId"
+                        asp-items="Model.Documents"
+                        label="Documento">
+            </abp-select>
+
+            <abp-input asp-for="Input.DisplayOrder" />
+
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel | AbpModalButtons.Save)">
+        </abp-modal-footer>
+    </abp-modal>
+
+</form>

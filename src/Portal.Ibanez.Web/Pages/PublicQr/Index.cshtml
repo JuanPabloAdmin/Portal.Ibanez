@@ -1,0 +1,76 @@
+﻿@page "/q/{code}"
+@model Portal.Ibanez.Web.Pages.PublicQr.IndexModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Documentación técnica</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f7;
+            margin: 0;
+            padding: 32px;
+            color: #1d1d1f;
+        }
+
+        .card {
+            max-width: 640px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 8px 32px rgba(0,0,0,.08);
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .doc {
+            display: block;
+            padding: 14px 16px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-top: 12px;
+            text-decoration: none;
+            color: #111;
+            background: #fafafa;
+        }
+
+            .doc:hover {
+                background: #f0f0f0;
+            }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Documentación técnica</h1>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Message))
+        {
+            <p>@Model.Message</p>
+        }
+        else
+        {
+            <p>Seleccione el documento que desea descargar:</p>
+
+            @foreach (var document in Model.Documents)
+            {
+                <a class="doc" href="/q/@Model.Code/download/@document.MachineDocumentId">
+                    @document.DocumentTitle
+                    <br />
+                    <small>@document.FileName</small>
+                </a>
+            }
+        }
+    </div>
+</body>
+</html>

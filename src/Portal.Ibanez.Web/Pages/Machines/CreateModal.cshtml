@@ -1,0 +1,50 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Portal.Ibanez.Localization
+@using Portal.Ibanez.Web.Pages.Machines
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model CreateModalModel
+@inject IHtmlLocalizer<IbanezResource> L
+
+<form method="post" asp-page="/Machines/CreateModal" >
+
+    <abp-modal>
+        <abp-modal-header title="Nueva máquina"></abp-modal-header>
+
+        <abp-modal-body>
+
+            @if (Model.CustomerId.HasValue)
+            {
+                <input type="hidden" asp-for="Machine.CustomerId" />
+            }
+            else
+            {
+                <abp-select asp-for="Machine.CustomerId"
+                            asp-items="Model.Customers"
+                            label="Cliente">
+                </abp-select>
+            }
+
+            <abp-select asp-for="Machine.MachineTypeId"
+                        asp-items="Model.MachineTypes"
+                        label="Tipo de máquina">
+            </abp-select>
+
+            <abp-input asp-for="Machine.OrderNumber" />
+
+            <abp-input asp-for="Machine.CabinetNumber" />
+
+            <abp-input asp-for="Machine.ManufacturingDate" />
+
+            <abp-input asp-for="Machine.DeliveryDate" />
+
+            <abp-input asp-for="Machine.Observations" />
+
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel | AbpModalButtons.Save)">
+        </abp-modal-footer>
+
+    </abp-modal>
+
+</form>

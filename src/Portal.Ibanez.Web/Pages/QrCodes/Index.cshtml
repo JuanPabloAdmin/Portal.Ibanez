@@ -1,0 +1,46 @@
+﻿@page
+@using Portal.Ibanez.Localization
+@using Portal.Ibanez.Web.Pages.QrCodes
+@using Microsoft.Extensions.Localization
+@model IndexModel
+@inject IStringLocalizer<IbanezResource> L
+
+@section scripts
+{
+    <abp-script src="/Pages/QrCodes/Index.js" />
+}
+
+<input type="hidden" id="MachineId" value="@Model.MachineId" />
+
+<abp-card>
+
+    <abp-card-header>
+
+        <abp-row>
+
+            <abp-column size-md="_6">
+                <h2>@Model.Title</h2>
+            </abp-column>
+
+            <abp-column size-md="_6" class="text-end">
+
+                <abp-button id="NewQrCodeButton"
+                            text="Nuevo QR"
+                            icon="plus"
+                            button-type="Primary" />
+
+            </abp-column>
+
+        </abp-row>
+
+    </abp-card-header>
+
+    <abp-card-body>
+
+        <abp-table striped-rows="true"
+                   id="QrCodesTable">
+        </abp-table>
+
+    </abp-card-body>
+
+</abp-card>

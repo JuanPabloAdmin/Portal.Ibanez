@@ -1,0 +1,31 @@
+﻿@page
+@using Portal.Ibanez.Localization
+@using Portal.Ibanez.Web.Pages.Machines
+@using Microsoft.Extensions.Localization
+@model IndexModel
+@inject IStringLocalizer<IbanezResource> L
+
+@section scripts
+{
+    <abp-script src="/Pages/Machines/Index.js" />
+}
+<input type="hidden" id="CustomerId" value="@Model.CustomerId" />
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <h2>@Model.Title</h2>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                <abp-button id="NewMachineButton"
+                            text="Nueva máquina"
+                            icon="plus"
+                            button-type="Primary" />
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+
+    <abp-card-body>
+        <abp-table striped-rows="true" id="MachinesTable"></abp-table>
+    </abp-card-body>
+</abp-card>

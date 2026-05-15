@@ -1,0 +1,32 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Portal.Ibanez.Localization
+@using Portal.Ibanez.Web.Pages.QrCodes
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model CreateModalModel
+@inject IHtmlLocalizer<IbanezResource> L
+
+<form method="post" asp-page="/QrCodes/CreateModal"     >
+
+    <abp-modal>
+        <abp-modal-header title="Nuevo código QR"></abp-modal-header>
+
+        <abp-modal-body>
+
+            <input type="hidden" asp-for="QrCode.MachineId" />
+
+            <abp-input asp-for="QrCode.Name" />
+
+            <abp-input asp-for="QrCode.Code" />
+
+            <abp-input asp-for="QrCode.Description" />
+
+            <abp-input asp-for="QrCode.IsActive" />
+
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel | AbpModalButtons.Save)">
+        </abp-modal-footer>
+    </abp-modal>
+
+</form>

@@ -1,0 +1,12 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace Portal.Ibanez.Web.Pages.MachineTypes;
+
+[Authorize]
+public class IndexModel : PageModel
+{
+    public void OnGet()
+    {
+    }
+}

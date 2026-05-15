@@ -1,0 +1,34 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Portal.Ibanez.Localization
+@using Portal.Ibanez.Web.Pages.QrCodes
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model EditModalModel
+@inject IHtmlLocalizer<IbanezResource> L
+
+<form method="post" asp-page="/QrCodes/EditModal"   >
+
+    <abp-modal>
+        <abp-modal-header title="Editar código QR"></abp-modal-header>
+
+        <abp-modal-body>
+
+            <abp-input asp-for="Id" />
+
+            <input type="hidden" asp-for="QrCode.MachineId" />
+
+            <abp-input asp-for="QrCode.Name" />
+
+            <abp-input asp-for="QrCode.Code" readonly="true" />
+
+            <abp-input asp-for="QrCode.Description" />
+
+            <abp-input asp-for="QrCode.IsActive" />
+
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel | AbpModalButtons.Save)">
+        </abp-modal-footer>
+    </abp-modal>
+
+</form>

@@ -1,0 +1,31 @@
+﻿@page
+@using Portal.Ibanez.Localization
+@using Portal.Ibanez.Web.Pages.MachineTypes
+@using Microsoft.Extensions.Localization
+@model IndexModel
+@inject IStringLocalizer<IbanezResource> L
+
+@section scripts
+{
+    <abp-script src="/Pages/MachineTypes/Index.js" />
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <h2>Tipos de máquina</h2>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                <abp-button id="NewMachineTypeButton"
+                            text="Nuevo tipo"
+                            icon="plus"
+                            button-type="Primary" />
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+
+    <abp-card-body>
+        <abp-table striped-rows="true" id="MachineTypesTable"></abp-table>
+    </abp-card-body>
+</abp-card>

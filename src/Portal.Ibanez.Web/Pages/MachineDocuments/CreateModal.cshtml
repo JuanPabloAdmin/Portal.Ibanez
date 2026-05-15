@@ -1,0 +1,24 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Portal.Ibanez.Localization
+@using Portal.Ibanez.Web.Pages.MachineDocuments
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model CreateModalModel
+@inject IHtmlLocalizer<IbanezResource> L
+
+<form method="post" asp-page="/MachineDocuments/CreateModal" enctype="multipart/form-data" >
+    <abp-modal>
+        <abp-modal-header title="Nuevo documento"></abp-modal-header>
+
+        <abp-modal-body>
+            <input type="hidden" asp-for="Document.MachineId" />
+            <abp-input asp-for="Document.Title" />
+            <abp-input asp-for="PdfFile" type="file" label="Archivo PDF" />
+            <abp-input asp-for="Document.IsActive" />
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel | AbpModalButtons.Save)">
+        </abp-modal-footer>
+    </abp-modal>
+
+</form>

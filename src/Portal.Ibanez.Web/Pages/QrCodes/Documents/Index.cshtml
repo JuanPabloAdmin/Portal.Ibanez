@@ -1,0 +1,31 @@
+﻿@page
+@using Portal.Ibanez.Web.Pages.QrCodes.Documents
+@model IndexModel
+
+@section scripts
+{
+    <abp-script src="/Pages/QrCodes/Documents/Index.js" />
+}
+
+<input type="hidden" id="QrCodeId" value="@Model.QrCodeId" />
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <h2>@Model.Title</h2>
+            </abp-column>
+
+            <abp-column size-md="_6" class="text-end">
+                <abp-button id="NewQrCodeDocumentButton"
+                            text="Añadir documento"
+                            icon="plus"
+                            button-type="Primary" />
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+
+    <abp-card-body>
+        <abp-table striped-rows="true" id="QrCodeDocumentsTable"></abp-table>
+    </abp-card-body>
+</abp-card>

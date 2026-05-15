@@ -1,0 +1,21 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Portal.Ibanez.Localization
+@using Portal.Ibanez.Web.Pages.Customers
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model EditModalModel
+@inject IHtmlLocalizer<IbanezResource> L
+
+<abp-dynamic-form abp-model="Customer" asp-page="/Customers/EditModal" >
+    <abp-modal>
+        <abp-modal-header title="Editar cliente"></abp-modal-header>
+
+        <abp-modal-body>
+            <abp-input asp-for="Id" />
+            <abp-form-content />
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel | AbpModalButtons.Save)">
+        </abp-modal-footer>
+    </abp-modal>
+</abp-dynamic-form>

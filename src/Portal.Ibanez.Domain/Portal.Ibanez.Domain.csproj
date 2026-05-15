@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Portal.Ibanez</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Portal.Ibanez.Domain.Shared\Portal.Ibanez.Domain.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Emailing" Version="9.3.6" />
+    <PackageReference Include="Volo.Abp.Identity.Domain" Version="9.3.6" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" Version="9.3.6" />
+    <PackageReference Include="Volo.Abp.BackgroundJobs.Domain" Version="9.3.6" />
+    <PackageReference Include="Volo.Abp.AuditLogging.Domain" Version="9.3.6" />
+    <PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="9.3.6" />
+    <PackageReference Include="Volo.Abp.FeatureManagement.Domain" Version="9.3.6" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="9.3.6" />
+    <PackageReference Include="Volo.Abp.OpenIddict.Domain" Version="9.3.6" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.OpenIddict" Version="9.3.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Documents\" />
+  </ItemGroup>
+
+</Project>
