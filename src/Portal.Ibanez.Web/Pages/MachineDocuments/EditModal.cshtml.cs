@@ -32,6 +32,13 @@ public class EditModalModel : IbanezPageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
+        var existing = await _machineDocumentAppService.GetAsync(Id);
+
+        Document.StoredFileName = existing.StoredFileName;
+        Document.FileSize = existing.FileSize;
+        Document.ContentType = existing.ContentType;
+        Document.Version = existing.Version;
+
         await _machineDocumentAppService.UpdateAsync(Id, Document);
 
         return NoContent();
