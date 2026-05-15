@@ -1,31 +1,351 @@
 ﻿@page
+@using Microsoft.AspNetCore.Authorization
 @using Portal.Ibanez.Localization
 @using Portal.Ibanez.Web.Pages.Machines
 @using Microsoft.Extensions.Localization
 @model IndexModel
 @inject IStringLocalizer<IbanezResource> L
 
-@section scripts
-{
-    <abp-script src="/Pages/Machines/Index.js" />
-}
-<input type="hidden" id="CustomerId" value="@Model.CustomerId" />
-<abp-card>
-    <abp-card-header>
-        <abp-row>
-            <abp-column size-md="_6">
-                <h2>@Model.Title</h2>
-            </abp-column>
-            <abp-column size-md="_6" class="text-end">
-                <abp-button id="NewMachineButton"
-                            text="Nueva máquina"
-                            icon="plus"
-                            button-type="Primary" />
-            </abp-column>
-        </abp-row>
-    </abp-card-header>
+@section scripts {
+    <script>
+        $(function () {
+            // Inicialización de Modales
+            var createModal = new abp.ModalManager(abp.appPath + 'Machines/CreateModal');
+            var editModal = new abp.ModalManager(abp.appPath + 'Machines/EditModal');
 
-    <abp-card-body>
-        <abp-table striped-rows="true" id="MachinesTable"></abp-table>
-    </abp-card-body>
-</abp-card>
+            $('#NewMachineButton').click(function (e) {
+                e.preventDefault();
+                var customerId = $('#CustomerId').val();
+                var urlParams = customerId ? { customerId: customerId } : {};
+                createModal.open(urlParams);
+            });
+
+            $('.edit-machine-btn').click(function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                editModal.open({ id: id });
+            });
+
+            createModal.onResult(function () { window.location.href = window.location.pathname + window.location.search; });
+            editModal.onResult(function () { window.location.href = window.location.pathname + window.location.search; });
+
+            // Lógica Combinada de Búsqueda y Filtros en Tiempo Real
+            var currentSearch = "";
+            var currentFilter = "all";
+
+            function applyFilters() {
+                $(".machine-card-wrapper").each(function () {
+                    // 1. Comprueba si coincide con el texto del buscador
+                    var matchesSearch = $(this).find('.search-data').text().toLowerCase().indexOf(currentSearch) > -1;
+                    // 2. Comprueba si coincide con el filtro del botón (Operativa/Fabricación)
+                    var matchesStatus = currentFilter === "all" || $(this).data('status') === currentFilter;
+
+                    // Solo muestra la tarjeta si cumple ambas condiciones
+                    $(this).toggle(matchesSearch && matchesStatus);
+                });
+            }
+
+            // Evento al escribir en el buscador
+            $("#machineSearchInput").on("keyup", function () {
+                currentSearch = $(this).val().toLowerCase();
+                applyFilters();
+            });
+
+            // Evento al hacer clic en las opciones del botón Filtros
+            $('.filter-btn').click(function (e) {
+                e.preventDefault();
+                currentFilter = $(this).data('filter');
+
+                // Cambia el texto del botón para que el usuario sepa qué filtro está activo
+                var filterText = "Filtros";
+                if (currentFilter !== 'all') {
+                    filterText = $(this).text().trim();
+                }
+                $('#filterDropdownText').text(filterText);
+
+                applyFilters();
+            });
+        });
+    </script>
+}
+
+<input type="hidden" id="CustomerId" value="@Model.CustomerId" />
+
+<style>
+    body {
+        background-color: #f4f7f9;
+        font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    /* Botones principales */
+    .btn-brand {
+        background-color: #c71712;
+        color: white;
+        border: none;
+        font-weight: 500;
+        font-size: 0.85rem;
+        transition: all 0.2s;
+        box-shadow: 0 4px 6px -1px rgba(199, 23, 18, 0.2);
+    }
+
+        .btn-brand:hover {
+            background-color: #a5130f;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px -1px rgba(199, 23, 18, 0.3);
+        }
+
+    .btn-outline-custom {
+        border: 1px solid #d1d5db;
+        color: #4b5563;
+        background: white;
+        font-weight: 500;
+        font-size: 0.85rem;
+        transition: all 0.2s;
+    }
+
+        .btn-outline-custom:hover {
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+    /* Tarjeta Compacta */
+    .machine-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        transition: all 0.2s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: visible;
+    }
+
+        .machine-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border-color: #e8a09e;
+        }
+
+    .machine-visual {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+        border-radius: 10px 10px 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .machine-icon-box {
+        background: white;
+        padding: 8px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        border: 1px solid #e5e7eb;
+    }
+
+    /* Badges dinámicos */
+    .status-badge {
+        font-size: 0.6rem;
+        font-weight: 700;
+        padding: 0.25rem 0.5rem;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .status-operative {
+        background-color: #dcfce7;
+        color: #166534;
+        border: 1px solid #bbf7d0;
+    }
+
+    .status-progress {
+        background-color: #fef9c3;
+        color: #854d0e;
+        border: 1px solid #fef08a;
+    }
+
+    /* Datos técnicos */
+    .data-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 12px;
+    }
+
+    .data-cell {
+        background: #f9fafb;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px dashed #d1d5db;
+    }
+
+    .data-label {
+        display: block;
+        font-size: 0.55rem;
+        text-transform: uppercase;
+        color: #6b7280;
+        font-weight: 700;
+        margin-bottom: 2px;
+    }
+
+    .data-value {
+        font-family: monospace;
+        font-size: 0.8rem;
+        color: #111827;
+        font-weight: 600;
+    }
+
+    /* Buscador */
+    .search-wrapper {
+        position: relative;
+        width: 280px;
+    }
+
+        .search-wrapper svg {
+            position: absolute;
+            left: 12px;
+            top: 10px;
+            color: #9ca3af;
+        }
+
+        .search-wrapper input {
+            padding-left: 2.2rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            border-color: #d1d5db;
+        }
+</style>
+
+<div class="mb-3 d-flex flex-column flex-md-row justify-content-between align-items-md-end bg-white p-3 border rounded shadow-sm gap-3">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-1 small text-uppercase fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">
+                <li class="breadcrumb-item text-muted">Administración</li>
+                <li class="breadcrumb-item text-danger">@Model.Title</li>
+            </ol>
+        </nav>
+        <h2 class="h4 font-weight-bold text-dark mb-0 d-flex align-items-center gap-2">
+            Parque de Máquinas
+            <span class="badge bg-light text-secondary border rounded-pill fs-6" style="font-size: 0.8rem !important;">@Model.Machines.Count</span>
+        </h2>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2">
+        <div class="search-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" /></svg>
+            <input type="text" id="machineSearchInput" class="form-control" placeholder="Buscar por pedido, tipo, armario...">
+        </div>
+
+        <div class="dropdown">
+            <button class="btn btn-outline-custom d-flex align-items-center gap-2 px-3 h-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" /></svg>
+                <span id="filterDropdownText">Filtros</span>
+            </button>
+            <ul class="dropdown-menu shadow-sm border-0 mt-1" style="font-size: 0.85rem; border-radius: 8px;">
+                <li><a class="dropdown-item filter-btn py-2" href="#" data-filter="all">Todas las máquinas</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item filter-btn py-2" href="#" data-filter="operativa"><span class="badge bg-success bg-opacity-10 text-success me-2 border border-success">Operativa</span> Solo Operativas</a></li>
+                <li><a class="dropdown-item filter-btn py-2" href="#" data-filter="fabricacion"><span class="badge bg-warning bg-opacity-10 text-warning me-2 border border-warning">Fabricación</span> En Fabricación</a></li>
+            </ul>
+        </div>
+
+        <button id="NewMachineButton" class="btn btn-brand d-flex align-items-center gap-2 px-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" /></svg>
+            Nueva Máquina
+        </button>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-3" id="machinesGrid">
+    @if (Model.Machines.Count > 0)
+    {
+        foreach (var machine in Model.Machines)
+        {
+            bool isDelivered = machine.DeliveryDate.HasValue && machine.DeliveryDate.Value <= DateTime.Now;
+            string statusClass = isDelivered ? "status-operative" : "status-progress";
+            string statusText = isDelivered ? "Operativa" : "En Fabricación";
+            string filterKey = isDelivered ? "operativa" : "fabricacion"; // Clave para el filtro en JS
+
+            <div class="col machine-card-wrapper" data-status="@filterKey">
+                <div class="machine-card search-data">
+
+                    <div class="machine-visual">
+                        <div class="machine-icon-box text-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM9 2.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM9 10.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+                            </svg>
+                        </div>
+                        <span class="status-badge @statusClass">@statusText</span>
+                    </div>
+
+                    <div class="p-3 flex-grow-1">
+                        <h3 class="h6 fw-bold text-dark mb-1 text-truncate" title="@machine.MachineTypeName">@machine.MachineTypeName</h3>
+
+                        <div class="text-secondary small mb-3 d-flex align-items-center gap-1" style="font-size: 0.75rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z" /></svg>
+                            <span class="text-truncate fw-medium">@machine.CustomerCommercialName</span>
+                        </div>
+
+                        <div class="data-grid">
+                            <div class="data-cell">
+                                <span class="data-label">Nº Pedido</span>
+                                <span class="data-value">@machine.OrderNumber</span>
+                            </div>
+                            <div class="data-cell">
+                                <span class="data-label">Armario</span>
+                                <span class="data-value">@machine.CabinetNumber</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 pt-2 border-top position-relative">
+                            <div class="d-flex justify-content-between text-muted" style="font-size: 0.7rem;">
+                                <div>
+                                    <span class="d-block text-uppercase fw-bold" style="font-size: 0.55rem;">Fabricación</span>
+                                    <span class="text-dark fw-medium">@(machine.ManufacturingDate?.ToShortDateString() ?? "-")</span>
+                                </div>
+                                <div class="text-end">
+                                    <span class="d-block text-uppercase fw-bold" style="font-size: 0.55rem;">Entrega</span>
+                                    <span class="text-dark fw-medium">@(machine.DeliveryDate?.ToShortDateString() ?? "-")</span>
+                                </div>
+                            </div>
+                            <div class="progress mt-2" style="height: 3px;">
+                                <div class="progress-bar @(isDelivered ? "bg-success" : "bg-warning")" role="progressbar" style="width: @(isDelivered ? "100%" : "60%")" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-2 bg-light border-top d-flex gap-2">
+                        <a href="/Machines/Detail/@machine.Id" class="btn btn-dark btn-sm flex-grow-1 fw-bold text-decoration-none text-center d-flex align-items-center justify-content-center gap-2" style="border-radius: 6px; font-size: 0.75rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z" /></svg>
+                            Ver Módulo
+                        </a>
+
+                        <div class="dropdown">
+                            <button class="btn btn-white border bg-white btn-sm px-2 text-secondary h-100" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 6px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" /></svg>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" style="font-size: 0.8rem;">
+                                <li>
+                                    <button class="dropdown-item d-flex align-items-center gap-2 edit-machine-btn py-2" data-id="@machine.Id">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#6b7280" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" /></svg>
+                                        Editar detalles
+                                    </button>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <button class="dropdown-item text-danger d-flex align-items-center gap-2 py-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" /><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" /></svg>
+                                        Eliminar máquina
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

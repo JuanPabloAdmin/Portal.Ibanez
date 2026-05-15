@@ -1,0 +1,731 @@
+version=1
+
+# This file caches language service data to improve the performance of C# Dev Kit.
+# It is not intended for manual editing. It can safely be deleted and will be
+# regenerated automatically. For more information, see https://aka.ms/lscache
+#
+# To control where cache files are stored, use the following VS Code setting:
+#   "dotnet.projectsystem.cacheInProjectFolder": true
+
+[project]
+language=C#
+primary
+lastDtbSucceeded
+
+[properties]
+AssemblyName=Portal.Ibanez.Web
+CommandLineArgsForDesignTimeEvaluation=-langversion:latest -define:TRACE
+CompilerGeneratedFilesOutputPath=
+MaxSupportedLangVersion=13.0
+ProjectAssetsFile=<PATH>obj/project.assets.json
+RootNamespace=Portal.Ibanez.Web
+RunAnalyzers=
+RunAnalyzersDuringLiveAnalysis=
+SolutionPath=*Undefined*
+TargetFrameworkIdentifier=.NETCoreApp
+TargetPath=<PATH>bin/Debug/net9.0/Portal.Ibanez.Web.dll
+TargetRefPath=<PATH>obj/Debug/net9.0/ref/Portal.Ibanez.Web.dll
+TemporaryDependencyNodeTargetIdentifier=net9.0
+
+[commandLineArguments]
+/noconfig
+/unsafe-
+/checked-
+/nowarn:1701,1702,CS1591,1701,1702,8002
+/fullpaths
+/nostdlib+
+/errorreport:prompt
+/warn:9
+/define:TRACE;DEBUG;NET;NET9_0;NETCOREAPP;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NETCOREAPP1_0_OR_GREATER;NETCOREAPP1_1_OR_GREATER;NETCOREAPP2_0_OR_GREATER;NETCOREAPP2_1_OR_GREATER;NETCOREAPP2_2_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER
+/highentropyva+
+/nullable:enable
+/debug+
+/debug:portable
+/filealign:512
+/optimize-
+/out:obj\Debug\net9.0\Portal.Ibanez.Web.dll
+/refout:obj\Debug\net9.0\refint\Portal.Ibanez.Web.dll
+/target:exe
+/warnaserror-
+/utf8output
+/deterministic+
+/langversion:latest
+/warnaserror+:NU1605,SYSLIB0011
+
+[sourceFiles]
+IbanezBrandingProvider.cs
+IbanezWebAutoMapperProfile.cs
+IbanezWebModule.cs
+Menus/
+ IbanezMenuContributor.cs
+ IbanezMenus.cs
+obj/Debug/net9.0/
+ .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+ Portal.Ibanez.Web.AssemblyInfo.cs
+ Portal.Ibanez.Web.RazorAssemblyInfo.cs
+Pages/Customers/
+ CreateModal.cshtml.cs
+ EditModal.cshtml.cs
+ Index.cshtml.cs
+Pages/
+ IbanezPageModel.cs
+ Index.cshtml.cs
+ MachineDocuments/
+  CreateModal.cshtml.cs
+  Download.cshtml.cs
+  EditModal.cshtml.cs
+  Index.cshtml.cs
+ Machines/
+  CreateModal.cshtml.cs
+  Detail.cshtml.cs
+  EditModal.cshtml.cs
+  Index.cshtml.cs
+ MachineTypes/
+  CreateModal.cshtml.cs
+  EditModal.cshtml.cs
+  Index.cshtml.cs
+ PublicQr/
+  Download.cshtml.cs
+  Index.cshtml.cs
+ QrCodes/
+  CreateModal.cshtml.cs
+  Documents/
+   CreateModal.cshtml.cs
+   Index.cshtml.cs
+  EditModal.cshtml.cs
+  Image/Index.cshtml.cs
+  Index.cshtml.cs
+Program.cs
+Properties/AssemblyInfo.cs
+
+[metadataReferences]
+../
+ Portal.Ibanez.Application.Contracts/obj/Debug/net9.0/ref/Portal.Ibanez.Application.Contracts.dll
+ Portal.Ibanez.Application/obj/Debug/net9.0/ref/Portal.Ibanez.Application.dll
+ Portal.Ibanez.Domain.Shared/obj/Debug/net9.0/ref/Portal.Ibanez.Domain.Shared.dll
+ Portal.Ibanez.Domain/obj/Debug/net9.0/ref/Portal.Ibanez.Domain.dll
+ Portal.Ibanez.EntityFrameworkCore/obj/Debug/net9.0/ref/Portal.Ibanez.EntityFrameworkCore.dll
+ Portal.Ibanez.HttpApi/obj/Debug/net9.0/ref/Portal.Ibanez.HttpApi.dll
+<DOTNET>/packs/Microsoft.AspNetCore.App.Ref/9.0.16/ref/net9.0/
+ Microsoft.AspNetCore.Antiforgery.dll
+ Microsoft.AspNetCore.Authentication.Abstractions.dll
+ Microsoft.AspNetCore.Authentication.BearerToken.dll
+ Microsoft.AspNetCore.Authentication.Cookies.dll
+ Microsoft.AspNetCore.Authentication.Core.dll
+ Microsoft.AspNetCore.Authentication.dll
+ Microsoft.AspNetCore.Authentication.OAuth.dll
+ Microsoft.AspNetCore.Authorization.dll
+ Microsoft.AspNetCore.Authorization.Policy.dll
+ Microsoft.AspNetCore.Components.Authorization.dll
+ Microsoft.AspNetCore.Components.dll
+ Microsoft.AspNetCore.Components.Endpoints.dll
+ Microsoft.AspNetCore.Components.Forms.dll
+ Microsoft.AspNetCore.Components.Server.dll
+ Microsoft.AspNetCore.Components.Web.dll
+ Microsoft.AspNetCore.Connections.Abstractions.dll
+ Microsoft.AspNetCore.CookiePolicy.dll
+ Microsoft.AspNetCore.Cors.dll
+ Microsoft.AspNetCore.Cryptography.Internal.dll
+ Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+ Microsoft.AspNetCore.DataProtection.Abstractions.dll
+ Microsoft.AspNetCore.DataProtection.dll
+ Microsoft.AspNetCore.DataProtection.Extensions.dll
+ Microsoft.AspNetCore.Diagnostics.Abstractions.dll
+ Microsoft.AspNetCore.Diagnostics.dll
+ Microsoft.AspNetCore.Diagnostics.HealthChecks.dll
+ Microsoft.AspNetCore.dll
+ Microsoft.AspNetCore.HostFiltering.dll
+ Microsoft.AspNetCore.Hosting.Abstractions.dll
+ Microsoft.AspNetCore.Hosting.dll
+ Microsoft.AspNetCore.Hosting.Server.Abstractions.dll
+ Microsoft.AspNetCore.Html.Abstractions.dll
+ Microsoft.AspNetCore.Http.Abstractions.dll
+ Microsoft.AspNetCore.Http.Connections.Common.dll
+ Microsoft.AspNetCore.Http.Connections.dll
+ Microsoft.AspNetCore.Http.dll
+ Microsoft.AspNetCore.Http.Extensions.dll
+ Microsoft.AspNetCore.Http.Features.dll
+ Microsoft.AspNetCore.Http.Results.dll
+ Microsoft.AspNetCore.HttpLogging.dll
+ Microsoft.AspNetCore.HttpOverrides.dll
+ Microsoft.AspNetCore.HttpsPolicy.dll
+ Microsoft.AspNetCore.Identity.dll
+ Microsoft.AspNetCore.Localization.dll
+ Microsoft.AspNetCore.Localization.Routing.dll
+ Microsoft.AspNetCore.Metadata.dll
+ Microsoft.AspNetCore.Mvc.Abstractions.dll
+ Microsoft.AspNetCore.Mvc.ApiExplorer.dll
+ Microsoft.AspNetCore.Mvc.Core.dll
+ Microsoft.AspNetCore.Mvc.Cors.dll
+ Microsoft.AspNetCore.Mvc.DataAnnotations.dll
+ Microsoft.AspNetCore.Mvc.dll
+ Microsoft.AspNetCore.Mvc.Formatters.Json.dll
+ Microsoft.AspNetCore.Mvc.Formatters.Xml.dll
+ Microsoft.AspNetCore.Mvc.Localization.dll
+ Microsoft.AspNetCore.Mvc.Razor.dll
+ Microsoft.AspNetCore.Mvc.RazorPages.dll
+ Microsoft.AspNetCore.Mvc.TagHelpers.dll
+ Microsoft.AspNetCore.Mvc.ViewFeatures.dll
+ Microsoft.AspNetCore.OutputCaching.dll
+ Microsoft.AspNetCore.RateLimiting.dll
+ Microsoft.AspNetCore.Razor.dll
+ Microsoft.AspNetCore.Razor.Runtime.dll
+ Microsoft.AspNetCore.RequestDecompression.dll
+ Microsoft.AspNetCore.ResponseCaching.Abstractions.dll
+ Microsoft.AspNetCore.ResponseCaching.dll
+ Microsoft.AspNetCore.ResponseCompression.dll
+ Microsoft.AspNetCore.Rewrite.dll
+ Microsoft.AspNetCore.Routing.Abstractions.dll
+ Microsoft.AspNetCore.Routing.dll
+ Microsoft.AspNetCore.Server.HttpSys.dll
+ Microsoft.AspNetCore.Server.IIS.dll
+ Microsoft.AspNetCore.Server.IISIntegration.dll
+ Microsoft.AspNetCore.Server.Kestrel.Core.dll
+ Microsoft.AspNetCore.Server.Kestrel.dll
+ Microsoft.AspNetCore.Server.Kestrel.Transport.NamedPipes.dll
+ Microsoft.AspNetCore.Server.Kestrel.Transport.Quic.dll
+ Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.dll
+ Microsoft.AspNetCore.Session.dll
+ Microsoft.AspNetCore.SignalR.Common.dll
+ Microsoft.AspNetCore.SignalR.Core.dll
+ Microsoft.AspNetCore.SignalR.dll
+ Microsoft.AspNetCore.SignalR.Protocols.Json.dll
+ Microsoft.AspNetCore.StaticAssets.dll
+ Microsoft.AspNetCore.StaticFiles.dll
+ Microsoft.AspNetCore.WebSockets.dll
+ Microsoft.AspNetCore.WebUtilities.dll
+ Microsoft.Extensions.Caching.Abstractions.dll
+ Microsoft.Extensions.Caching.Memory.dll
+ Microsoft.Extensions.Configuration.Abstractions.dll
+ Microsoft.Extensions.Configuration.Binder.dll
+ Microsoft.Extensions.Configuration.CommandLine.dll
+ Microsoft.Extensions.Configuration.dll
+ Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+ Microsoft.Extensions.Configuration.FileExtensions.dll
+ Microsoft.Extensions.Configuration.Ini.dll
+ Microsoft.Extensions.Configuration.Json.dll
+ Microsoft.Extensions.Configuration.KeyPerFile.dll
+ Microsoft.Extensions.Configuration.UserSecrets.dll
+ Microsoft.Extensions.Configuration.Xml.dll
+ Microsoft.Extensions.DependencyInjection.Abstractions.dll
+ Microsoft.Extensions.DependencyInjection.dll
+ Microsoft.Extensions.Diagnostics.Abstractions.dll
+ Microsoft.Extensions.Diagnostics.dll
+ Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
+ Microsoft.Extensions.Diagnostics.HealthChecks.dll
+ Microsoft.Extensions.Features.dll
+ Microsoft.Extensions.FileProviders.Abstractions.dll
+ Microsoft.Extensions.FileProviders.Composite.dll
+ Microsoft.Extensions.FileProviders.Embedded.dll
+ Microsoft.Extensions.FileProviders.Physical.dll
+ Microsoft.Extensions.FileSystemGlobbing.dll
+ Microsoft.Extensions.Hosting.Abstractions.dll
+ Microsoft.Extensions.Hosting.dll
+ Microsoft.Extensions.Http.dll
+ Microsoft.Extensions.Identity.Core.dll
+ Microsoft.Extensions.Identity.Stores.dll
+ Microsoft.Extensions.Localization.Abstractions.dll
+ Microsoft.Extensions.Localization.dll
+ Microsoft.Extensions.Logging.Abstractions.dll
+ Microsoft.Extensions.Logging.Configuration.dll
+ Microsoft.Extensions.Logging.Console.dll
+ Microsoft.Extensions.Logging.Debug.dll
+ Microsoft.Extensions.Logging.dll
+ Microsoft.Extensions.Logging.EventLog.dll
+ Microsoft.Extensions.Logging.EventSource.dll
+ Microsoft.Extensions.Logging.TraceSource.dll
+ Microsoft.Extensions.ObjectPool.dll
+ Microsoft.Extensions.Options.ConfigurationExtensions.dll
+ Microsoft.Extensions.Options.DataAnnotations.dll
+ Microsoft.Extensions.Options.dll
+ Microsoft.Extensions.Primitives.dll
+ Microsoft.Extensions.WebEncoders.dll
+ Microsoft.JSInterop.dll
+ Microsoft.Net.Http.Headers.dll
+ System.Diagnostics.EventLog.dll
+ System.Security.Cryptography.Xml.dll
+ System.Threading.RateLimiting.dll
+<DOTNET>/packs/Microsoft.NETCore.App.Ref/9.0.16/ref/net9.0/
+ Microsoft.CSharp.dll
+ Microsoft.VisualBasic.Core.dll
+ Microsoft.VisualBasic.dll
+ Microsoft.Win32.Primitives.dll
+ Microsoft.Win32.Registry.dll
+ mscorlib.dll
+ netstandard.dll
+ System.AppContext.dll
+ System.Buffers.dll
+ System.Collections.Concurrent.dll
+ System.Collections.dll
+ System.Collections.Immutable.dll
+ System.Collections.NonGeneric.dll
+ System.Collections.Specialized.dll
+ System.ComponentModel.Annotations.dll
+ System.ComponentModel.DataAnnotations.dll
+ System.ComponentModel.dll
+ System.ComponentModel.EventBasedAsync.dll
+ System.ComponentModel.Primitives.dll
+ System.ComponentModel.TypeConverter.dll
+ System.Configuration.dll
+ System.Console.dll
+ System.Core.dll
+ System.Data.Common.dll
+ System.Data.DataSetExtensions.dll
+ System.Data.dll
+ System.Diagnostics.Contracts.dll
+ System.Diagnostics.Debug.dll
+ System.Diagnostics.DiagnosticSource.dll
+ System.Diagnostics.FileVersionInfo.dll
+ System.Diagnostics.Process.dll
+ System.Diagnostics.StackTrace.dll
+ System.Diagnostics.TextWriterTraceListener.dll
+ System.Diagnostics.Tools.dll
+ System.Diagnostics.TraceSource.dll
+ System.Diagnostics.Tracing.dll
+ System.dll
+ System.Drawing.dll
+ System.Drawing.Primitives.dll
+ System.Dynamic.Runtime.dll
+ System.Formats.Asn1.dll
+ System.Formats.Tar.dll
+ System.Globalization.Calendars.dll
+ System.Globalization.dll
+ System.Globalization.Extensions.dll
+ System.IO.Compression.Brotli.dll
+ System.IO.Compression.dll
+ System.IO.Compression.FileSystem.dll
+ System.IO.Compression.ZipFile.dll
+ System.IO.dll
+ System.IO.FileSystem.AccessControl.dll
+ System.IO.FileSystem.dll
+ System.IO.FileSystem.DriveInfo.dll
+ System.IO.FileSystem.Primitives.dll
+ System.IO.FileSystem.Watcher.dll
+ System.IO.IsolatedStorage.dll
+ System.IO.MemoryMappedFiles.dll
+ System.IO.Pipelines.dll
+ System.IO.Pipes.AccessControl.dll
+ System.IO.Pipes.dll
+ System.IO.UnmanagedMemoryStream.dll
+ System.Linq.dll
+ System.Linq.Expressions.dll
+ System.Linq.Parallel.dll
+ System.Linq.Queryable.dll
+ System.Memory.dll
+ System.Net.dll
+ System.Net.Http.dll
+ System.Net.Http.Json.dll
+ System.Net.HttpListener.dll
+ System.Net.Mail.dll
+ System.Net.NameResolution.dll
+ System.Net.NetworkInformation.dll
+ System.Net.Ping.dll
+ System.Net.Primitives.dll
+ System.Net.Quic.dll
+ System.Net.Requests.dll
+ System.Net.Security.dll
+ System.Net.ServicePoint.dll
+ System.Net.Sockets.dll
+ System.Net.WebClient.dll
+ System.Net.WebHeaderCollection.dll
+ System.Net.WebProxy.dll
+ System.Net.WebSockets.Client.dll
+ System.Net.WebSockets.dll
+ System.Numerics.dll
+ System.Numerics.Vectors.dll
+ System.ObjectModel.dll
+ System.Reflection.DispatchProxy.dll
+ System.Reflection.dll
+ System.Reflection.Emit.dll
+ System.Reflection.Emit.ILGeneration.dll
+ System.Reflection.Emit.Lightweight.dll
+ System.Reflection.Extensions.dll
+ System.Reflection.Metadata.dll
+ System.Reflection.Primitives.dll
+ System.Reflection.TypeExtensions.dll
+ System.Resources.Reader.dll
+ System.Resources.ResourceManager.dll
+ System.Resources.Writer.dll
+ System.Runtime.CompilerServices.Unsafe.dll
+ System.Runtime.CompilerServices.VisualC.dll
+ System.Runtime.dll
+ System.Runtime.Extensions.dll
+ System.Runtime.Handles.dll
+ System.Runtime.InteropServices.dll
+ System.Runtime.InteropServices.JavaScript.dll
+ System.Runtime.InteropServices.RuntimeInformation.dll
+ System.Runtime.Intrinsics.dll
+ System.Runtime.Loader.dll
+ System.Runtime.Numerics.dll
+ System.Runtime.Serialization.dll
+ System.Runtime.Serialization.Formatters.dll
+ System.Runtime.Serialization.Json.dll
+ System.Runtime.Serialization.Primitives.dll
+ System.Runtime.Serialization.Xml.dll
+ System.Security.AccessControl.dll
+ System.Security.Claims.dll
+ System.Security.Cryptography.Algorithms.dll
+ System.Security.Cryptography.Cng.dll
+ System.Security.Cryptography.Csp.dll
+ System.Security.Cryptography.dll
+ System.Security.Cryptography.Encoding.dll
+ System.Security.Cryptography.OpenSsl.dll
+ System.Security.Cryptography.Primitives.dll
+ System.Security.Cryptography.X509Certificates.dll
+ System.Security.dll
+ System.Security.Principal.dll
+ System.Security.Principal.Windows.dll
+ System.Security.SecureString.dll
+ System.ServiceModel.Web.dll
+ System.ServiceProcess.dll
+ System.Text.Encoding.CodePages.dll
+ System.Text.Encoding.dll
+ System.Text.Encoding.Extensions.dll
+ System.Text.Encodings.Web.dll
+ System.Text.Json.dll
+ System.Text.RegularExpressions.dll
+ System.Threading.Channels.dll
+ System.Threading.dll
+ System.Threading.Overlapped.dll
+ System.Threading.Tasks.Dataflow.dll
+ System.Threading.Tasks.dll
+ System.Threading.Tasks.Extensions.dll
+ System.Threading.Tasks.Parallel.dll
+ System.Threading.Thread.dll
+ System.Threading.ThreadPool.dll
+ System.Threading.Timer.dll
+ System.Transactions.dll
+ System.Transactions.Local.dll
+ System.ValueTuple.dll
+ System.Web.dll
+ System.Web.HttpUtility.dll
+ System.Windows.dll
+ System.Xml.dll
+ System.Xml.Linq.dll
+ System.Xml.ReaderWriter.dll
+ System.Xml.Serialization.dll
+ System.Xml.XDocument.dll
+ System.Xml.XmlDocument.dll
+ System.Xml.XmlSerializer.dll
+ System.Xml.XPath.dll
+ System.Xml.XPath.XDocument.dll
+ WindowsBase.dll
+<NUGET>/
+ asp.versioning.abstractions/8.1.0/lib/net8.0/Asp.Versioning.Abstractions.dll
+ asp.versioning.http/8.1.0/lib/net8.0/Asp.Versioning.Http.dll
+ asp.versioning.mvc.apiexplorer/8.1.0/lib/net8.0/Asp.Versioning.Mvc.ApiExplorer.dll
+ asp.versioning.mvc/8.1.0/lib/net8.0/Asp.Versioning.Mvc.dll
+ asynckeyedlock/7.1.6/lib/net9.0/AsyncKeyedLock.dll
+ autofac.extensions.dependencyinjection/10.0.0/lib/net8.0/Autofac.Extensions.DependencyInjection.dll
+ autofac.extras.dynamicproxy/7.1.0/lib/net6.0/Autofac.Extras.DynamicProxy.dll
+ autofac/8.2.1/lib/net8.0/Autofac.dll
+ automapper/14.0.0/lib/net8.0/AutoMapper.dll
+ azure.core/1.38.0/lib/net6.0/Azure.Core.dll
+ azure.identity/1.11.4/lib/netstandard2.0/Azure.Identity.dll
+ castle.core.asyncinterceptor/2.1.0/lib/net6.0/Castle.Core.AsyncInterceptor.dll
+ castle.core/5.1.1/lib/net6.0/Castle.Core.dll
+ identitymodel/7.0.0/lib/net6.0/IdentityModel.dll
+ jetbrains.annotations/2024.3.0/lib/netstandard2.0/JetBrains.Annotations.dll
+ microsoft.aspnetcore.authentication.openidconnect/9.0.5/lib/net9.0/Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
+ microsoft.aspnetcore.mvc.razor.extensions/6.0.0/lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+ microsoft.aspnetcore.mvc.razor.runtimecompilation/9.0.5/lib/net9.0/Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll
+ microsoft.aspnetcore.razor.language/6.0.0/lib/netstandard2.0/Microsoft.AspNetCore.Razor.Language.dll
+ microsoft.bcl.asyncinterfaces/9.0.5/lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll
+ microsoft.codeanalysis.common/4.0.0/lib/netcoreapp3.1/Microsoft.CodeAnalysis.dll
+ microsoft.codeanalysis.csharp/4.0.0/lib/netcoreapp3.1/Microsoft.CodeAnalysis.CSharp.dll
+ microsoft.codeanalysis.razor/6.0.0/lib/netstandard2.0/Microsoft.CodeAnalysis.Razor.dll
+ microsoft.data.sqlclient/5.1.6/ref/net6.0/Microsoft.Data.SqlClient.dll
+ microsoft.entityframeworkcore.abstractions/9.0.5/lib/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+ microsoft.entityframeworkcore.relational/9.0.5/lib/net8.0/Microsoft.EntityFrameworkCore.Relational.dll
+ microsoft.entityframeworkcore.sqlserver/9.0.5/lib/net8.0/Microsoft.EntityFrameworkCore.SqlServer.dll
+ microsoft.entityframeworkcore/9.0.5/lib/net8.0/Microsoft.EntityFrameworkCore.dll
+ microsoft.extensions.caching.hybrid/9.4.0/lib/net9.0/Microsoft.Extensions.Caching.Hybrid.dll
+ microsoft.extensions.dependencymodel/9.0.5/lib/net9.0/Microsoft.Extensions.DependencyModel.dll
+ microsoft.identity.client.extensions.msal/4.61.3/lib/net6.0/Microsoft.Identity.Client.Extensions.Msal.dll
+ microsoft.identity.client/4.61.3/lib/net6.0/Microsoft.Identity.Client.dll
+ microsoft.identitymodel.abstractions/8.12.0/lib/net9.0/Microsoft.IdentityModel.Abstractions.dll
+ microsoft.identitymodel.jsonwebtokens/8.12.0/lib/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll
+ microsoft.identitymodel.logging/8.12.0/lib/net9.0/Microsoft.IdentityModel.Logging.dll
+ microsoft.identitymodel.protocols.openidconnect/8.0.1/lib/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+ microsoft.identitymodel.protocols/8.12.0/lib/net9.0/Microsoft.IdentityModel.Protocols.dll
+ microsoft.identitymodel.tokens/8.12.0/lib/net9.0/Microsoft.IdentityModel.Tokens.dll
+ microsoft.openapi/1.6.23/lib/netstandard2.0/Microsoft.OpenApi.dll
+ microsoft.sqlserver.server/1.0.0/lib/netstandard2.0/Microsoft.SqlServer.Server.dll
+ microsoft.win32.systemevents/6.0.0/lib/net6.0/Microsoft.Win32.SystemEvents.dll
+ mycsharp.httpuseragentparser/3.0.25/lib/net9.0/MyCSharp.HttpUserAgentParser.dll
+ nito.asyncex.context/5.1.2/lib/netstandard2.0/Nito.AsyncEx.Context.dll
+ nito.asyncex.tasks/5.1.2/lib/netstandard2.0/Nito.AsyncEx.Tasks.dll
+ nito.disposables/2.2.1/lib/netstandard2.1/Nito.Disposables.dll
+ npgsql.entityframeworkcore.postgresql/9.0.4/lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+ npgsql/9.0.3/lib/net8.0/Npgsql.dll
+ nuglify/1.21.15/lib/net5.0/NUglify.dll
+ openiddict.abstractions/6.4.0/lib/net9.0/OpenIddict.Abstractions.dll
+ openiddict.core/6.4.0/lib/net9.0/OpenIddict.Core.dll
+ openiddict.server.aspnetcore/6.4.0/lib/net9.0/OpenIddict.Server.AspNetCore.dll
+ openiddict.server/6.4.0/lib/net9.0/OpenIddict.Server.dll
+ openiddict.validation.aspnetcore/6.4.0/lib/net9.0/OpenIddict.Validation.AspNetCore.dll
+ openiddict.validation.serverintegration/6.4.0/lib/net9.0/OpenIddict.Validation.ServerIntegration.dll
+ openiddict.validation/6.4.0/lib/net9.0/OpenIddict.Validation.dll
+ polly.core/8.5.2/lib/net8.0/Polly.Core.dll
+ polly/8.5.2/lib/net6.0/Polly.dll
+ qrcoder/1.8.0/lib/net6.0/QRCoder.dll
+ scriban/6.2.1/lib/net7.0/Scriban.dll
+ serilog.aspnetcore/9.0.0/lib/net9.0/Serilog.AspNetCore.dll
+ serilog.extensions.hosting/9.0.0/lib/net9.0/Serilog.Extensions.Hosting.dll
+ serilog.extensions.logging/9.0.0/lib/net9.0/Serilog.Extensions.Logging.dll
+ serilog.formatting.compact/3.0.0/lib/net8.0/Serilog.Formatting.Compact.dll
+ serilog.settings.configuration/9.0.0/lib/net9.0/Serilog.Settings.Configuration.dll
+ serilog.sinks.async/2.1.0/lib/net8.0/Serilog.Sinks.Async.dll
+ serilog.sinks.console/6.0.0/lib/net8.0/Serilog.Sinks.Console.dll
+ serilog.sinks.debug/3.0.0/lib/net8.0/Serilog.Sinks.Debug.dll
+ serilog.sinks.file/6.0.0/lib/net8.0/Serilog.Sinks.File.dll
+ serilog/4.2.0/lib/net9.0/Serilog.dll
+ skiasharp/3.119.2/ref/net8.0/SkiaSharp.dll
+ swashbuckle.aspnetcore.swagger/8.1.1/lib/net9.0/Swashbuckle.AspNetCore.Swagger.dll
+ swashbuckle.aspnetcore.swaggergen/8.1.1/lib/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+ swashbuckle.aspnetcore.swaggerui/8.1.1/lib/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+ system.clientmodel/1.0.0/lib/net6.0/System.ClientModel.dll
+ system.codedom/9.0.1/lib/net9.0/System.CodeDom.dll
+ system.drawing.common/6.0.0/lib/net6.0/System.Drawing.Common.dll
+ system.identitymodel.tokens.jwt/8.0.1/lib/net9.0/System.IdentityModel.Tokens.Jwt.dll
+ system.linq.dynamic.core/1.6.7/lib/net9.0/System.Linq.Dynamic.Core.dll
+ system.management/9.0.1/lib/net9.0/System.Management.dll
+ system.memory.data/1.0.2/lib/netstandard2.0/System.Memory.Data.dll
+ system.security.cryptography.protecteddata/6.0.0/lib/net6.0/System.Security.Cryptography.ProtectedData.dll
+ timezoneconverter/7.0.0/lib/net9.0/TimeZoneConverter.dll
+ volo.abp.account.application.contracts/9.3.6/lib/net9.0/Volo.Abp.Account.Application.Contracts.dll
+ volo.abp.account.application/9.3.6/lib/net9.0/Volo.Abp.Account.Application.dll
+ volo.abp.account.httpapi/9.3.6/lib/net9.0/Volo.Abp.Account.HttpApi.dll
+ volo.abp.account.web.openiddict/9.3.6/lib/net9.0/Volo.Abp.Account.Web.OpenIddict.dll
+ volo.abp.account.web/9.3.6/lib/net9.0/Volo.Abp.Account.Web.dll
+ volo.abp.apiversioning.abstractions/9.3.6/lib/net9.0/Volo.Abp.ApiVersioning.Abstractions.dll
+ volo.abp.aspnetcore.abstractions/9.3.6/lib/net9.0/Volo.Abp.AspNetCore.Abstractions.dll
+ volo.abp.aspnetcore.bundling/9.3.6/lib/net9.0/Volo.Abp.AspNetCore.Bundling.dll
+ volo.abp.aspnetcore.multitenancy/9.3.6/lib/net9.0/Volo.Abp.AspNetCore.MultiTenancy.dll
+ volo.abp.aspnetcore.mvc.contracts/9.3.6/lib/net9.0/Volo.Abp.AspNetCore.Mvc.Contracts.dll
+ volo.abp.aspnetcore.mvc.ui.bootstrap/9.3.6/lib/net9.0/Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.dll
+ volo.abp.aspnetcore.mvc.ui.bundling.abstractions/9.3.6/lib/net9.0/Volo.Abp.AspNetCore.Mvc.UI.Bundling.Abstractions.dll
+ volo.abp.aspnetcore.mvc.ui.bundling/9.3.6/lib/net9.0/Volo.Abp.AspNetCore.Mvc.UI.Bundling.dll
+ volo.abp.aspnetcore.mvc.ui.multitenancy/9.1.0/lib/net9.0/Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy.dll
+ volo.abp.aspnetcore.mvc.ui.packages/9.3.6/lib/net9.0/Volo.Abp.AspNetCore.Mvc.UI.Packages.dll
+ volo.abp.aspnetcore.mvc.ui.theme.leptonxlite/4.1.0/lib/net9.0/Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite.dll
+ volo.abp.aspnetcore.mvc.ui.theme.shared/9.3.6/lib/net9.0/Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.dll
+ volo.abp.aspnetcore.mvc.ui.widgets/9.3.6/lib/net9.0/Volo.Abp.AspNetCore.Mvc.UI.Widgets.dll
+ volo.abp.aspnetcore.mvc.ui/9.3.6/lib/net9.0/Volo.Abp.AspNetCore.Mvc.UI.dll
+ volo.abp.aspnetcore.mvc/9.3.6/lib/net9.0/Volo.Abp.AspNetCore.Mvc.dll
+ volo.abp.aspnetcore.serilog/9.3.6/lib/net9.0/Volo.Abp.AspNetCore.Serilog.dll
+ volo.abp.aspnetcore/9.3.6/lib/net9.0/Volo.Abp.AspNetCore.dll
+ volo.abp.auditing.contracts/9.3.6/lib/net9.0/Volo.Abp.Auditing.Contracts.dll
+ volo.abp.auditing/9.3.6/lib/net9.0/Volo.Abp.Auditing.dll
+ volo.abp.auditlogging.domain.shared/9.3.6/lib/net9.0/Volo.Abp.AuditLogging.Domain.Shared.dll
+ volo.abp.auditlogging.domain/9.3.6/lib/net9.0/Volo.Abp.AuditLogging.Domain.dll
+ volo.abp.auditlogging.entityframeworkcore/9.3.6/lib/net9.0/Volo.Abp.AuditLogging.EntityFrameworkCore.dll
+ volo.abp.authorization.abstractions/9.3.6/lib/net9.0/Volo.Abp.Authorization.Abstractions.dll
+ volo.abp.authorization/9.3.6/lib/net9.0/Volo.Abp.Authorization.dll
+ volo.abp.autofac/9.3.6/lib/net9.0/Volo.Abp.Autofac.dll
+ volo.abp.automapper/9.3.6/lib/net9.0/Volo.Abp.AutoMapper.dll
+ volo.abp.backgroundjobs.abstractions/9.3.6/lib/net9.0/Volo.Abp.BackgroundJobs.Abstractions.dll
+ volo.abp.backgroundjobs.domain.shared/9.3.6/lib/net9.0/Volo.Abp.BackgroundJobs.Domain.Shared.dll
+ volo.abp.backgroundjobs.domain/9.3.6/lib/net9.0/Volo.Abp.BackgroundJobs.Domain.dll
+ volo.abp.backgroundjobs.entityframeworkcore/9.3.6/lib/net9.0/Volo.Abp.BackgroundJobs.EntityFrameworkCore.dll
+ volo.abp.backgroundjobs/9.3.6/lib/net9.0/Volo.Abp.BackgroundJobs.dll
+ volo.abp.backgroundworkers/9.3.6/lib/net9.0/Volo.Abp.BackgroundWorkers.dll
+ volo.abp.caching/9.3.6/lib/net9.0/Volo.Abp.Caching.dll
+ volo.abp.castle.core/9.3.6/lib/net9.0/Volo.Abp.Castle.Core.dll
+ volo.abp.core/9.3.6/lib/net9.0/Volo.Abp.Core.dll
+ volo.abp.data/9.3.6/lib/net9.0/Volo.Abp.Data.dll
+ volo.abp.ddd.application.contracts/9.3.6/lib/net9.0/Volo.Abp.Ddd.Application.Contracts.dll
+ volo.abp.ddd.application/9.3.6/lib/net9.0/Volo.Abp.Ddd.Application.dll
+ volo.abp.ddd.domain.shared/9.3.6/lib/net9.0/Volo.Abp.Ddd.Domain.Shared.dll
+ volo.abp.ddd.domain/9.3.6/lib/net9.0/Volo.Abp.Ddd.Domain.dll
+ volo.abp.distributedlocking.abstractions/9.3.6/lib/net9.0/Volo.Abp.DistributedLocking.Abstractions.dll
+ volo.abp.emailing/9.3.6/lib/net9.0/Volo.Abp.Emailing.dll
+ volo.abp.entityframeworkcore.postgresql/9.3.6/lib/net9.0/Volo.Abp.EntityFrameworkCore.PostgreSql.dll
+ volo.abp.entityframeworkcore.sqlserver/9.3.6/lib/net9.0/Volo.Abp.EntityFrameworkCore.SqlServer.dll
+ volo.abp.entityframeworkcore/9.3.6/lib/net9.0/Volo.Abp.EntityFrameworkCore.dll
+ volo.abp.eventbus.abstractions/9.3.6/lib/net9.0/Volo.Abp.EventBus.Abstractions.dll
+ volo.abp.eventbus/9.3.6/lib/net9.0/Volo.Abp.EventBus.dll
+ volo.abp.exceptionhandling/9.3.6/lib/net9.0/Volo.Abp.ExceptionHandling.dll
+ volo.abp.featuremanagement.application.contracts/9.3.6/lib/net9.0/Volo.Abp.FeatureManagement.Application.Contracts.dll
+ volo.abp.featuremanagement.application/9.3.6/lib/net9.0/Volo.Abp.FeatureManagement.Application.dll
+ volo.abp.featuremanagement.domain.shared/9.3.6/lib/net9.0/Volo.Abp.FeatureManagement.Domain.Shared.dll
+ volo.abp.featuremanagement.domain/9.3.6/lib/net9.0/Volo.Abp.FeatureManagement.Domain.dll
+ volo.abp.featuremanagement.entityframeworkcore/9.3.6/lib/net9.0/Volo.Abp.FeatureManagement.EntityFrameworkCore.dll
+ volo.abp.featuremanagement.httpapi/9.3.6/lib/net9.0/Volo.Abp.FeatureManagement.HttpApi.dll
+ volo.abp.featuremanagement.web/9.3.6/lib/net9.0/Volo.Abp.FeatureManagement.Web.dll
+ volo.abp.features/9.3.6/lib/net9.0/Volo.Abp.Features.dll
+ volo.abp.globalfeatures/9.3.6/lib/net9.0/Volo.Abp.GlobalFeatures.dll
+ volo.abp.guids/9.3.6/lib/net9.0/Volo.Abp.Guids.dll
+ volo.abp.http.abstractions/9.3.6/lib/net9.0/Volo.Abp.Http.Abstractions.dll
+ volo.abp.http/9.3.6/lib/net9.0/Volo.Abp.Http.dll
+ volo.abp.identity.application.contracts/9.3.6/lib/net9.0/Volo.Abp.Identity.Application.Contracts.dll
+ volo.abp.identity.application/9.3.6/lib/net9.0/Volo.Abp.Identity.Application.dll
+ volo.abp.identity.aspnetcore/9.3.6/lib/net9.0/Volo.Abp.Identity.AspNetCore.dll
+ volo.abp.identity.domain.shared/9.3.6/lib/net9.0/Volo.Abp.Identity.Domain.Shared.dll
+ volo.abp.identity.domain/9.3.6/lib/net9.0/Volo.Abp.Identity.Domain.dll
+ volo.abp.identity.entityframeworkcore/9.3.6/lib/net9.0/Volo.Abp.Identity.EntityFrameworkCore.dll
+ volo.abp.identity.httpapi/9.3.6/lib/net9.0/Volo.Abp.Identity.HttpApi.dll
+ volo.abp.identity.web/9.3.6/lib/net9.0/Volo.Abp.Identity.Web.dll
+ volo.abp.json.abstractions/9.3.6/lib/net9.0/Volo.Abp.Json.Abstractions.dll
+ volo.abp.json.systemtextjson/9.3.6/lib/net9.0/Volo.Abp.Json.SystemTextJson.dll
+ volo.abp.json/9.3.6/lib/net9.0/Volo.Abp.Json.dll
+ volo.abp.localization.abstractions/9.3.6/lib/net9.0/Volo.Abp.Localization.Abstractions.dll
+ volo.abp.localization/9.3.6/lib/net9.0/Volo.Abp.Localization.dll
+ volo.abp.minify/9.3.6/lib/net9.0/Volo.Abp.Minify.dll
+ volo.abp.multitenancy.abstractions/9.3.6/lib/net9.0/Volo.Abp.MultiTenancy.Abstractions.dll
+ volo.abp.multitenancy/9.3.6/lib/net9.0/Volo.Abp.MultiTenancy.dll
+ volo.abp.objectextending/9.3.6/lib/net9.0/Volo.Abp.ObjectExtending.dll
+ volo.abp.objectmapping/9.3.6/lib/net9.0/Volo.Abp.ObjectMapping.dll
+ volo.abp.openiddict.aspnetcore/9.3.6/lib/net9.0/Volo.Abp.OpenIddict.AspNetCore.dll
+ volo.abp.openiddict.domain.shared/9.3.6/lib/net9.0/Volo.Abp.OpenIddict.Domain.Shared.dll
+ volo.abp.openiddict.domain/9.3.6/lib/net9.0/Volo.Abp.OpenIddict.Domain.dll
+ volo.abp.openiddict.entityframeworkcore/9.3.6/lib/net9.0/Volo.Abp.OpenIddict.EntityFrameworkCore.dll
+ volo.abp.permissionmanagement.application.contracts/9.3.6/lib/net9.0/Volo.Abp.PermissionManagement.Application.Contracts.dll
+ volo.abp.permissionmanagement.application/9.3.6/lib/net9.0/Volo.Abp.PermissionManagement.Application.dll
+ volo.abp.permissionmanagement.domain.identity/9.3.6/lib/net9.0/Volo.Abp.PermissionManagement.Domain.Identity.dll
+ volo.abp.permissionmanagement.domain.openiddict/9.3.6/lib/net9.0/Volo.Abp.PermissionManagement.Domain.OpenIddict.dll
+ volo.abp.permissionmanagement.domain.shared/9.3.6/lib/net9.0/Volo.Abp.PermissionManagement.Domain.Shared.dll
+ volo.abp.permissionmanagement.domain/9.3.6/lib/net9.0/Volo.Abp.PermissionManagement.Domain.dll
+ volo.abp.permissionmanagement.entityframeworkcore/9.3.6/lib/net9.0/Volo.Abp.PermissionManagement.EntityFrameworkCore.dll
+ volo.abp.permissionmanagement.httpapi/9.3.6/lib/net9.0/Volo.Abp.PermissionManagement.HttpApi.dll
+ volo.abp.permissionmanagement.web/9.3.6/lib/net9.0/Volo.Abp.PermissionManagement.Web.dll
+ volo.abp.security/9.3.6/lib/net9.0/Volo.Abp.Security.dll
+ volo.abp.serialization/9.3.6/lib/net9.0/Volo.Abp.Serialization.dll
+ volo.abp.settingmanagement.application.contracts/9.3.6/lib/net9.0/Volo.Abp.SettingManagement.Application.Contracts.dll
+ volo.abp.settingmanagement.application/9.3.6/lib/net9.0/Volo.Abp.SettingManagement.Application.dll
+ volo.abp.settingmanagement.domain.shared/9.3.6/lib/net9.0/Volo.Abp.SettingManagement.Domain.Shared.dll
+ volo.abp.settingmanagement.domain/9.3.6/lib/net9.0/Volo.Abp.SettingManagement.Domain.dll
+ volo.abp.settingmanagement.entityframeworkcore/9.3.6/lib/net9.0/Volo.Abp.SettingManagement.EntityFrameworkCore.dll
+ volo.abp.settingmanagement.httpapi/9.3.6/lib/net9.0/Volo.Abp.SettingManagement.HttpApi.dll
+ volo.abp.settingmanagement.web/9.3.6/lib/net9.0/Volo.Abp.SettingManagement.Web.dll
+ volo.abp.settings/9.3.6/lib/net9.0/Volo.Abp.Settings.dll
+ volo.abp.specifications/9.3.6/lib/net9.0/Volo.Abp.Specifications.dll
+ volo.abp.swashbuckle/9.3.6/lib/net9.0/Volo.Abp.Swashbuckle.dll
+ volo.abp.tenantmanagement.application.contracts/9.3.6/lib/net9.0/Volo.Abp.TenantManagement.Application.Contracts.dll
+ volo.abp.tenantmanagement.application/9.3.6/lib/net9.0/Volo.Abp.TenantManagement.Application.dll
+ volo.abp.tenantmanagement.domain.shared/9.3.6/lib/net9.0/Volo.Abp.TenantManagement.Domain.Shared.dll
+ volo.abp.tenantmanagement.domain/9.3.6/lib/net9.0/Volo.Abp.TenantManagement.Domain.dll
+ volo.abp.tenantmanagement.entityframeworkcore/9.3.6/lib/net9.0/Volo.Abp.TenantManagement.EntityFrameworkCore.dll
+ volo.abp.tenantmanagement.httpapi/9.3.6/lib/net9.0/Volo.Abp.TenantManagement.HttpApi.dll
+ volo.abp.tenantmanagement.web/9.3.6/lib/net9.0/Volo.Abp.TenantManagement.Web.dll
+ volo.abp.texttemplating.core/9.3.6/lib/net9.0/Volo.Abp.TextTemplating.Core.dll
+ volo.abp.texttemplating.scriban/9.3.6/lib/net9.0/Volo.Abp.TextTemplating.Scriban.dll
+ volo.abp.texttemplating/9.3.6/lib/net9.0/Volo.Abp.TextTemplating.dll
+ volo.abp.threading/9.3.6/lib/net9.0/Volo.Abp.Threading.dll
+ volo.abp.timing/9.3.6/lib/net9.0/Volo.Abp.Timing.dll
+ volo.abp.ui.navigation/9.3.6/lib/net9.0/Volo.Abp.UI.Navigation.dll
+ volo.abp.ui/9.3.6/lib/net9.0/Volo.Abp.UI.dll
+ volo.abp.uow/9.3.6/lib/net9.0/Volo.Abp.Uow.dll
+ volo.abp.users.abstractions/9.3.6/lib/net9.0/Volo.Abp.Users.Abstractions.dll
+ volo.abp.users.domain.shared/9.3.6/lib/net9.0/Volo.Abp.Users.Domain.Shared.dll
+ volo.abp.users.domain/9.3.6/lib/net9.0/Volo.Abp.Users.Domain.dll
+ volo.abp.users.entityframeworkcore/9.3.6/lib/net9.0/Volo.Abp.Users.EntityFrameworkCore.dll
+ volo.abp.validation.abstractions/9.3.6/lib/net9.0/Volo.Abp.Validation.Abstractions.dll
+ volo.abp.validation/9.3.6/lib/net9.0/Volo.Abp.Validation.dll
+ volo.abp.virtualfilesystem/9.3.6/lib/net9.0/Volo.Abp.VirtualFileSystem.dll
+
+[analyzerReferences]
+<DOTNET>/packs/Microsoft.AspNetCore.App.Ref/9.0.16/analyzers/dotnet/cs/
+ Microsoft.AspNetCore.App.Analyzers.dll
+ Microsoft.AspNetCore.App.CodeFixes.dll
+ Microsoft.AspNetCore.Components.Analyzers.dll
+<DOTNET>/packs/Microsoft.AspNetCore.App.Ref/9.0.16/analyzers/dotnet/roslyn4.4/cs/
+ Microsoft.Extensions.Logging.Generators.dll
+ Microsoft.Extensions.Options.SourceGeneration.dll
+<DOTNET>/packs/Microsoft.NETCore.App.Ref/9.0.16/analyzers/dotnet/cs/
+ Microsoft.Interop.ComInterfaceGenerator.dll
+ Microsoft.Interop.JavaScript.JSImportGenerator.dll
+ Microsoft.Interop.LibraryImportGenerator.dll
+ Microsoft.Interop.SourceGeneration.dll
+ System.Text.Json.SourceGeneration.dll
+ System.Text.RegularExpressions.Generator.dll
+<DOTNET>/sdk/10.0.300/Sdks/Microsoft.NET.Sdk.Razor/source-generators/
+ Microsoft.AspNetCore.Razor.Utilities.Shared.dll
+ Microsoft.CodeAnalysis.Razor.Compiler.dll
+ Microsoft.Extensions.ObjectPool.dll
+<DOTNET>/sdk/10.0.300/Sdks/Microsoft.NET.Sdk.Web/analyzers/cs/
+ Microsoft.AspNetCore.Analyzers.dll
+ Microsoft.AspNetCore.Mvc.Analyzers.dll
+<DOTNET>/sdk/10.0.300/Sdks/Microsoft.NET.Sdk/analyzers/
+ Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll
+ Microsoft.CodeAnalysis.NetAnalyzers.dll
+<NUGET>/microsoft.codeanalysis.analyzers/3.3.2/analyzers/dotnet/cs/
+ Microsoft.CodeAnalysis.Analyzers.dll
+ Microsoft.CodeAnalysis.CSharp.Analyzers.dll
+<NUGET>/microsoft.entityframeworkcore.analyzers/9.0.5/analyzers/dotnet/cs/Microsoft.EntityFrameworkCore.Analyzers.dll
+
+[analyzerConfigFiles]
+<DOTNET>/sdk/10.0.300/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_9_default.globalconfig
+obj/Debug/net9.0/Portal.Ibanez.Web.GeneratedMSBuildEditorConfig.editorconfig
+
+[additionalFiles]
+Components/_ViewImports.cshtml
+Pages/Customers/
+ CreateModal.cshtml
+ EditModal.cshtml
+ Index.cshtml
+Pages/
+ Index.cshtml
+ MachineDocuments/
+  CreateModal.cshtml
+  Download.cshtml
+  EditModal.cshtml
+  Index.cshtml
+ Machines/
+  CreateModal.cshtml
+  Detail.cshtml
+  EditModal.cshtml
+  Index.cshtml
+ MachineTypes/
+  CreateModal.cshtml
+  EditModal.cshtml
+  Index.cshtml
+ PublicQr/
+  Download.cshtml
+  Index.cshtml
+ QrCodes/
+  CreateModal.cshtml
+  Documents/
+   CreateModal.cshtml
+   Index.cshtml
+  EditModal.cshtml
+  Image/Index.cshtml
+  Index.cshtml
+ _ViewImports.cshtml
+Views/_ViewImports.cshtml
+
+[dynamicFiles]
+Components/_ViewImports.cshtml
+Pages/Customers/
+ CreateModal.cshtml
+ EditModal.cshtml
+ Index.cshtml
+Pages/
+ Index.cshtml
+ MachineDocuments/
+  CreateModal.cshtml
+  Download.cshtml
+  EditModal.cshtml
+  Index.cshtml
+ Machines/
+  CreateModal.cshtml
+  Detail.cshtml
+  EditModal.cshtml
+  Index.cshtml
+ MachineTypes/
+  CreateModal.cshtml
+  EditModal.cshtml
+  Index.cshtml
+ PublicQr/
+  Download.cshtml
+  Index.cshtml
+ QrCodes/
+  CreateModal.cshtml
+  Documents/
+   CreateModal.cshtml
+   Index.cshtml
+  EditModal.cshtml
+  Image/Index.cshtml
+  Index.cshtml
+ _ViewImports.cshtml
+Views/_ViewImports.cshtml

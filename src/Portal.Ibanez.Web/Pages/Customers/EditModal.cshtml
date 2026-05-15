@@ -6,11 +6,11 @@
 @model EditModalModel
 @inject IHtmlLocalizer<IbanezResource> L
 
-<abp-dynamic-form abp-model="Customer" asp-page="/Customers/EditModal" >
+<abp-dynamic-form abp-model="Customer" asp-page="/Customers/EditModal">
     <abp-modal>
-        <abp-modal-header title="Editar cliente"></abp-modal-header>
+        <abp-modal-header title="Editar cliente" class="bg-light border-bottom"></abp-modal-header>
 
-        <abp-modal-body>
+        <abp-modal-body class="pt-4">
             <abp-input asp-for="Id" />
             <abp-form-content />
         </abp-modal-body>
