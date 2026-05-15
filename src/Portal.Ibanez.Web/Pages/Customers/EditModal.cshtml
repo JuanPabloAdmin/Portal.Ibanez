@@ -5,6 +5,9 @@
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
 @model EditModalModel
 @inject IHtmlLocalizer<IbanezResource> L
+@{
+    Layout = null;
+}
 
 <abp-dynamic-form abp-model="Customer" asp-page="/Customers/EditModal">
     <abp-modal>

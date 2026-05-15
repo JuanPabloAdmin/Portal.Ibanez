@@ -16,7 +16,7 @@ public class MachineDocumentAppService :
         MachineDocument,
         MachineDocumentDto,
         Guid,
-      GetMachineDocumentListInput,
+        GetMachineDocumentListInput,
         CreateUpdateMachineDocumentDto>,
     IMachineDocumentAppService
 {
@@ -24,6 +24,7 @@ public class MachineDocumentAppService :
         : base(repository)
     {
     }
+
     public override async Task<PagedResultDto<MachineDocumentDto>> GetListAsync(GetMachineDocumentListInput input)
     {
         var queryable = await Repository.GetQueryableAsync();
@@ -46,5 +47,31 @@ public class MachineDocumentAppService :
             totalCount,
             ObjectMapper.Map<List<MachineDocument>, List<MachineDocumentDto>>(items)
         );
+    }
+
+    // SOBRESCRITURA PARA MANEJO AUTOMÁTICO DE VERSIONES
+    public override async Task<MachineDocumentDto> UpdateAsync(Guid id, CreateUpdateMachineDocumentDto input)
+    {
+        var document = await Repository.GetAsync(id);
+
+        // Lógica: Si el nombre del archivo guardado cambia, asumimos que es una versión nueva
+        if (document.StoredFileName != input.StoredFileName && !string.IsNullOrEmpty(input.StoredFileName))
+        {
+            input.Version = document.Version + 1;
+        }
+        else
+        {
+            input.Version = document.Version; // Mantenemos la versión si solo se edita el título
+        }
+
+        return await base.UpdateAsync(id, input);
+    }
+
+    // MÉTODO PARA ACTIVAR/DESACTIVAR RÁPIDAMENTE
+    public async Task ToggleActiveAsync(Guid id)
+    {
+        var document = await Repository.GetAsync(id);
+        document.IsActive = !document.IsActive;
+        await Repository.UpdateAsync(document);
     }
 }

@@ -5,6 +5,9 @@
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
 @model CreateModalModel
 @inject IHtmlLocalizer<IbanezResource> L
+@{
+    Layout = null;
+}
 
 <form method="post" asp-page="/QrCodes/CreateModal"     >
 

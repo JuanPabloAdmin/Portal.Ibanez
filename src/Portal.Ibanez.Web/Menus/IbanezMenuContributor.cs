@@ -53,7 +53,8 @@ public class IbanezMenuContributor : IMenuContributor
         "Ibanez.Customers",
         "Clientes",
         url: "/Customers",
-        icon: "fa fa-users"
+        icon: "fa fa-users",
+        order: 1
     )
 );
 

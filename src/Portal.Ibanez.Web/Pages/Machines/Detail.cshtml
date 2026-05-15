@@ -6,6 +6,10 @@
 
     var customerName = string.IsNullOrWhiteSpace(Model.Machine.CustomerCommercialName) ? "Cliente" : Model.Machine.CustomerCommercialName;
     var machineName = string.IsNullOrWhiteSpace(Model.Machine.MachineTypeName) ? "Máquina" : Model.Machine.MachineTypeName;
+
+}
+@{
+    Layout = null;
 }
 
 @section scripts {
@@ -153,18 +157,61 @@
                     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
                         @foreach (var doc in Model.Documents)
                         {
+                            var fileSizeMb = (doc.FileSize / 1024f / 1024f).ToString("N2");
+
                             <div class="col">
-                                <div class="item-card p-3 d-flex flex-column">
-                                    <div class="d-flex align-items-start gap-3 mb-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#c71712" viewBox="0 0 16 16"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" /></svg>
-                                        <div class="overflow-hidden">
-                                            <h6 class="fw-bold mb-1 text-truncate text-dark">@doc.Title</h6>
-                                            <div class="text-muted extra-small text-truncate" style="font-size: 0.7rem;">@doc.FileName</div>
+                                <div class="item-card h-100 shadow-sm border-0 position-relative overflow-hidden" style="border-radius: 12px; background: #fff; transition: all 0.3s ease;">
+
+                                    <div style="height: 4px; background: linear-gradient(90deg, #c71712 0%, #ff4d4d 100%);"></div>
+
+                                    <div class="p-4">
+                                        <div class="d-flex align-items-start gap-3">
+                                            <div class="position-relative p-2 rounded-3" style="background: #fff5f5; border: 1px solid #ffebeb;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="#c71712" class="bi bi-file-earmark-pdf-fill" viewBox="0 0 16 16">
+                                                    <path d="M5.523 12.424c.14-.082.293-.162.459-.238a7.878 7.878 0 0 1-.45.606c-.28.337-.498.516-.635.572a.266.266 0 0 1-.035.012.282.282 0 0 1-.026-.044c-.056-.11-.054-.216.04-.308.118-.117.306-.213.547-.3z" />
+                                                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2zM3.35 14.658c0 .286.11.541.338.71.226.167.49.248.82.242.427-.008.99-.243 1.62-.71l.152-.113c.21-.151.456-.33.713-.507a10.582 10.582 0 0 1 1.28-.733c.338-.174.68-.316 1.023-.426.33-.105.67-.16 1.03-.16.322 0 .612.062.896.188.252.113.438.29.56.532.136.273.16.577.073.907-.076.284-.28.53-.61.738-.322.204-.748.334-1.28.388-.53.053-1.12-.015-1.77-.203-.48-.138-.98-.364-1.5-.678a11.58 11.58 0 0 1-1.07-.75c-.322-.26-.64-.53-.948-.823a9.544 9.544 0 0 1-.73-.763 7.492 7.492 0 0 1-.59-.793 4.3 4.3 0 0 1-.41-1.104 1.755 1.755 0 0 1-.097-.55c0-.44.13-.814.39-1.122.25-.308.585-.462 1.005-.462.303 0 .6.09.89.27.27.17.48.42.63.74.144.32.21.684.198 1.09-.012.396-.092.83-.24 1.303-.14.473-.348.97-.62 1.488a19.14 19.5 0 0 1-.683 1.157c-.12.19-.245.385-.373.587l-.09.143c-.1-.1-.2-.2-.3-.3l-.2-.2c-.1-.1-.1-.2-.2-.3l-.1-.1z" />
+                                                </svg>
+                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger shadow-sm" style="font-size: 0.65rem; border: 2px solid #fff;">
+                                                    V@(doc.Version)
+                                                </span>
+                                            </div>
+
+                                            <div class="overflow-hidden flex-grow-1">
+                                                <h6 class="fw-bold mb-1 text-dark" style="letter-spacing: -0.02em; font-size: 1rem;">@doc.Title</h6>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <span class="text-muted" style="font-size: 0.75rem;"><i class="fa fa-hdd-o"></i> @fileSizeMb MB</span>
+                                                    <span class="text-muted">•</span>
+                                                    @if (doc.IsActive)
+                                                    {
+                                                        <span class="fw-bold text-success" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;">Público</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="fw-bold text-warning" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;">Privado</span>
+                                                    }
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="mt-auto btn-group w-100 shadow-sm">
-                                        <button class="btn btn-light btn-sm fw-bold border-end edit-doc-btn" data-id="@doc.Id">Editar</button>
-                                        <a href="/MachineDocuments/Download/@doc.Id" class="btn btn-light btn-sm fw-bold text-danger">Bajar</a>
+
+                                        <div class="mt-4 mb-3">
+                                            <div class="d-flex align-items-center p-2 rounded-2" style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                                                <i class="fa fa-paperclip text-muted me-2 ms-1"></i>
+                                                <code class="text-secondary small text-truncate" style="font-size: 0.75rem;">@doc.FileName</code>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex gap-2">
+                                            <button class="btn btn-outline-secondary btn-sm flex-grow-1 edit-doc-btn d-flex align-items-center justify-content-center gap-2"
+                                                    data-id="@doc.Id"
+                                                    style="border-radius: 8px; font-weight: 600; padding: 8px;">
+                                                <i class="fa fa-pencil-square-o"></i> Editar
+                                            </button>
+                                            <a href="/MachineDocuments/Download/@doc.Id"
+                                               class="btn btn-danger btn-sm flex-grow-1 d-flex align-items-center justify-content-center gap-2 shadow-sm"
+                                               style="background-color: #c71712; border-radius: 8px; font-weight: 600; padding: 8px; border: none;">
+                                                <i class="fa fa-cloud-download"></i> Descargar
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
