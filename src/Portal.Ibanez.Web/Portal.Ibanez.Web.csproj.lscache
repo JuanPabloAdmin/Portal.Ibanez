@@ -660,11 +660,12 @@ obj/Debug/net9.0/Portal.Ibanez.Web.GeneratedMSBuildEditorConfig.editorconfig
 
 [additionalFiles]
 Components/_ViewImports.cshtml
-Pages/Customers/
- CreateModal.cshtml
- EditModal.cshtml
- Index.cshtml
 Pages/
+ Account/Login.cshtml
+ Customers/
+  CreateModal.cshtml
+  EditModal.cshtml
+  Index.cshtml
  Index.cshtml
  MachineDocuments/
   CreateModal.cshtml
@@ -696,11 +697,12 @@ Views/_ViewImports.cshtml
 
 [dynamicFiles]
 Components/_ViewImports.cshtml
-Pages/Customers/
- CreateModal.cshtml
- EditModal.cshtml
- Index.cshtml
 Pages/
+ Account/Login.cshtml
+ Customers/
+  CreateModal.cshtml
+  EditModal.cshtml
+  Index.cshtml
  Index.cshtml
  MachineDocuments/
   CreateModal.cshtml

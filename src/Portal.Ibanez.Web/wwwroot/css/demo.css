@@ -1,0 +1,385 @@
+.text-brand {
+    color: var(--lpx-brand);
+  }
+  
+  .lpx-text-blue {
+    color: #4895ef !important;
+  }
+  
+  .lpx-bg-blue {
+    background-color: rgba(72, 149, 239, 0.2);
+  }
+  
+  .dropdown .dropdown-toggle:after {
+    display: none;
+  }
+  
+  .pricing-advanced {
+    position: absolute;
+    z-index: 1;
+    top: -20px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: var(--lpx-radius);
+  }
+  
+  @media only screen and (max-width: 991px) {
+    .lpx-wizard {
+      padding: 0 40px;
+    }
+  }
+  .lpx-wizard-list {
+    z-index: 1;
+  }
+  .lpx-wizard-item {
+    flex: 1;
+    text-align: center;
+    border-bottom: 2px solid var(--lpx-content-text);
+    padding-bottom: 8px;
+    opacity: 0.4;
+    list-style: none;
+  }
+  .lpx-wizard-item .lpx-wizard-number {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--lpx-content-bg);
+    color: var(--lpx-content-text);
+    background-color: var(--lpx-card-bg);
+  }
+  .lpx-wizard-item.active {
+    opacity: 1;
+  }
+  .lpx-wizard-item.active .lpx-wizard-number {
+    color: var(--lpx-light);
+    background-color: var(--lpx-dark);
+    border-color: var(--lpx-dark);
+  }
+  .lpx-wizard-content {
+    display: none;
+  }
+  .lpx-wizard-content .select-item {
+    position: relative;
+  }
+  .lpx-wizard-content .select-item .bi-check-lg {
+    position: absolute;
+    opacity: 0;
+  }
+  .lpx-wizard-content .select-item:focus {
+    border-color: var(--lpx-primary) !important;
+  }
+  .lpx-wizard-content .select-item:focus .bi-check-lg {
+    opacity: 1 !important;
+  }
+  .lpx-wizard-content.active {
+    display: block;
+  }
+  @media only screen and (max-width: 991px) {
+    .lpx-wizard.vertical .lpx-wizard-list {
+      width: 100%;
+    }
+  }
+  .lpx-wizard.vertical .lpx-wizard-list .lpx-wizard-item {
+    border-right: 2px solid var(--lpx-content-text);
+    border-bottom: none;
+  }
+  @media only screen and (max-width: 991px) {
+    .lpx-wizard.vertical .lpx-wizard-list .lpx-wizard-item {
+      border-bottom: 2px solid var(--lpx-content-text);
+      border-right: none;
+    }
+  }
+  
+  #notification-bar .lpx-context-menu {
+    top: 140px;
+  }
+  
+  .border-demo [class^=border] {
+    width: 5rem;
+    height: 5rem;
+    margin: 0.25rem;
+    display: inline-block;
+    background-color: rgba(8, 20, 73, 0.03);
+  }
+  
+  .lpx-demo-cards-flex {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .lpx-demo-cards-flex .card {
+    margin-right: 1rem;
+  }
+  
+  .lpx-demo-card {
+    width: 18rem;
+  }
+  
+  .lpx-demo-carousel {
+    width: 500px;
+    height: 250px;
+  }
+  
+  .lpx-demo-dropdown {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .lpx-demo-scrollspy {
+    position: relative;
+    height: 200px;
+    margin-top: 0.5rem;
+    overflow: auto;
+  }
+  
+  .lpx-demo-table {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .lpx-demo-table table {
+    width: calc(50% - 10px);
+  }
+  
+  .lpx-theme-dark .hljs {
+    background: #121212;
+  }
+  
+  .highlight-prev {
+    position: relative;
+  }
+  .highlight-prev .button-area {
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+  .highlight-prev button {
+    border: none;
+    transition: background-color 0.2s;
+    background: rgba(var(--lpx-dark-rgb), 0.2);
+    padding: 5px;
+    border-radius: 7px;
+    line-height: 1;
+  }
+  .highlight-prev:hover .button-area {
+    display: block;
+  }
+  .highlight-prev:hover button:hover {
+    background: rgba(var(--lpx-dark-rgb), 0.4);
+  }
+  
+  pre {
+    border-radius: var(--lpx-radius) !important;
+    overflow: hidden;
+  }
+  pre code.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 1.5em 1.5em 0 1.5em !important;
+    color: var(--lpx-content-text) !important;
+    background: var(--lpx-content-bg) !important;
+    border-radius: var(--lpx-radius) !important;
+  }
+  
+  .demo-card-container {
+    background: var(--lpx-content-bg) !important;
+    border-radius: var(--lpx-radius) !important;
+    padding: 1.25rem;
+  }
+  .demo-card-container .card:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .carousel {
+    border-radius: var(--lpx-radius) !important;
+    overflow: hidden;
+  }
+  
+  .copy-button {
+    color: var(--lpx-content-text) !important;
+    background: var(--lpx-card-bg) !important;
+    font-size: 1em;
+    border: 2px solid var(--lpx-border-color);
+  }
+  
+  .highlight-prev .button-area {
+    top: 15px;
+    right: 20px;
+  }
+  
+  .demo-tabs.nav-tabs .nav-link {
+    padding: 0px 0px 7px !important;
+    font-weight: 500;
+    border: 0 !important;
+  }
+  
+  .hljs-addition {
+    background-color: var(--lpx-content-bg) !important;
+  }
+  
+  .hljs-deletion {
+    background-color: var(--lpx-content-bg) !important;
+  }
+  
+  code {
+    font-size: 1em !important;
+    color: var(--lpx-brand) !important;
+  }
+  
+  .example-offcanvas .offcanvas {
+    position: static;
+    display: block;
+    height: 200px;
+    visibility: visible;
+    transform: translate(0);
+  }
+  
+  :root {
+    --lpx-theme-light-bg: url("/assets/img/login-pages/login-bg-img-light.svg");
+    --lpx-theme-dim-bg: url("/assets/img/login-pages/login-bg-img-dim.svg");
+    --lpx-theme-dark-bg: url("/assets/img/login-pages/login-bg-img-dark.svg");
+  }
+  
+  :root .lpx-theme-light {
+    --lpx-logo: url("/assets/img/icon.svg");
+  }
+  
+  :root .lpx-theme-dark {
+    --lpx-logo: url("/assets/img/icon.svg");
+  }
+  
+  :root .lpx-theme-dim {
+    --lpx-logo: url("/assets/img/icon.svg");
+  }
+  
+  .lpx-landing-hero-section {
+    background-image: url("../../../assets/img/landing-page/card-bg-image2.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+  }
+  @media (max-width: 992px) {
+    .lpx-landing-hero-section {
+      background-image: none;
+    }
+  }
+  
+  .lpx-landing-img-container {
+    margin-bottom: -24px;
+    margin-right: -24px;
+    overflow: hidden;
+    text-align: end;
+  }
+  
+  @media (min-width: 992px) {
+    #carouselHeroSection .carousel-control-prev,
+    #carouselHeroSection .carousel-control-next {
+      display: none;
+    }
+  }
+  #carouselHeroSection .carousel-indicators {
+    bottom: -10px;
+  }
+  @media (max-width: 992px) {
+    #carouselHeroSection .carousel-indicators {
+      display: none;
+    }
+  }
+  
+  #carouselExampleSlidesOnly {
+    width: 100%;
+  }
+  #carouselExampleSlidesOnly .carousel-inner {
+    display: flex;
+  }
+  #carouselExampleSlidesOnly .carousel-item {
+    width: auto !important;
+  }
+  .lpx-landing-card:before {
+    content: "";
+    background-image: url("../../../assets/img/landing-page/card-bg-image.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+  @media (max-width: 768px) {
+    .lpx-landing-card:before {
+      background-image: none;
+    }
+  }
+  .lpx-landing-card .card-body {
+    z-index: 1;
+  }
+  .lpx-landing-card.lpx-landing-card-right:before {
+    right: 0;
+    transform: rotate(180deg);
+  }
+  
+  .starting-content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .card-bg-image {
+    position: absolute;
+    width: 630px;
+    height: auto;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+  }
+  
+  @media (min-width: 1199px) {
+    .h-lg-100 {
+      height: 100% !important;
+    }
+  }
+  @media (min-width: 768px) {
+    .h-md-100 {
+      height: 100% !important;
+    }
+  }
+  .abp-logo {
+    background-repeat: no-repeat;
+  }
+  
+  .abp-support {
+    width: 178px;
+    height: 30px;
+    background-image: url("/assets/img/getting-started/abp-support.svg");
+  }
+  
+  .abp-community {
+    width: 215px;
+    height: 30px;
+    background-image: url("/assets/img/getting-started/abp-community.svg");
+  }
+  
+  .abp-blog {
+    width: 142px;
+    height: 30px;
+    background-image: url("/assets/img/getting-started/abp-blog.svg");
+  }
+  
+  .logo-x {
+    width: 20px;
+    height: 20px;
+    background-image: url("/assets/img/getting-started/x.svg");
+  }
+  
+  .lpx-theme-dark .abp-support {
+    background-image: url("/assets/img/getting-started/abp-support-white.svg");
+  }
+  .lpx-theme-dark .abp-community {
+    background-image: url("/assets/img/getting-started/abp-community-white.svg");
+  }
+  .lpx-theme-dark .abp-blog {
+    background-image: url("/assets/img/getting-started/abp-blog-white.svg");
+  }
+  .lpx-theme-dark .logo-x {
+    background-image: url("/assets/img/getting-started/x-white.svg");
+  }
+  

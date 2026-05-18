@@ -1,0 +1,822 @@
+/* 1) Import válido de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+* {
+    font-family: "Montserrat", 'FontAwesome';
+}
+
+
+:root {
+    --primary: #fa551e;
+    --info: #1e6ec8;
+    --success: #28b446;
+    --warning: #faaa14;
+    --error: #f0321e;
+
+    --red: #f0321e;
+    --grey: #5A6473;
+    --color-red-light: #fbeaea;
+    --color-yellow-light: #fdf6e5;
+    --color-green-light: #e2f1e7;
+    --color-blue-light: #e1eaf4;
+
+    --color-neutral-0: #FFFFFF;
+    --color-neutral-1: #EEEEEE;
+    --color-neutral-2: #D1D3D6;
+    --color-neutral-3: #A8AEB7;
+    --color-neutral-4: #616771;
+    --color-neutral-5: #353C47;
+    --color-neutral-6: #adb5bd;
+    --color-neutral-7: #6a7178;
+    --color-neutral-8: #4f575e;
+    --color-neutral-9: #272b30;
+    --color-neutral-10: #101213;
+
+    --space-none: 0;
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-base: 16px;
+    --space-m: 24px;
+    --space-l: 32px;
+    --space-xl: 40px;
+    --space-xxl: 48px;
+
+    --font-family-sans-serif: canaro_book, sans-serif;
+    --font-family-monospace: Roboto;
+
+    --font-size-display: 36px;
+    --font-size-h1: 32px;
+    --font-size-h2: 28px;
+    --font-size-h3: 26px;
+    --font-size-h4: 22px;
+    --font-size-h5: 20px;
+    --font-size-h6: 18px;
+    --font-size-base: 16px;
+    --font-size-s: 14px;
+    --font-size-xs: 12px;
+    --font-extra-light: 200;
+    --font-light: 300;
+    --font-book: 400;
+    --font-medium: 500;
+    --font-semi-bold: 600;
+    --font-bold: bold;
+    --font-extra-bold: 800;
+    --font-black: 900;
+
+    --border-size-s: 1px;
+    --border-size-m: 2px;
+    --border-radius-soft: 4px;
+}
+
+:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #a3daff;
+}
+
+html, body, a, select, form, fieldset, table, tr, td, img, input, button, select, textarea, optgroup, option {
+    font-family: canaro_book, sans-serif;
+}
+
+body {
+    overflow: auto;
+    overflow-x: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    -ms-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    color: #676c6f;
+}
+
+p {
+    color: #1d1d1c;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: canaro_book, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-neutral-10);
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-semi-bold);
+    line-height: 1.25;
+    margin-bottom: var(--space-l);
+}
+
+.brand__logos brand__logos--small d-md-none {
+    z-index: 1;
+}
+
+#content {
+    z-index: 10;
+}
+
+fieldset {
+    width: inherit;
+}
+
+a:not([class^="text-"]), a:link:not([class^="text-"]), a:visited:not([class^="text-"]) {
+    color: var(--primary);
+    -webkit-transition: color 100ms ease;
+    transition: color 100ms ease;
+}
+
+a:hover, a:link:hover, a:visited:hover, a:link.link-hover, a.link-hover:visited {
+    color: #5A6473;
+    text-decoration: none;
+}
+
+a, a:visited {
+    color: var(--primary);
+    -webkit-transition: color 180ms linear;
+    transition: color 180ms linear;
+}
+
+a[disabled="disabled"], a[disabled="disabled"]:hover {
+    color: var(--color-neutral-3) !important;
+    text-decoration: none;
+}
+
+.form__title {
+    padding: 15px;
+    margin: 20px 0 0;
+}
+
+.bg-primary {
+    color: #fff;
+    background-color: var(--primary);
+}
+
+/*---- INPUTS -------------- */
+
+.form-control:focus {
+    box-shadow: none;
+    border: var(--border-size-s) solid var(--primary);
+}
+
+
+
+.form label {
+    color: #676c6f;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.form-group label {
+    display: block;
+    padding: 0 0 3px;
+    margin: 0;
+}
+
+.form-control {
+    background-color: #fff;
+    border: 1px solid var(--color-neutral-2);
+    border-radius: 4px;
+    color: var(--gray);
+    font-size: 14px;
+    font-weight: 300;
+    padding: 0 15px;
+    height: 5vh;
+    font-family: 'Montserrat';
+}
+
+
+.form-control input {
+    color: var(--gray);
+}
+
+/** keep separate: workaround for chrome */
+input::placeholder {
+    color: var(--color-neutral-3);
+    opacity: 1;
+    font-size: 14px;
+}
+
+input:-moz-placeholder, input::-moz-placeholder, input:-ms-input-placeholder {
+    color: var(--color-neutral-3);
+    opacity: 1;
+    font-size: 14px;
+}
+
+.required-fields {
+    font-size: 14px;
+    color: #676c6f;
+    font-family: canaro, sans-serif;
+    font-weight: 300;
+}
+
+.errormsg {
+    margin-top: 0;
+}
+
+.text-error {
+    color: var(--error);
+}
+
+.text-warning {
+    color: var(--warning);
+}
+
+.text-success {
+    color: var(--success);
+}
+
+/* disable eye icon on EDGE Browser (https://docs.microsoft.com/en-us/microsoft-edge/web-platform/password-reveal) */
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
+
+/* add icon on the right side of input */
+.input-append-right-icon {
+    position: relative;
+    float: right;
+    top: -32px;
+    right: 16px;
+    cursor: pointer;
+    height: 0;
+}
+
+/* add icon on the right side of input */
+.input-append-right-icon {
+    position: relative;
+    float: right;
+    top: -3.3rem;
+    right: 1.5rem;
+    cursor: pointer;
+}
+
+.input-append-right-icon .fa {
+    font-size: 18px;
+}
+
+/** ---- BUTTONS -------------- */
+
+/* general buttons */
+.btn {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: var(--border-radius-soft);
+    border: var(--border-size-s) solid currentColor;
+    color: var(--primary);
+    cursor: pointer;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    font-weight: var(--font-semi-bold);
+    height: 40px;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0 var(--space-base);
+    -webkit-transition: all 180ms linear;
+    transition: all 180ms linear;
+    width: 100%;
+}
+
+.btn:hover {
+    background-color: #FFF3EF;
+    border-color: #fa551e;
+    color: #fa551e;
+    filter: none;
+}
+
+.btn:hover:active {
+    background-color: #FFE4DB;
+    border-color: #CD542D;
+    color: #CD542D;
+}
+
+.btn-delete {
+    background-color: #fa551e;
+    border-color: #fa551e;
+    color: #fff !important;
+}
+
+/* primary buttons */
+.btn-primary {
+    background-color: #fa551e;
+    border-color: #fa551e;
+    color: #fff !important;
+}
+
+.btn-primary:hover {
+    background-color: #E24E1D;
+    border-color: #E24E1D;
+    color: #fff;
+    filter: none;
+}
+
+.btn-primary:hover:active, .btn-primary:focus, .btn-primary.focus {
+    background-color: #C8471D;
+    border-color: #C8471D;
+    color: #fff;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+    box-shadow: none !important;
+    background-color: #C8471D;
+    border-color: #C8471D;
+    color: #fff;
+}
+
+.btn-primary.disabled:hover, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary:hover, .btn-primary.disabled:focus, .btn-primary[disabled]:focus, fieldset[disabled] .btn-primary:focus, .btn-primary.disabled.focus, .btn-primary[disabled].focus, fieldset[disabled] .btn-primary.focus {
+    background-color: #C8471D;
+    border-color: #C8471D;
+}
+
+
+/* social buttons */
+.social-btn {
+    display: inline-table;
+    transform: rotate(45deg);
+    border: solid 2px var(--color-neutral-2);
+    border-radius: 16px;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    margin: 4px;
+}
+
+.social-btn .btn {
+    transform: rotate(-45deg);
+    padding: 0;
+    border: 0;
+    width: 24px;
+    height: 24px;
+    margin: 6px;
+    background-color: transparent;
+}
+
+.social-btn .btn img {
+    border: 0;
+    background-color: transparent;
+    border-radius: 50%;
+    margin: auto;
+    max-width: 24px;
+    max-height: 24px;
+    pointer-events: none;
+}
+
+.social-name {
+    display: none;
+}
+
+.fr-social-login-button {
+    /*width: 100%;*/
+}
+
+.fr-social-login-button--linkedin img {
+    /*background: radial-gradient(circle, #fff 70%, #0077b5 100%);*/
+}
+
+.fr-social-login-button--apple img {
+    background-color: #000000;
+    color: #ffffff;
+    border-color: #000000;
+}
+
+@media (max-width: 767.98px) {
+    .social-name {
+        display: none;
+    }
+}
+
+.fr-hr-with-text {
+    content: none;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.fr-hr-with-text::before {
+    content: none;
+}
+
+.fr-hr-with-text::after {
+    text-transform: none;
+    background-color: transparent;
+    line-height: 1rem;
+}
+
+/** NOTIFICATIONS ---------------------------------------- **/
+
+.alert {
+    border: 0 !important;
+}
+
+.alert-danger {
+    color: var(--error);
+    background-color: var(--color-red-light);
+}
+
+.alert-warning {
+    color: var(--warning);
+    background-color: var(--color-yellow-light);
+}
+
+.alert-info {
+    color: var(--info);
+    background-color: var(--color-blue-light);
+}
+
+.alert-success {
+    color: var(--success);
+    background-color: var(--color-green-light);
+}
+
+
+.has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
+    color: var(--error);
+}
+
+.has-error .form-control-feedback {
+    color: var(--error);
+}
+
+.has-error .form-control {
+    color: var(--error);
+}
+
+/** DROPDOWNS ------------------------------------------- **/
+
+.dropdown-menu > li > a {
+    color: var(--gray) !important;
+    text-decoration: none;
+    background-color: white;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: var(--primary) !important;
+    text-decoration: none;
+    background-color: white;
+}
+
+/** NAVBAR ---------------------------------------------- **/
+.navbar-static-top {
+    background-color: var(--color-neutral-0);
+    box-shadow: 0 1px 5px 0 rgb(21 24 26 / 10%);
+}
+
+.navbar-nav > li > a {
+    color: var(--gray) !important;
+    text-decoration: none;
+    background-color: white;
+}
+
+.navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
+    color: var(--primary) !important;
+    text-decoration: none;
+    background-color: white;
+}
+
+/** TABS ------------------------------------------------ **/
+
+.nav-tabs > li > a {
+    color: var(--color-neutral-3) !important;
+}
+
+.nav-tabs > li > a:hover {
+    border-bottom: var(--border-size-m) solid var(--color-neutral-6);
+    color: var(--color-neutral-10) !important;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: var(--grey) !important;
+    background-color: white;
+    font-weight: var(--font-semi-bold);
+    border: 0;
+    border-bottom: var(--border-size-m) solid var(--primary);
+}
+
+
+.has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
+    color: var(--error);
+}
+
+.has-error .form-control-feedback {
+    color: var(--error);
+}
+
+.has-error .form-control {
+    color: var(--error);
+}
+
+/** DROPDOWNS ------------------------------------------- **/
+
+.dropdown-menu > li > a {
+    color: var(--gray) !important;
+    text-decoration: none;
+    background-color: white;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: var(--primary) !important;
+    text-decoration: none;
+    background-color: white;
+}
+
+/** NAVBAR ---------------------------------------------- **/
+.navbar-static-top {
+    background-color: var(--color-neutral-0);
+    box-shadow: 0 1px 5px 0 rgb(21 24 26 / 10%);
+}
+
+.navbar-nav > li > a {
+    color: var(--gray) !important;
+    text-decoration: none;
+    background-color: white;
+}
+
+.navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
+    color: var(--primary) !important;
+    text-decoration: none;
+    background-color: white;
+}
+
+/** TABS ------------------------------------------------ **/
+
+.nav-tabs > li > a {
+    color: var(--color-neutral-3) !important;
+}
+
+.nav-tabs > li > a:hover {
+    border-bottom: var(--border-size-m) solid var(--color-neutral-6);
+    color: var(--color-neutral-10) !important;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: var(--grey) !important;
+    background-color: white;
+    font-weight: var(--font-semi-bold);
+    border: 0;
+    border-bottom: var(--border-size-m) solid var(--primary);
+}
+
+.navbar .user-avatar.fa {
+    padding: 7px 0 0 8px;
+}
+
+/** Password Strength component ----------------------------------- **/
+
+.p-s-grp p {
+    margin: 0 0 1px;
+}
+
+.p-s-grp p i.fa-check {
+    margin: 0 .5rem;
+}
+
+.p-s {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.p-s-info {
+    margin: 5px 0 0;
+    /*color: rgb(137, 135, 146);*/
+    font-size: 14px;
+    text-align: right;
+}
+
+.bg-error {
+    background-color: var(--error);
+}
+
+.bg-success {
+    background-color: var(--success);
+}
+
+/** PAGE SPECIFIC --------------------------------------- **/
+
+/* login page */
+#login-base {
+}
+
+@media (min-width: 768px) {
+    #login-base {
+        padding: 0;
+        margin-bottom: -70px;
+    }
+}
+
+.page-header {
+    border: 0;
+}
+
+/** FOOTER */
+/** big screen */
+@media (min-width: 993px) {
+    .footer-container {
+        display: flex;
+    }
+
+    .col-left {
+        flex: 47.33%;
+    }
+
+    .col-right {
+        flex: 52.67%;
+    }
+
+    .col-left {
+        display: flex;
+        justify-content: center;
+    }
+
+    .footer-info {
+        /*display: flex;
+        justify-content: left;*/
+        width: 420px;
+    }
+
+    .footer__copyright {
+        width: 420px;
+    }
+
+    .footer__links {
+        padding-right: 30px;
+    }
+}
+
+/* medium screen */
+@media (max-width: 993px) {
+    .footer-container {
+        width: 550px;
+        margin: auto;
+    }
+}
+
+/** small screen */
+@media (max-width: 767.98px) {
+    .footer-container {
+        width: 365px;
+    }
+
+    footer .footer__links a {
+        font-size: 7px;
+    }
+    footer .footer__links a:after {
+        margin: 4px 4px 0px 3px !important;
+    }
+}
+
+
+.footer__logo {
+    margin-right: 15px;
+}
+
+.footer__logo a img {
+    width: 31px;
+    height: 31px;
+    object-fit: cover;
+    object-position: right;
+}
+
+.footer-info {
+    display: flex;
+    justify-content: left;
+    width: max-content;
+}
+
+.footer__copyright {
+    align-self: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    align-items: center;
+}
+
+.footer__links {
+    align-items: baseline;
+    width: 100%;
+}
+
+/*override FR structure*/
+#login-base h1, .bootstrap-dialog.login-dialog .page-header h1 {
+    text-transform: none;
+    font-size: 36px;
+    letter-spacing: -.2px;;
+}
+
+.login .remember-forgot {
+    margin: -10px 0 20px 0;
+}
+
+/* panel-footer on profile page */
+.panel-footer .btn {
+    margin: 1px 0;
+}
+
+@media (max-width: 767.98px) {
+    footer {
+        position: absolute;
+        padding: 0;
+    }
+}
+
+.grecaptcha-badge {
+    bottom: 64px !important;
+}
+
+@media (max-width: 767.98px) {
+    .grecaptcha-badge {
+        position: unset !important;
+    }
+}
+
+/* Button Link color and hover*/
+.btn-link-default {
+    color: var(--primary);
+}
+
+.btn-link-default:hover {
+    color: #5A6473;
+    text-decoration: none;
+}
+
+/** back button on login-page-pw-b2b */
+.back-grp {
+    padding: 0 15px;
+    width: 10%;
+}
+
+.back-link {
+    cursor: pointer;
+}
+
+.back-link i.left-arrow {
+    color: var(--primary);
+}
+
+.back-link:hover i.left-arrow {
+    transform: translateX(-5px);
+}
+
+.back-link .back-link-text {
+    color: #1d1d1c
+}
+
+.forgot-link {
+    display: block;
+    padding: 0;
+    margin-top: 3px;
+    margin-bottom: 4.2rem;
+    color: #676c6f !important;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.faq-link {
+    color: #676c6f !important;
+    text-decoration: underline;
+    margin-left: 3.5%;
+}
+
+.faq-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.faq-container {
+    flex: 1;
+}
+
+@media (max-width: 767.98px) {
+    .faq-link {
+        margin-left: 0%;
+    }
+}
+
+.topBar {
+    width: 100%;
+    height: 50px;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.topBarText {
+    position: relative;
+    top: 30%;
+    text-align: center;
+    margin-right: 10%;
+    flex: 3;
+    color: #2B3545;
+}
+
+@media screen and (min-width: 768.98px) {
+    .topBarText {
+        display: none;
+        width: max-content;
+    }
+}
