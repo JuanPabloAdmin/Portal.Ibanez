@@ -17,6 +17,10 @@
         <abp-modal-body>
 
             <input type="hidden" asp-for="QrCode.MachineId" />
+            <abp-select asp-for="QrCode.DocumentFolderId"
+                        asp-items="Model.DocumentFolders"
+                        label="Carpeta">
+            </abp-select>
 
             <abp-input asp-for="QrCode.Name" />
 

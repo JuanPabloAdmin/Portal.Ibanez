@@ -24,7 +24,7 @@ public class DetailModel : IbanezPageModel
     public IReadOnlyList<QrCodeDto> QrCodes { get; set; } = new List<QrCodeDto>();
 
     // Diccionario para cargar los documentos enlazados de cada QR
-    public Dictionary<Guid, List<QrCodeDocumentDto>> QrLinkedDocuments { get; set; } = new();
+  //  public Dictionary<Guid, List<QrCodeDocumentDto>> QrLinkedDocuments { get; set; } = new();
 
     private readonly IMachineAppService _machineAppService;
     private readonly IMachineDocumentAppService _documentAppService;
@@ -74,22 +74,22 @@ public class DetailModel : IbanezPageModel
         QrCodes = qrResult.Items;
 
         // Carga de relaciones QR-Documento
-        foreach (var qr in QrCodes)
-        {
-            var linkedDocs = await _qrCodeAppService.GetDocumentsAsync(qr.Id);
-            QrLinkedDocuments[qr.Id] = linkedDocs;
-        }
+        //foreach (var qr in QrCodes)
+        //{
+        //    var linkedDocs = await _qrCodeAppService.GetDocumentsAsync(qr.Id);
+        //    QrLinkedDocuments[qr.Id] = linkedDocs;
+        //}
     }
 
     // Acción para vincular un documento a un QR
     public async Task<IActionResult> OnPostAddLinkAsync(Guid qrId, Guid docId, Guid machineId)
     {
-        await _qrCodeAppService.AddDocumentAsync(new AddQrCodeDocumentDto
-        {
-            QrCodeId = qrId,
-            MachineDocumentId = docId,
-            DisplayOrder = 0
-        });
+        //await _qrCodeAppService.AddDocumentAsync(new AddQrCodeDocumentDto
+        //{
+        //    QrCodeId = qrId,
+        //    MachineDocumentId = docId,
+        //    DisplayOrder = 0
+        //});
 
         // Redirección con hash para que el JS abra el acordeón correspondiente
         return Redirect($"/Machines/Detail/{machineId}#collapse-{qrId}");
@@ -98,7 +98,7 @@ public class DetailModel : IbanezPageModel
     // Acción para eliminar la vinculación
     public async Task<IActionResult> OnPostRemoveLinkAsync(Guid linkId, Guid machineId, Guid qrId)
     {
-        await _qrCodeAppService.RemoveDocumentAsync(linkId);
+      //  await _qrCodeAppService.RemoveDocumentAsync(linkId);
 
         return Redirect($"/Machines/Detail/{machineId}#collapse-{qrId}");
     }

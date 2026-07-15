@@ -261,12 +261,12 @@
                     <div class="accordion shadow-sm border rounded" id="qrLinkAccordion">
                         @foreach (var qr in Model.QrCodes)
                         {
-                            var linked = Model.QrLinkedDocuments[qr.Id];
+                          //  var linked = Model.QrLinkedDocuments[qr.Id];
                             <div class="accordion-item border-0 border-bottom last-child-border-0">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed py-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@qr.Id">
                                         <span class="fw-bold me-2">QR: @qr.Name</span>
-                                        <span class="badge bg-primary rounded-pill fw-normal" style="font-size: 0.7rem;">@linked.Count documentos</span>
+                                        @* <span class="badge bg-primary rounded-pill fw-normal" style="font-size: 0.7rem;">@linked.Count documentos</span> *@
                                     </button>
                                 </h2>
                                 <div id="collapse-@qr.Id" class="accordion-collapse collapse" data-bs-parent="#qrLinkAccordion">
@@ -276,7 +276,7 @@
                                             <tbody>
                                                 @foreach (var doc in Model.Documents)
                                                 {
-                                                    var link = linked.FirstOrDefault(x => x.MachineDocumentId == doc.Id);
+                                                  @* //  var link = linked.FirstOrDefault(x => x.MachineDocumentId == doc.Id);
                                                     <tr>
                                                         <td class="ps-4 py-3"><div class="fw-bold small">@doc.Title</div><div class="extra-small text-muted font-monospace">@doc.FileName</div></td>
                                                         <td class="text-center pe-4">
@@ -299,7 +299,7 @@
                                                                 </form>
                                                             }
                                                         </td>
-                                                    </tr>
+                                                    </tr> *@
                                                 }
                                             </tbody>
                                         </table>

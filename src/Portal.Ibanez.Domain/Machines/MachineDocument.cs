@@ -7,11 +7,14 @@ public class MachineDocument : FullAuditedAggregateRoot<Guid>
 {
     public Guid MachineId { get; set; }
 
+    public Guid? DocumentFolderId { get; set; }
+
     public string Title { get; set; }
 
     public string FileName { get; set; }
 
     public string StoredFileName { get; set; }
+    public string? RelativePath { get; set; }
 
     public string ContentType { get; set; }
 

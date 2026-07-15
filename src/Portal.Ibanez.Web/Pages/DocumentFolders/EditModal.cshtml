@@ -1,0 +1,29 @@
+﻿@page
+@using Portal.Ibanez.Web.Pages.DocumentFolders
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model EditModalModel
+
+<form method="post" asp-page="/DocumentFolders/EditModal">
+
+    <abp-modal>
+        <abp-modal-header title="Editar carpeta documental"></abp-modal-header>
+
+        <abp-modal-body>
+
+            <abp-input asp-for="Id" />
+
+            <input type="hidden" asp-for="Folder.MachineId" />
+
+            <abp-input asp-for="Folder.Name" />
+
+            <abp-input asp-for="Folder.Description" />
+
+            <abp-input asp-for="Folder.IsActive" />
+
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel | AbpModalButtons.Save)">
+        </abp-modal-footer>
+    </abp-modal>
+
+</form>

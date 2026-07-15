@@ -12,10 +12,6 @@ public interface IQrCodeAppService :
         GetQrCodeListInput,
         CreateUpdateQrCodeDto>
 {
-    Task<List<QrCodeDocumentDto>> GetDocumentsAsync(Guid qrCodeId);
-
-    Task AddDocumentAsync(AddQrCodeDocumentDto input);
-
-    Task RemoveDocumentAsync(Guid qrCodeDocumentId);
+   
     Task<QrCodeDto?> GetByCodeAsync(string code);
 }

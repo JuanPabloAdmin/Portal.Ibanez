@@ -3,6 +3,7 @@ using Portal.Ibanez.Customers;
 using Portal.Ibanez.Documents;
 using Portal.Ibanez.Machines;
 using Portal.Ibanez.QrCodes;
+using Portal.Ibanez.DocumentFolders;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -58,11 +59,11 @@ public class IbanezDbContext :
     public DbSet<Machine> Machines { get; set; }
     public DbSet<MachineDocument> MachineDocuments { get; set; }
     public DbSet<QrCode> QrCodes { get; set; }
-    public DbSet<QrCodeDocument> QrCodeDocuments { get; set; }
+   
     // Tenant Management
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
-
+    public DbSet<DocumentFolder> DocumentFolders { get; set; }
     #endregion
 
     public IbanezDbContext(DbContextOptions<IbanezDbContext> options)
@@ -134,7 +135,9 @@ public class IbanezDbContext :
             b.Property(x => x.Title).IsRequired().HasMaxLength(200);
             b.Property(x => x.FileName).IsRequired().HasMaxLength(255);
             b.Property(x => x.StoredFileName).IsRequired().HasMaxLength(255);
+            b.Property(x => x.RelativePath).HasMaxLength(1000);
             b.Property(x => x.ContentType).IsRequired().HasMaxLength(100);
+            b.HasIndex(x => x.DocumentFolderId);
         });
 
         builder.Entity<QrCode>(b =>
@@ -147,14 +150,24 @@ public class IbanezDbContext :
             b.Property(x => x.Description).HasMaxLength(1000);
 
             b.HasIndex(x => x.Code).IsUnique();
+            b.HasIndex(x => x.DocumentFolderId);
         });
 
-        builder.Entity<QrCodeDocument>(b =>
+       
+
+        builder.Entity<DocumentFolder>(b =>
         {
-            b.ToTable(IbanezConsts.DbTablePrefix + "QrCodeDocuments", IbanezConsts.DbSchema);
+            b.ToTable(IbanezConsts.DbTablePrefix + "DocumentFolders", IbanezConsts.DbSchema);
             b.ConfigureByConvention();
 
-            b.HasIndex(x => new { x.QrCodeId, x.MachineDocumentId }).IsUnique();
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            b.Property(x => x.Description)
+                .HasMaxLength(1000);
+
+            b.HasIndex(x => new { x.MachineId, x.Name });
         });
     }
 }

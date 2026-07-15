@@ -64,8 +64,8 @@
 
             @foreach (var document in Model.Documents)
             {
-                <a class="doc" href="/q/@Model.Code/download/@document.MachineDocumentId">
-                    @document.DocumentTitle
+                <a class="doc" href="/q/@Model.Code/download/@document.Id">
+                    @document.Title
                     <br />
                     <small>@document.FileName</small>
                 </a>

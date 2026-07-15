@@ -1,0 +1,27 @@
+﻿@page
+@using Portal.Ibanez.Web.Pages.DocumentFolders
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model CreateModalModel
+
+<form method="post" asp-page="/DocumentFolders/CreateModal">
+
+    <abp-modal>
+        <abp-modal-header title="Nueva carpeta documental"></abp-modal-header>
+
+        <abp-modal-body>
+
+            <input type="hidden" asp-for="Folder.MachineId" />
+
+            <abp-input asp-for="Folder.Name" />
+
+            <abp-input asp-for="Folder.Description" />
+
+            <abp-input asp-for="Folder.IsActive" />
+
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel | AbpModalButtons.Save)">
+        </abp-modal-footer>
+    </abp-modal>
+
+</form>

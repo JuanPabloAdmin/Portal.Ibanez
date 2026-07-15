@@ -33,6 +33,12 @@ public class MachineDocumentAppService :
         {
             queryable = queryable.Where(x => x.MachineId == input.MachineId.Value);
         }
+        if (input.DocumentFolderId.HasValue)
+        {
+            queryable = queryable.Where(
+                x => x.DocumentFolderId == input.DocumentFolderId.Value
+            );
+        }
 
         var totalCount = await AsyncExecuter.CountAsync(queryable);
 
@@ -73,5 +79,24 @@ public class MachineDocumentAppService :
         var document = await Repository.GetAsync(id);
         document.IsActive = !document.IsActive;
         await Repository.UpdateAsync(document);
+    }
+
+    public async Task<List<MachineDocumentDto>> GetByFolderAsync(Guid documentFolderId)
+    {
+        var queryable = await Repository.GetQueryableAsync();
+
+        var query = queryable
+            .Where(x =>
+                x.DocumentFolderId == documentFolderId &&
+                x.IsActive
+            )
+            .OrderBy(x => x.RelativePath ?? x.FileName);
+
+        var entities = await AsyncExecuter.ToListAsync(query);
+
+        return ObjectMapper.Map<
+            List<MachineDocument>,
+            List<MachineDocumentDto>
+        >(entities);
     }
 }

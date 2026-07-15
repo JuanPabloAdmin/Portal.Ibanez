@@ -35,11 +35,21 @@
                                 }
                             },
                             {
-                            text: 'Documentos',
-                            action: function (data) {
-                                window.location.href = '/QrCodes/Documents?qrCodeId=' + data.record.id;
-                            }
-                        },
+                                text: 'Carpeta relacionada',
+                                action: function (data) {
+
+                                    if (!data.record.documentFolderId) {
+                                        abp.notify.warn('Este QR no tiene una carpeta  asociada.');
+                                        return;
+                                    }
+
+                                    window.location.href =
+                                        '/MachineDocuments?machineId=' +
+                                        data.record.machineId +
+                                        '&documentFolderId=' +
+                                        data.record.documentFolderId;
+                                }
+                            },
                             {
                                 text: 'Editar',
                                 action: function (data) {

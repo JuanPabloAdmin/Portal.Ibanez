@@ -9,6 +9,9 @@
     var editModal = new abp.ModalManager({
         viewUrl: '/Machines/EditModal'
     });
+    var duplicateModal = new abp.ModalManager({
+        viewUrl: '/Machines/DuplicateModal'
+    });
 
     var dataTable = $('#MachinesTable').DataTable(
         abp.libs.datatables.normalizeConfiguration({
@@ -29,9 +32,10 @@
                     rowAction: {
                         items: [
                             {
-                                text: 'Documentos',
+                                text: 'Carpetas',
                                 action: function (data) {
-                                    window.location.href = '/MachineDocuments?machineId=' + data.record.id;
+                                    window.location.href =
+                                        '/DocumentFolders?machineId=' + data.record.id;
                                 }
                             },
                             {
@@ -44,6 +48,14 @@
                                 text: 'Editar',
                                 action: function (data) {
                                     editModal.open({ id: data.record.id });
+                                }
+                            },
+                            {
+                                text: 'Duplicar',
+                                action: function (data) {
+                                    duplicateModal.open({
+                                        sourceMachineId: data.record.id
+                                    });
                                 }
                             },
                             {
@@ -109,6 +121,9 @@
     });
 
     editModal.onResult(function () {
+        location.reload();
+    });
+    duplicateModal.onResult(function () {
         location.reload();
     });
 

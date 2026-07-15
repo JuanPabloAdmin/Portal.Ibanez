@@ -1,0 +1,45 @@
+﻿@page
+@using Portal.Ibanez.Web.Pages.MachineDocuments
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model UploadFolderModalModel
+
+<form method="post"
+      asp-page="/MachineDocuments/UploadFolderModal"
+      enctype="multipart/form-data">
+
+    <abp-modal>
+        <abp-modal-header title="Subir carpeta de documentos"></abp-modal-header>
+
+        <abp-modal-body>
+
+            <input type="hidden" asp-for="MachineId" />
+            <input type="hidden" asp-for="DocumentFolderId" />
+
+            <div class="mb-3">
+                <label for="FolderFiles" class="form-label">
+                    Selecciona una carpeta
+                </label>
+
+                <input id="FolderFiles"
+                       name="FolderFiles"
+                       type="file"
+                       class="form-control"
+                       accept=".pdf,application/pdf"
+                       multiple
+                       webkitdirectory
+                       directory />
+
+                <div class="form-text">
+                    Se subirán únicamente los archivos PDF contenidos en la carpeta seleccionada.
+                </div>
+
+                <span asp-validation-for="FolderFiles" class="text-danger"></span>
+            </div>
+
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel | AbpModalButtons.Save)">
+        </abp-modal-footer>
+    </abp-modal>
+
+</form>

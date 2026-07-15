@@ -17,6 +17,9 @@ public class CreateModalModel : IbanezPageModel
     [BindProperty(SupportsGet = true)]
     public Guid? MachineId { get; set; }
     
+    [BindProperty(SupportsGet = true)]
+    public Guid? DocumentFolderId { get; set; }
+
     [BindProperty]
     public IFormFile PdfFile { get; set; }
 
@@ -46,6 +49,10 @@ public class CreateModalModel : IbanezPageModel
         {
             Document.MachineId = MachineId.Value;
         }
+        if (DocumentFolderId.HasValue)
+        {
+            Document.DocumentFolderId = DocumentFolderId.Value;
+        }
     }
 
     public async Task<IActionResult> OnPostAsync()
@@ -56,9 +63,21 @@ public class CreateModalModel : IbanezPageModel
             return Page();
         }
 
-        if (!PdfFile.ContentType.Equals("application/pdf", StringComparison.OrdinalIgnoreCase))
+        var extension = Path.GetExtension(PdfFile.FileName);
+
+        if (!extension.Equals(".pdf", StringComparison.OrdinalIgnoreCase))
         {
             ModelState.AddModelError(nameof(PdfFile), "Solo se permiten archivos PDF.");
+            return Page();
+        }
+
+        if (!Document.DocumentFolderId.HasValue)
+        {
+            ModelState.AddModelError(
+                "Document.DocumentFolderId",
+                "No se ha indicado la carpeta documental."
+            );
+
             return Page();
         }
 
@@ -66,7 +85,8 @@ public class CreateModalModel : IbanezPageModel
             _webHostEnvironment.WebRootPath,
             "uploads",
             "machines",
-            Document.MachineId.ToString()
+            Document.MachineId.ToString(),
+            Document.DocumentFolderId.Value.ToString()
         );
 
         Directory.CreateDirectory(uploadsRootPath);

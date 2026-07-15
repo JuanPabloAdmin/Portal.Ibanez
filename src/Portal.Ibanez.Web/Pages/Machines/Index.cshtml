@@ -25,7 +25,16 @@
                 var id = $(this).data('id');
                 editModal.open({ id: id });
             });
+                   
+            $('.duplicate-machine-btn').click(function (e) {
+            e.preventDefault();
 
+            var machineId = $(this).data('id');
+
+            duplicateModal.open({
+                sourceMachineId: machineId
+            });
+        });
             createModal.onResult(function () { window.location.href = window.location.pathname + window.location.search; });
             editModal.onResult(function () { window.location.href = window.location.pathname + window.location.search; });
 
@@ -318,11 +327,14 @@
                     </div>
 
                     <div class="p-2 bg-light border-top d-flex gap-2">
-                        <a href="/Machines/Detail/@machine.Id" class="btn btn-dark btn-sm flex-grow-1 fw-bold text-decoration-none text-center d-flex align-items-center justify-content-center gap-2" style="border-radius: 6px; font-size: 0.75rem;">
+                        <a href="/DocumentFolders?MachineID=@machine.Id" class="btn btn-dark btn-sm flex-grow-1 fw-bold text-decoration-none text-center d-flex align-items-center justify-content-center gap-2" style="border-radius: 6px; font-size: 0.75rem;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z" /></svg>
                             Ver Documentación
                         </a>
-
+                        <a href="/QrCodes?MachineID=@machine.Id" class="btn btn-dark btn-sm flex-grow-1 fw-bold text-decoration-none text-center d-flex align-items-center justify-content-center gap-2" style="border-radius: 6px; font-size: 0.75rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z" /></svg>
+                            Ver QR
+                        </a>
                         <div class="dropdown">
                             <button class="btn btn-white border bg-white btn-sm px-2 text-secondary h-100" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 6px;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" /></svg>
@@ -332,6 +344,23 @@
                                     <button class="dropdown-item d-flex align-items-center gap-2 edit-machine-btn py-2" data-id="@machine.Id">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#6b7280" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" /></svg>
                                         Editar detalles
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button"
+                                            class="dropdown-item d-flex align-items-center gap-2 duplicate-machine-btn py-2"
+                                            data-id="@machine.Id">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width="12"
+                                             height="12"
+                                             fill="#6b7280"
+                                             viewBox="0 0 16 16">
+                                            <path d="M4 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-1V6a2 2 0 0 0-2-2H4V2z" />
+                                            <path d="M1 7a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H3z" />
+                                        </svg>
+
+                                        Duplicar máquina
                                     </button>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>

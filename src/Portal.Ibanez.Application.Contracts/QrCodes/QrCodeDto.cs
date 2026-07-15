@@ -6,6 +6,7 @@ namespace Portal.Ibanez.QrCodes;
 public class QrCodeDto : FullAuditedEntityDto<Guid>
 {
     public Guid MachineId { get; set; }
+    public Guid? DocumentFolderId { get; set; }
 
     public string Code { get; set; }
 

@@ -10,6 +10,9 @@ public class CreateUpdateQrCodeDto
     [DisplayName("Máquina")]
     public Guid MachineId { get; set; }
 
+    [DisplayName("Carpeta")]
+    public Guid? DocumentFolderId { get; set; }
+
     [Required]
     [StringLength(100)]
     [DisplayName("Código QR")]

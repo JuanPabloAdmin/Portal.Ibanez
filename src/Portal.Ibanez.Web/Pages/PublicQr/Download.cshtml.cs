@@ -36,11 +36,7 @@ public class DownloadModel : IbanezPageModel
             return NotFound();
         }
 
-        var associatedDocuments = await _qrCodeAppService.GetDocumentsAsync(qrCode.Id);
-
-        var isAssociated = associatedDocuments.Any(x => x.MachineDocumentId == documentId);
-
-        if (!isAssociated)
+        if (!qrCode.DocumentFolderId.HasValue)
         {
             return NotFound();
         }
@@ -52,13 +48,35 @@ public class DownloadModel : IbanezPageModel
             return NotFound();
         }
 
-        var fullPath = Path.Combine(
-            _webHostEnvironment.WebRootPath,
-            "uploads",
-            "machines",
-            document.MachineId.ToString(),
-            document.StoredFileName
-        );
+        if (!document.DocumentFolderId.HasValue ||
+            document.DocumentFolderId.Value != qrCode.DocumentFolderId.Value)
+        {
+            return NotFound();
+        }
+
+        string fullPath;
+
+        if (document.DocumentFolderId.HasValue)
+        {
+            fullPath = Path.Combine(
+                _webHostEnvironment.WebRootPath,
+                "uploads",
+                "machines",
+                document.MachineId.ToString(),
+                document.DocumentFolderId.Value.ToString(),
+                document.StoredFileName
+            );
+        }
+        else
+        {
+            fullPath = Path.Combine(
+                _webHostEnvironment.WebRootPath,
+                "uploads",
+                "machines",
+                document.MachineId.ToString(),
+                document.StoredFileName
+            );
+        }
 
         if (!System.IO.File.Exists(fullPath))
         {

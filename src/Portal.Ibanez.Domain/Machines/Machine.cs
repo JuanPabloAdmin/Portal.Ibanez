@@ -9,6 +9,7 @@ public class Machine : FullAuditedAggregateRoot<Guid>
     public Guid CustomerId { get; set; }
 
     public Guid MachineTypeId { get; set; }
+  
 
     public DateTime? ManufacturingDate { get; set; }
 

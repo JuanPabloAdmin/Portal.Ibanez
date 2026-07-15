@@ -4,7 +4,7 @@ using Portal.Ibanez.QrCodes;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using Portal.Ibanez.Documents;
 namespace Portal.Ibanez.Web.Pages.PublicQr;
 
 [AllowAnonymous]
@@ -15,15 +15,17 @@ public class IndexModel : IbanezPageModel
 
     public string Message { get; set; }
 
-    public List<QrCodeDocumentDto> Documents { get; set; } = new();
+    public List<MachineDocumentDto> Documents { get; set; } = new();
 
     private readonly IQrCodeAppService _qrCodeAppService;
-
-    public IndexModel(IQrCodeAppService qrCodeAppService)
+    private readonly IMachineDocumentAppService _machineDocumentAppService;
+    public IndexModel(
+     IQrCodeAppService qrCodeAppService,
+     IMachineDocumentAppService machineDocumentAppService)
     {
         _qrCodeAppService = qrCodeAppService;
+        _machineDocumentAppService = machineDocumentAppService;
     }
-
     public async Task<IActionResult> OnGetAsync(string code)
     {
         Code = code;
@@ -36,7 +38,15 @@ public class IndexModel : IbanezPageModel
             return Page();
         }
 
-        Documents = await _qrCodeAppService.GetDocumentsAsync(qrCode.Id);
+        if (!qrCode.DocumentFolderId.HasValue)
+        {
+            Message = "Este código QR no tiene una carpeta documental asociada.";
+            return Page();
+        }
+
+        Documents = await _machineDocumentAppService.GetByFolderAsync(
+            qrCode.DocumentFolderId.Value
+        );
 
         if (Documents.Count == 0)
         {
@@ -46,7 +56,7 @@ public class IndexModel : IbanezPageModel
 
         if (Documents.Count == 1)
         {
-            return Redirect($"/q/{Code}/download/{Documents[0].MachineDocumentId}");
+            return Redirect($"/q/{Code}/download/{Documents[0].Id}");
         }
 
         return Page();

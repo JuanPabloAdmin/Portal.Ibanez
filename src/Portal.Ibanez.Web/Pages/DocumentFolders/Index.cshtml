@@ -1,0 +1,33 @@
+﻿@page
+@using Portal.Ibanez.Web.Pages.DocumentFolders
+@model IndexModel
+
+@section scripts
+{
+    <abp-script src="/Pages/DocumentFolders/Index.js" />
+}
+
+<input type="hidden" id="MachineId" value="@Model.MachineId" />
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_7">
+                <h2>@Model.Title</h2>
+            </abp-column>
+
+            <abp-column size-md="_5" class="text-end">
+                <abp-button id="NewDocumentFolderButton"
+                            text="Nueva carpeta"
+                            icon="folder-plus"
+                            button-type="Primary" />
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+
+    <abp-card-body>
+        <abp-table striped-rows="true"
+                   id="DocumentFoldersTable">
+        </abp-table>
+    </abp-card-body>
+</abp-card>

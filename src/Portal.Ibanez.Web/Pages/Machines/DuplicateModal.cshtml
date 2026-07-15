@@ -1,0 +1,41 @@
+﻿@page
+@using Portal.Ibanez.Web.Pages.Machines
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model DuplicateModalModel
+
+<form method="post" asp-page="/Machines/DuplicateModal">
+
+    <abp-modal>
+        <abp-modal-header title="Duplicar máquina"></abp-modal-header>
+
+        <abp-modal-body>
+
+            <input type="hidden" asp-for="SourceMachineId" />
+            <input type="hidden" asp-for="Input.MachineTypeId" />
+            <input type="hidden" asp-for="Input.ManufacturingDate" />
+            <input type="hidden" asp-for="Input.DeliveryDate" />
+            <input type="hidden" asp-for="Input.Observations" />
+
+            <div class="alert alert-info">
+                <strong>Máquina origen:</strong>
+                @Model.MachineSummary
+            </div>
+
+            <abp-select asp-for="Input.CustomerId"
+                        asp-items="Model.Customers"
+                        label="Cliente destino">
+            </abp-select>
+
+            <abp-input asp-for="Input.OrderNumber" />
+
+            <abp-input asp-for="Input.CabinetNumber" />
+
+            <abp-input asp-for="Input.CopyDocuments" />
+
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel | AbpModalButtons.Save)">
+        </abp-modal-footer>
+    </abp-modal>
+
+</form>

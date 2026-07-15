@@ -1,8 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Portal.Ibanez.DocumentFolders;
 using Portal.Ibanez.QrCodes;
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+using Volo.Abp.Application.Dtos;
 
 namespace Portal.Ibanez.Web.Pages.QrCodes;
 
@@ -15,14 +21,21 @@ public class CreateModalModel : IbanezPageModel
     [BindProperty]
     public CreateUpdateQrCodeDto QrCode { get; set; }
 
-    private readonly IQrCodeAppService _qrCodeAppService;
+    public List<SelectListItem> DocumentFolders { get; set; } = new();
 
-    public CreateModalModel(IQrCodeAppService qrCodeAppService)
+
+    private readonly IQrCodeAppService _qrCodeAppService;
+    private readonly IDocumentFolderAppService _documentFolderAppService;
+
+    public CreateModalModel(
+     IQrCodeAppService qrCodeAppService,
+     IDocumentFolderAppService documentFolderAppService)
     {
         _qrCodeAppService = qrCodeAppService;
+        _documentFolderAppService = documentFolderAppService;
     }
 
-    public void OnGet()
+    public async Task OnGetAsync()
     {
         QrCode = new CreateUpdateQrCodeDto
         {
@@ -33,6 +46,17 @@ public class CreateModalModel : IbanezPageModel
         if (MachineId.HasValue)
         {
             QrCode.MachineId = MachineId.Value;
+
+            var folders = await _documentFolderAppService.GetListAsync(
+                new GetDocumentFolderListInput
+                {
+                    MachineId = MachineId.Value,
+                    MaxResultCount = 1000
+                });
+
+            DocumentFolders = folders.Items
+                .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
+                .ToList();
         }
     }
 

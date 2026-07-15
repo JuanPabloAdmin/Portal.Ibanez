@@ -5,7 +5,7 @@ using Portal.Ibanez.MachineTypes;
 using Portal.Ibanez.Machines;
 using Portal.Ibanez.Documents;
 using Portal.Ibanez.QrCodes;
-
+using Portal.Ibanez.DocumentFolders;
 
 public class IbanezApplicationAutoMapperProfile : Profile
 {
@@ -29,5 +29,8 @@ public class IbanezApplicationAutoMapperProfile : Profile
         CreateMap<QrCode, QrCodeDto>();
         CreateMap<CreateUpdateQrCodeDto, QrCode>();
         CreateMap<QrCodeDto, CreateUpdateQrCodeDto>();
+        CreateMap<DocumentFolder, DocumentFolderDto>();
+        CreateMap<CreateUpdateDocumentFolderDto, DocumentFolder>();
+        CreateMap<DocumentFolderDto, CreateUpdateDocumentFolderDto>();
     }
 }

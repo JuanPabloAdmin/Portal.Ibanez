@@ -5,6 +5,9 @@
     var createModal = new abp.ModalManager({
         viewUrl: '/MachineDocuments/CreateModal'
     });
+    var uploadFolderModal = new abp.ModalManager({
+        viewUrl: '/MachineDocuments/UploadFolderModal'
+    });
 
     var editModal = new abp.ModalManager({
         viewUrl: '/MachineDocuments/EditModal'
@@ -20,7 +23,8 @@
 
             ajax: abp.libs.datatables.createAjax(service.getList, function () {
                 return {
-                    machineId: $('#MachineId').val()
+                    machineId: $('#MachineId').val(),
+                    documentFolderId: $('#DocumentFolderId').val()
                 };
             }),
 
@@ -84,18 +88,32 @@
         })
     );
 
-    $('#NewMachineDocumentButton').click(function (e) {
+    $('#NewDocumentButton').click(function (e) {
         e.preventDefault();
+
         createModal.open({
-            machineId: $('#MachineId').val()
+            machineId: $('#MachineId').val(),
+            documentFolderId: $('#DocumentFolderId').val()
         });
     });
+    $('#UploadFolderButton').click(function (e) {
 
+        e.preventDefault();
+
+        uploadFolderModal.open({
+            machineId: $('#MachineId').val(),
+            documentFolderId: $('#DocumentFolderId').val()
+        });
+
+    });
     createModal.onResult(function () {
         location.reload();
     });
 
     editModal.onResult(function () {
+        location.reload();
+    });
+    uploadFolderModal.onResult(function () {
         location.reload();
     });
 

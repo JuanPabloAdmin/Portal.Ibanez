@@ -111,6 +111,76 @@ namespace Portal.Ibanez.Migrations
                     b.ToTable("AppCustomers", (string)null);
                 });
 
+            modelBuilder.Entity("Portal.Ibanez.DocumentFolders.DocumentFolder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("ExtraProperties")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<Guid>("MachineId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MachineId", "Name");
+
+                    b.ToTable("AppDocumentFolders", (string)null);
+                });
+
             modelBuilder.Entity("Portal.Ibanez.Documents.MachineDocument", b =>
                 {
                     b.Property<Guid>("Id")
@@ -143,6 +213,9 @@ namespace Portal.Ibanez.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("DeletionTime");
+
+                    b.Property<Guid?>("DocumentFolderId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ExtraProperties")
                         .IsRequired()
@@ -177,6 +250,10 @@ namespace Portal.Ibanez.Migrations
                     b.Property<Guid>("MachineId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("RelativePath")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
                     b.Property<string>("StoredFileName")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -191,6 +268,8 @@ namespace Portal.Ibanez.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DocumentFolderId");
 
                     b.ToTable("AppMachineDocuments", (string)null);
                 });
@@ -369,6 +448,9 @@ namespace Portal.Ibanez.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
+                    b.Property<Guid?>("DocumentFolderId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("ExtraProperties")
                         .IsRequired()
                         .HasColumnType("text")
@@ -404,29 +486,9 @@ namespace Portal.Ibanez.Migrations
                     b.HasIndex("Code")
                         .IsUnique();
 
+                    b.HasIndex("DocumentFolderId");
+
                     b.ToTable("AppQrCodes", (string)null);
-                });
-
-            modelBuilder.Entity("Portal.Ibanez.QrCodes.QrCodeDocument", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("MachineDocumentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("QrCodeId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QrCodeId", "MachineDocumentId")
-                        .IsUnique();
-
-                    b.ToTable("AppQrCodeDocuments", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

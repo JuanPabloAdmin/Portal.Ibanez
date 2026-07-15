@@ -9,6 +9,8 @@ public class CreateUpdateMachineDocumentDto
     [Required]
     [DisplayName("Máquina")]
     public Guid MachineId { get; set; }
+    [DisplayName("Carpeta")]
+    public Guid? DocumentFolderId { get; set; }
 
     [Required]
     [StringLength(200)]
@@ -21,6 +23,10 @@ public class CreateUpdateMachineDocumentDto
 
     [StringLength(255)]
     public string StoredFileName { get; set; }
+
+    [StringLength(1000)]
+    [DisplayName("Ruta relativa")]
+    public string? RelativePath { get; set; }
 
     [StringLength(100)]
     public string ContentType { get; set; }

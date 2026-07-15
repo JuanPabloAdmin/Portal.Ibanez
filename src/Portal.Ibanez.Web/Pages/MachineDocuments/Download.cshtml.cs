@@ -26,13 +26,29 @@ public class DownloadModel : IbanezPageModel
     {
         var document = await _machineDocumentAppService.GetAsync(id);
 
-        var fullPath = Path.Combine(
-            _webHostEnvironment.WebRootPath,
-            "uploads",
-            "machines",
-            document.MachineId.ToString(),
-            document.StoredFileName
-        );
+        string fullPath;
+
+        if (document.DocumentFolderId.HasValue)
+        {
+            fullPath = Path.Combine(
+                _webHostEnvironment.WebRootPath,
+                "uploads",
+                "machines",
+                document.MachineId.ToString(),
+                document.DocumentFolderId.Value.ToString(),
+                document.StoredFileName
+            );
+        }
+        else
+        {
+            fullPath = Path.Combine(
+                _webHostEnvironment.WebRootPath,
+                "uploads",
+                "machines",
+                document.MachineId.ToString(),
+                document.StoredFileName
+            );
+        }
 
         if (!System.IO.File.Exists(fullPath))
         {
