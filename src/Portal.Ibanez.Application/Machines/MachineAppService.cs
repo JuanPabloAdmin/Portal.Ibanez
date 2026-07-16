@@ -12,6 +12,7 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Linq;
+using System.Collections.Generic;
 
 namespace Portal.Ibanez.Machines;
 
@@ -125,17 +126,30 @@ public class MachineAppService :
             var sourceFolders = await AsyncExecuter.ToListAsync(
                 sourceFoldersQueryable
                     .Where(x => x.MachineId == sourceMachineId)
-                    .OrderBy(x => x.Name)
+                    .OrderBy(x => x.CreationTime)
             );
 
+            /*
+             * Relación:
+             * carpeta original -> carpeta nueva
+             */
+            var folderIdMap = new Dictionary<Guid, Guid>();
+
+            /*
+             * Primera pasada:
+             * crear todas las carpetas, todavía sin ParentFolderId.
+             */
             foreach (var sourceFolder in sourceFolders)
             {
+                var newFolderId = GuidGenerator.Create();
+
                 var newFolder = new DocumentFolder(
-                    GuidGenerator.Create(),
+                    newFolderId,
                     newMachine.Id,
                     sourceFolder.Name
                 )
                 {
+                    ParentFolderId = null,
                     Description = sourceFolder.Description,
                     IsActive = sourceFolder.IsActive
                 };
@@ -145,45 +159,99 @@ public class MachineAppService :
                     autoSave: true
                 );
 
-                var sourceDocumentsQueryable =
-                    await _machineDocumentRepository.GetQueryableAsync();
+                folderIdMap[sourceFolder.Id] = newFolderId;
+            }
 
-                var sourceDocuments = await AsyncExecuter.ToListAsync(
-                    sourceDocumentsQueryable
-                        .Where(x =>
-                            x.MachineId == sourceMachineId &&
-                            x.DocumentFolderId == sourceFolder.Id)
-                        .OrderBy(x => x.RelativePath ?? x.FileName)
+            /*
+             * Segunda pasada:
+             * reconstruir las relaciones padre-hijo usando los IDs nuevos.
+             */
+            foreach (var sourceFolder in sourceFolders)
+            {
+                if (!sourceFolder.ParentFolderId.HasValue)
+                {
+                    continue;
+                }
+
+                if (!folderIdMap.TryGetValue(
+                        sourceFolder.Id,
+                        out var newFolderId))
+                {
+                    continue;
+                }
+
+                if (!folderIdMap.TryGetValue(
+                        sourceFolder.ParentFolderId.Value,
+                        out var newParentFolderId))
+                {
+                    continue;
+                }
+
+                var newFolder = await _documentFolderRepository.GetAsync(
+                    newFolderId
                 );
 
-                foreach (var sourceDocument in sourceDocuments)
-                {
-                    var newDocument = new MachineDocument(
-                        GuidGenerator.Create(),
-                        newMachine.Id,
-                        sourceDocument.Title,
-                        sourceDocument.FileName,
-                        sourceDocument.StoredFileName,
-                        sourceDocument.ContentType,
-                        sourceDocument.FileSize
-                    )
-                    {
-                        DocumentFolderId = newFolder.Id,
-                        RelativePath = sourceDocument.RelativePath,
-                        Version = sourceDocument.Version,
-                        IsActive = sourceDocument.IsActive
-                    };
+                newFolder.ParentFolderId = newParentFolderId;
 
-                    await _machineDocumentRepository.InsertAsync(
-                        newDocument,
-                        autoSave: true
-                    );
-                    duplicatedDocuments.Add(new DuplicatedDocumentDto
-                    {
-                        SourceDocumentId = sourceDocument.Id,
-                        NewDocumentId = newDocument.Id
-                    });
+                await _documentFolderRepository.UpdateAsync(
+                    newFolder,
+                    autoSave: true
+                );
+            }
+
+            /*
+             * Tercera pasada:
+             * copiar documentos y asociarlos a la carpeta nueva equivalente.
+             */
+            var sourceDocumentsQueryable =
+                await _machineDocumentRepository.GetQueryableAsync();
+
+            var sourceDocuments = await AsyncExecuter.ToListAsync(
+                sourceDocumentsQueryable
+                    .Where(x => x.MachineId == sourceMachineId)
+                    .OrderBy(x => x.RelativePath ?? x.FileName)
+            );
+
+            foreach (var sourceDocument in sourceDocuments)
+            {
+                if (!sourceDocument.DocumentFolderId.HasValue)
+                {
+                    continue;
                 }
+
+                if (!folderIdMap.TryGetValue(
+                        sourceDocument.DocumentFolderId.Value,
+                        out var newDocumentFolderId))
+                {
+                    continue;
+                }
+
+                var newDocument = new MachineDocument(
+                    GuidGenerator.Create(),
+                    newMachine.Id,
+                    sourceDocument.Title,
+                    sourceDocument.FileName,
+                    sourceDocument.StoredFileName,
+                    sourceDocument.ContentType,
+                    sourceDocument.FileSize
+                )
+                {
+                    DocumentFolderId = newDocumentFolderId,
+                    RelativePath = sourceDocument.RelativePath,
+                    Version = sourceDocument.Version,
+                    IsActive = sourceDocument.IsActive
+                };
+
+                await _machineDocumentRepository.InsertAsync(
+                    newDocument,
+                    autoSave: true
+                );
+
+                duplicatedDocuments.Add(new DuplicatedDocumentDto
+                {
+                    SourceDocumentId = sourceDocument.Id,
+                    NewDocumentId = newDocument.Id
+                });
             }
         }
 

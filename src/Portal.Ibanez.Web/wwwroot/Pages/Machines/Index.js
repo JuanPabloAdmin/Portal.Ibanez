@@ -9,9 +9,9 @@
     var editModal = new abp.ModalManager({
         viewUrl: '/Machines/EditModal'
     });
-    var duplicateModal = new abp.ModalManager({
-        viewUrl: '/Machines/DuplicateModal'
-    });
+    var duplicateModal = new abp.ModalManager(
+        abp.appPath + 'Machines/DuplicateModal'
+    );
 
     var dataTable = $('#MachinesTable').DataTable(
         abp.libs.datatables.normalizeConfiguration({
@@ -113,6 +113,15 @@
         e.preventDefault();
         createModal.open({
             customerId: $('#CustomerId').val()
+        });
+    });
+    $('.duplicate-machine-btn').click(function (e) {
+        e.preventDefault();
+
+        var machineId = $(this).data('id');
+
+        duplicateModal.open({
+            sourceMachineId: machineId
         });
     });
 
