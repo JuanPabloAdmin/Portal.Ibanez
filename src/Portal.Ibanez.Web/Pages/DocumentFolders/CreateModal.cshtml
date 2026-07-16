@@ -2,6 +2,9 @@
 @using Portal.Ibanez.Web.Pages.DocumentFolders
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
 @model CreateModalModel
+@{
+    Layout = null;
+}
 
 <form method="post" asp-page="/DocumentFolders/CreateModal">
 
@@ -11,11 +14,10 @@
         <abp-modal-body>
 
             <input type="hidden" asp-for="Folder.MachineId" />
+            <input type="hidden" asp-for="Folder.ParentFolderId" />
 
             <abp-input asp-for="Folder.Name" />
-
             <abp-input asp-for="Folder.Description" />
-
             <abp-input asp-for="Folder.IsActive" />
 
         </abp-modal-body>

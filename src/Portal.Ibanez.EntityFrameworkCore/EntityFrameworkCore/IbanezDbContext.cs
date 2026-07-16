@@ -168,6 +168,11 @@ public class IbanezDbContext :
                 .HasMaxLength(1000);
 
             b.HasIndex(x => new { x.MachineId, x.Name });
+            b.HasIndex(x => x.ParentFolderId);
+            b.HasOne<DocumentFolder>()
+    .WithMany()
+    .HasForeignKey(x => x.ParentFolderId)
+    .OnDelete(DeleteBehavior.Restrict);
         });
     }
 }

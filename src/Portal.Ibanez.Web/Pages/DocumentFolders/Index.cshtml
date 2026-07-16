@@ -8,26 +8,56 @@
 }
 
 <input type="hidden" id="MachineId" value="@Model.MachineId" />
+<input type="hidden" id="ParentFolderId" value="@Model.ParentFolderId" />
 
 <abp-card>
     <abp-card-header>
         <abp-row>
-            <abp-column size-md="_7">
-                <h2>@Model.Title</h2>
+            <abp-column size-md="_8">
+                <h2 class="mb-1">@Model.Title</h2>
+
+                @if (!string.IsNullOrWhiteSpace(Model.CurrentFolderName))
+                {
+                    <div class="text-muted">
+                        Carpeta actual:
+                        <strong>@Model.CurrentFolderName</strong>
+                    </div>
+                }
             </abp-column>
 
-            <abp-column size-md="_5" class="text-end">
+            <abp-column size-md="_4" class="text-end">
+                @if (Model.ParentFolderId.HasValue)
+                {
+                    <a href="/DocumentFolders?machineId=@Model.MachineId"
+                       class="btn btn-outline-secondary me-2">
+                        Volver a raíz
+                    </a>
+                }
+
                 <abp-button id="NewDocumentFolderButton"
                             text="Nueva carpeta"
                             icon="folder-plus"
                             button-type="Primary" />
+
+                @if (Model.ParentFolderId.HasValue)
+                {
+                    <abp-button id="NewDocumentButton"
+                                text="Nuevo documento"
+                                icon="file-circle-plus"
+                                button-type="Success" />
+
+                    <abp-button id="UploadFolderButton"
+                                text="Subir carpeta"
+                                icon="folder-open"
+                                button-type="Outline_Primary" />
+                }
             </abp-column>
         </abp-row>
     </abp-card-header>
 
     <abp-card-body>
-        <abp-table striped-rows="true"
-                   id="DocumentFoldersTable">
-        </abp-table>
+        <div id="DocumentFoldersExplorer"
+             class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        </div>
     </abp-card-body>
 </abp-card>

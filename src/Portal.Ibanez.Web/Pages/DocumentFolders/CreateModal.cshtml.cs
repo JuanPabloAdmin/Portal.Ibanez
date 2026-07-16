@@ -9,11 +9,8 @@ namespace Portal.Ibanez.Web.Pages.DocumentFolders;
 [Authorize]
 public class CreateModalModel : IbanezPageModel
 {
-    [BindProperty(SupportsGet = true)]
-    public Guid? MachineId { get; set; }
-
     [BindProperty]
-    public CreateUpdateDocumentFolderDto Folder { get; set; }
+    public CreateUpdateDocumentFolderDto Folder { get; set; } = new();
 
     private readonly IDocumentFolderAppService _documentFolderAppService;
 
@@ -23,21 +20,28 @@ public class CreateModalModel : IbanezPageModel
         _documentFolderAppService = documentFolderAppService;
     }
 
-    public void OnGet()
+    public void OnGet(Guid machineId, Guid? parentFolderId)
     {
         Folder = new CreateUpdateDocumentFolderDto
         {
+            MachineId = machineId,
+            ParentFolderId = parentFolderId,
             IsActive = true
         };
-
-        if (MachineId.HasValue)
-        {
-            Folder.MachineId = MachineId.Value;
-        }
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
+        if (Folder.MachineId == Guid.Empty)
+        {
+            ModelState.AddModelError(
+                "Folder.MachineId",
+                "No se recibió correctamente la máquina."
+            );
+
+            return Page();
+        }
+
         await _documentFolderAppService.CreateAsync(Folder);
 
         return NoContent();

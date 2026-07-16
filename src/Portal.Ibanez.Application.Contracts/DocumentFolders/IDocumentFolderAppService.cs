@@ -1,6 +1,7 @@
 ﻿using System;
 using Volo.Abp.Application.Services;
-
+using System.Collections.Generic;
+using System.Threading.Tasks;
 namespace Portal.Ibanez.DocumentFolders;
 
 public interface IDocumentFolderAppService :
@@ -10,4 +11,7 @@ public interface IDocumentFolderAppService :
         GetDocumentFolderListInput,
         CreateUpdateDocumentFolderDto>
 {
+    Task<FolderExplorerDto> GetExplorerAsync( GetFolderExplorerInput input);
+
+    Task<FolderContentStateDto> GetContentStateAsync(Guid folderId);
 }

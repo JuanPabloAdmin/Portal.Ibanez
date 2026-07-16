@@ -8,6 +8,8 @@ public class CreateUpdateDocumentFolderDto
 {
     [Required]
     public Guid MachineId { get; set; }
+    [DisplayName("Carpeta padre")]
+    public Guid? ParentFolderId { get; set; }
 
     [Required]
     [StringLength(200)]

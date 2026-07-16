@@ -6,7 +6,7 @@ namespace Portal.Ibanez.DocumentFolders;
 public class DocumentFolder : FullAuditedAggregateRoot<Guid>
 {
     public Guid MachineId { get; set; }
-
+    public Guid? ParentFolderId { get; set; }
     public string Name { get; set; }
 
     public string Description { get; set; }

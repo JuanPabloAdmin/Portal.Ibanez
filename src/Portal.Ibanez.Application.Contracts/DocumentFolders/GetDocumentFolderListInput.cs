@@ -6,5 +6,8 @@ namespace Portal.Ibanez.DocumentFolders;
 public class GetDocumentFolderListInput : PagedAndSortedResultRequestDto
 {
     public Guid? MachineId { get; set; }
-    public Guid? DocumentFolderId { get; set; }
+    public Guid? ParentFolderId { get; set; }
+
+    public bool OnlyRootFolders { get; set; }
+ 
 }

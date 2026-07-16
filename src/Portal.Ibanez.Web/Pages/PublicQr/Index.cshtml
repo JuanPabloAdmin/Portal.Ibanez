@@ -1,5 +1,6 @@
 ﻿@page "/q/{code}"
-@model Portal.Ibanez.Web.Pages.PublicQr.IndexModel
+@using Portal.Ibanez.Web.Pages.PublicQr
+@model IndexModel
 @{
     Layout = null;
 }
@@ -8,69 +9,190 @@
 <html lang="es">
 <head>
     <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1" />
+
     <title>Documentación técnica</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f7;
-            margin: 0;
-            padding: 32px;
-            color: #1d1d1f;
+        * {
+            box-sizing: border-box;
         }
 
-        .card {
-            max-width: 640px;
+        body {
+            margin: 0;
+            padding: 24px;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f5f7;
+            color: #1f2937;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 760px;
             margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header-title {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .header-subtitle {
+            margin-top: 6px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .panel {
             background: #fff;
             border-radius: 16px;
-            padding: 28px;
-            box-shadow: 0 8px 32px rgba(0,0,0,.08);
+            padding: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .08);
         }
 
-        h1 {
-            font-size: 22px;
-            margin-bottom: 8px;
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
         }
 
-        .doc {
+        .current-folder {
+            font-size: 18px;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .back-button {
+            display: none;
+            border: 1px solid #d1d5db;
+            background: #fff;
+            color: #374151;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .items {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .item {
             display: block;
-            padding: 14px 16px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            margin-top: 12px;
-            text-decoration: none;
-            color: #111;
+            width: 100%;
+            border: 1px solid #e5e7eb;
             background: #fafafa;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: left;
+            text-decoration: none;
+            color: #111827;
+            cursor: pointer;
         }
 
-            .doc:hover {
-                background: #f0f0f0;
+            .item:hover {
+                background: #f3f4f6;
             }
+
+        .item-title {
+            font-weight: 700;
+            margin-bottom: 4px;
+            overflow-wrap: anywhere;
+        }
+
+        .item-subtitle {
+            color: #6b7280;
+            font-size: 13px;
+            overflow-wrap: anywhere;
+        }
+
+        .message {
+            padding: 18px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background: #fafafa;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .error {
+            color: #991b1b;
+            background: #fef2f2;
+            border-color: #fecaca;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 24px;
+            color: #6b7280;
+        }
+
+        @@media (min-width: 640px) {
+            .items {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div class="card">
-        <h1>Documentación técnica</h1>
 
-        @if (!string.IsNullOrWhiteSpace(Model.Message))
-        {
-            <p>@Model.Message</p>
-        }
-        else
-        {
-            <p>Seleccione el documento que desea descargar:</p>
+    <input type="hidden"
+           id="QrCode"
+           value="@Model.Code" />
 
-            @foreach (var document in Model.Documents)
-            {
-                <a class="doc" href="/q/@Model.Code/download/@document.Id">
-                    @document.Title
-                    <br />
-                    <small>@document.FileName</small>
-                </a>
-            }
-        }
+    <div class="page">
+
+        <header class="header">
+            <h1 class="header-title">
+                https://www.ibanez.eu
+            </h1>
+
+            <div class="header-subtitle">
+                Documentación técnica
+            </div>
+        </header>
+
+        <main class="panel">
+
+            <div class="toolbar">
+
+                <button type="button"
+                        id="BackButton"
+                        class="back-button">
+                    ← Volver
+                </button>
+
+                <div id="CurrentFolderName"
+                     class="current-folder">
+                    Documentación
+                </div>
+
+            </div>
+
+            <div id="ExplorerContent">
+                <div class="loading">
+                    Cargando documentación...
+                </div>
+            </div>
+
+        </main>
+
     </div>
+
+    
+    <script src="/Pages/PublicQr/Index.js"></script>
+
 </body>
 </html>
