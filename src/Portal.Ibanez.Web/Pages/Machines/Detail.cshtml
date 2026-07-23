@@ -11,6 +11,8 @@
 
 @section scripts {
     <script>
+
+
         $(function () {
             // Inicialización de gestores de modales de ABP
             var editMachineModal = new abp.ModalManager(abp.appPath + 'Machines/EditModal');
@@ -18,11 +20,23 @@
             var editDocModal = new abp.ModalManager(abp.appPath + 'MachineDocuments/EditModal');
             var createQrModal = new abp.ModalManager(abp.appPath + 'QrCodes/CreateModal');
             var editQrModal = new abp.ModalManager(abp.appPath + 'QrCodes/EditModal');
+            var duplicateModal = new abp.ModalManager(
+                abp.appPath + 'Machines/DuplicateModal'
+            );
+
 
             $('#EditMachineButton').click(function () { editMachineModal.open({ id: '@Model.Id' }); });
             $('#NewDocumentButton').click(function () { createDocModal.open({ machineId: '@Model.Id' }); });
             $('#NewQrButton').click(function () { createQrModal.open({ machineId: '@Model.Id' }); });
+            $('.duplicate-machine-btn').click(function (e) {
+                e.preventDefault();
 
+                var machineId = $(this).data('id');
+
+                duplicateModal.open({
+                    sourceMachineId: machineId
+                });
+            });
             $('.edit-doc-btn').click(function () { editDocModal.open({ id: $(this).data('id') }); });
             $('.edit-qr-btn').click(function () { editQrModal.open({ id: $(this).data('id') }); });
 
@@ -33,6 +47,7 @@
             editDocModal.onResult(reload);
             createQrModal.onResult(reload);
             editQrModal.onResult(reload);
+            duplicateModal.onResult(reload);
 
             // Gestión de estado visual (Tabs y Acordeones) tras redirección
             var hash = window.location.hash;

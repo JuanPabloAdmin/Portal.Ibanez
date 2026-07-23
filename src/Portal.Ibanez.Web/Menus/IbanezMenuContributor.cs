@@ -57,6 +57,15 @@ public class IbanezMenuContributor : IMenuContributor
         order: 1
     )
 );
+        context.Menu.AddItem(
+new ApplicationMenuItem(
+"Ibanez.MachineTypes",
+"Tipos de Maquinas",
+url: "/machinetypes",
+icon: "fa fa-bars",
+order: 2
+)
+);
 
         if (MultiTenancyConsts.IsEnabled)
         {

@@ -43,6 +43,7 @@
         font-family: 'Inter', system-ui, sans-serif;
     }
 
+    /* Botón Principal */
     .btn-brand {
         background-color: #c71712;
         color: white;
@@ -51,115 +52,209 @@
         border-radius: 0.5rem;
         font-weight: 600;
         transition: all 0.2s;
+        box-shadow: 0 4px 6px -1px rgba(199, 23, 18, 0.2);
     }
 
         .btn-brand:hover {
             background-color: #a5130f;
             color: white;
             transform: translateY(-1px);
+            box-shadow: 0 6px 8px -1px rgba(199, 23, 18, 0.3);
         }
 
-    /* Tarjeta de Cliente Moderna */
+    /* Tarjeta de Cliente Premium */
     .customer-card {
         background: #ffffff;
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        transition: all 0.25s ease;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         height: 100%;
         display: flex;
         flex-direction: column;
+        position: relative;
         overflow: hidden;
     }
 
-        .customer-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 20px -8px rgba(0,0,0,0.1);
-            border-color: #d1d5db;
+        /* Franja de color superior */
+        .customer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #c71712 0%, #e11d48 100%);
+            opacity: 0.8;
+            transition: opacity 0.3s;
         }
 
+        .customer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.1);
+            border-color: #cbd5e1;
+        }
+
+            .customer-card:hover::before {
+                opacity: 1;
+            }
+
+            .customer-card:hover .company-avatar {
+                transform: scale(1.05);
+            }
+
+    /* Cabecera de la tarjeta */
     .customer-header {
-        padding: 1.5rem;
-        background: linear-gradient(to bottom, #ffffff, #f9fafb);
-        border-bottom: 1px solid #f3f4f6;
+        padding: 1.5rem 1.5rem 1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        border-bottom: 1px dashed #f1f5f9;
     }
 
     .company-avatar {
         width: 48px;
         height: 48px;
-        background-color: #f3f4f6;
-        color: #374151;
+        background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        color: #c71712;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 10px;
+        border-radius: 12px;
         font-weight: 700;
         font-size: 1.25rem;
-        border: 1px solid #e5e7eb;
+        border: 1px solid rgba(199, 23, 18, 0.1);
+        flex-shrink: 0;
+        transition: transform 0.3s ease;
+        box-shadow: inset 0 2px 4px rgba(255,255,255,0.5);
     }
 
-    .info-row {
+    .customer-id-badge {
+        font-size: 0.65rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        padding: 0.2rem 0.6rem;
+        border-radius: 20px;
+        background-color: #f1f5f9;
+        color: #475569;
+        border: 1px solid #e2e8f0;
+    }
+
+    /* Lista de Información con Iconos */
+    .info-list {
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .info-item {
         display: flex;
         align-items: center;
         gap: 10px;
-        margin-bottom: 0.75rem;
         font-size: 0.85rem;
     }
 
-    .info-label {
-        color: #9ca3af;
-        text-transform: uppercase;
-        font-size: 0.65rem;
-        font-weight: 700;
-        letter-spacing: 0.05em;
-        width: 60px;
+    .info-icon-wrapper {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8fafc;
+        border-radius: 6px;
+        color: #64748b;
+        flex-shrink: 0;
     }
 
+    .info-text {
+        color: #334155;
+        font-weight: 500;
+    }
+
+    .info-link {
+        color: #0284c7;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+
+        .info-link:hover {
+            color: #0369a1;
+            text-decoration: underline;
+        }
+
+    /* Botonera Footer */
     .card-footer-actions {
-        padding: 1rem;
-        background-color: #f9fafb;
-        border-top: 1px solid #f3f4f6;
+        padding: 1.25rem 1.5rem;
+        background-color: #fafbfc;
+        border-top: 1px solid #f1f5f9;
         display: flex;
         gap: 8px;
+        margin-top: auto;
     }
 
     .btn-action-main {
-        background-color: #374151;
+        background-color: #1e293b;
         color: white;
         font-weight: 600;
         font-size: 0.8rem;
         flex-grow: 1;
         border-radius: 8px;
+        padding: 0.6rem 1rem;
+        border: none;
+        transition: background-color 0.2s;
+        text-decoration: none;
     }
 
         .btn-action-main:hover {
-            background-color: #111827;
+            background-color: #0f172a;
             color: white;
+        }
+
+    .btn-action-edit {
+        background-color: #ffffff;
+        border: 1px solid #cbd5e1;
+        color: #475569;
+        border-radius: 8px;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+    }
+
+        .btn-action-edit:hover {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            border-color: #94a3b8;
         }
 
     /* Buscador */
     .search-wrapper {
         position: relative;
-        width: 300px;
+        width: 320px;
     }
 
         .search-wrapper svg {
             position: absolute;
             left: 12px;
-            top: 11px;
-            color: #9ca3af;
+            top: 12px;
+            color: #94a3b8;
         }
 
         .search-wrapper input {
             padding-left: 2.5rem;
-            border-radius: 10px;
-            border-color: #e5e7eb;
+            border-radius: 0.5rem;
+            border-color: #cbd5e1;
+            font-size: 0.9rem;
         }
 </style>
 
+<!-- Cabecera de la Página -->
 <div class="mb-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center bg-white p-4 border rounded-4 shadow-sm gap-3">
     <h2 class="h4 text-dark mb-0 d-flex align-items-center gap-2">
-        <div class="p-2 bg-light rounded-3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#6b7280" viewBox="0 0 16 16">
+        <div class="p-2 bg-light rounded-3 text-secondary d-flex align-items-center justify-content-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
             </svg>
         </div>
@@ -169,10 +264,10 @@
         </div>
     </h2>
 
-    <div class="d-flex gap-3">
+    <div class="d-flex flex-wrap gap-3">
         <div class="search-wrapper">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" /></svg>
-            <input type="text" id="customerSearchInput" class="form-control" placeholder="Buscar por nombre, CIF o email...">
+            <input type="text" id="customerSearchInput" class="form-control shadow-sm" placeholder="Buscar por nombre, CIF o email...">
         </div>
         <button id="NewCustomerButton" class="btn-brand d-flex align-items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" /></svg>
@@ -181,6 +276,7 @@
     </div>
 </div>
 
+<!-- Listado de Tarjetas -->
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
     @if (Model.Customers.Count > 0)
     {
@@ -190,36 +286,65 @@
 
             <div class="col customer-card-wrapper">
                 <div class="customer-card shadow-sm">
-                    <div class="customer-header d-flex align-items-center gap-3">
-                        <div class="company-avatar">@initial</div>
+
+                    <!-- Header: Avatar y Nombre -->
+                    <div class="customer-header">
+                        <div class="company-avatar shadow-sm">@initial</div>
                         <div class="overflow-hidden">
-                            <h3 class="h6 fw-bold text-dark mb-0 text-truncate" title="@customer.CommercialName">@customer.CommercialName</h3>
-                            <span class="text-muted small">ID: @customer.TaxId</span>
+                            <h3 class="h6 fw-bold text-dark mb-1 text-truncate" title="@customer.CommercialName">@customer.CommercialName</h3>
+                            <span class="customer-id-badge">ID: @(string.IsNullOrEmpty(customer.TaxId) ? "N/D" : customer.TaxId)</span>
                         </div>
                     </div>
 
-                    <div class="p-4 flex-grow-1">
-                        <div class="info-row">
-                            <span class="info-label">Fiscal</span>
-                            <span class="text-dark fw-medium text-truncate">@customer.FiscalName</span>
+                    <!-- Cuerpo: Información con Iconos -->
+                    <div class="info-list flex-grow-1">
+                        <!-- Razón Social (Edificio) -->
+                        <div class="info-item" title="Razón Social: @customer.FiscalName">
+                            <div class="info-icon-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z" />
+                                    <path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z" />
+                                </svg>
+                            </div>
+                            <span class="info-text text-truncate">@(string.IsNullOrEmpty(customer.FiscalName) ? "Sin razón social" : customer.FiscalName)</span>
                         </div>
-                        <div class="info-row">
-                            <span class="info-label">Email</span>
-                            <a href="mailto:@customer.Email" class="text-decoration-none text-primary text-truncate">@customer.Email</a>
+
+                        <!-- Email (Sobre) -->
+                        <div class="info-item">
+                            <div class="info-icon-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z" />
+                                </svg>
+                            </div>
+                            @if (!string.IsNullOrEmpty(customer.Email))
+                            {
+                                <a href="mailto:@customer.Email" class="info-link text-truncate" title="@customer.Email">@customer.Email</a>
+                            }
+                            else
+                            {
+                                <span class="text-muted fst-italic text-truncate">Sin email</span>
+                            }
                         </div>
-                        <div class="info-row mb-0">
-                            <span class="info-label">Teléfono</span>
-                            <span class="text-secondary">@customer.Phone</span>
+
+                        <!-- Teléfono (Llamada) -->
+                        <div class="info-item">
+                            <div class="info-icon-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                </svg>
+                            </div>
+                            <span class="info-text">@(string.IsNullOrEmpty(customer.Phone) ? "Sin teléfono" : customer.Phone)</span>
                         </div>
                     </div>
 
+                    <!-- Footer: Acciones -->
                     <div class="card-footer-actions">
                         <a href="/Machines?customerId=@customer.Id" class="btn btn-action-main d-flex align-items-center justify-content-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM9 2.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" /></svg>
                             Ver Máquinas
                         </a>
-                        <button type="button" class="btn btn-light border edit-customer-btn px-3" data-id="@customer.Id" title="Editar Cliente">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#6b7280" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" /></svg>
+                        <button type="button" class="btn-action-edit edit-customer-btn" data-id="@customer.Id" title="Editar Cliente">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" /></svg>
                         </button>
                     </div>
                 </div>
@@ -228,9 +353,14 @@
     }
     else
     {
+        <!-- Estado Vacío Modernizado -->
         <div class="col-12 text-center py-5">
-            <div class="bg-white p-5 rounded-4 border text-muted">
-                <p class="mb-0">No hay clientes registrados en el sistema.</p>
+            <div class="bg-white p-5 rounded-4 border text-muted shadow-sm d-flex flex-column align-items-center">
+                <div class="mb-3 p-3 bg-light rounded-circle text-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" viewBox="0 0 16 16"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" /></svg>
+                </div>
+                <h4 class="h5 text-dark fw-bold mb-1">No hay clientes</h4>
+                <p class="mb-0 text-secondary" style="font-size: 0.9rem;">Aún no se ha registrado ningún cliente en el sistema.</p>
             </div>
         </div>
     }

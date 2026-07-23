@@ -2,62 +2,285 @@
 @using Portal.Ibanez.Web.Pages.DocumentFolders
 @model IndexModel
 
-@section scripts
-{
+@section scripts {
     <abp-script src="/Pages/DocumentFolders/Index.js" />
 }
 
 <input type="hidden" id="MachineId" value="@Model.MachineId" />
 <input type="hidden" id="ParentFolderId" value="@Model.ParentFolderId" />
 
-<abp-card>
-    <abp-card-header>
-        <abp-row>
-            <abp-column size-md="_8">
-                <h2 class="mb-1">@Model.Title</h2>
+<style>
+    body {
+        background-color: #f4f7f9;
+        font-family: 'Inter', system-ui, sans-serif;
+    }
 
-                @if (!string.IsNullOrWhiteSpace(Model.CurrentFolderName))
-                {
-                    <div class="text-muted">
-                        Carpeta actual:
-                        <strong>@Model.CurrentFolderName</strong>
-                    </div>
-                }
-            </abp-column>
+    /* Botones Superiores */
+    .btn-brand {
+        background-color: #c71712;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+        transition: all 0.2s;
+        box-shadow: 0 4px 6px -1px rgba(199, 23, 18, 0.2);
+    }
 
-            <abp-column size-md="_4" class="text-end">
-                @if (Model.ParentFolderId.HasValue)
-                {
-                    <a href="/DocumentFolders?machineId=@Model.MachineId"
-                       class="btn btn-outline-secondary me-2">
-                        Volver a raíz
-                    </a>
-                }
+        .btn-brand:hover {
+            background-color: #a5130f;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 8px -1px rgba(199, 23, 18, 0.3);
+        }
 
-                <abp-button id="NewDocumentFolderButton"
-                            text="Nueva carpeta"
-                            icon="folder-plus"
-                            button-type="Primary" />
+    .btn-success-custom {
+        background-color: #10b981;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+        transition: all 0.2s;
+        box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);
+    }
 
-                @if (Model.ParentFolderId.HasValue)
-                {
-                    <abp-button id="NewDocumentButton"
-                                text="Nuevo documento"
-                                icon="file-circle-plus"
-                                button-type="Success" />
+        .btn-success-custom:hover {
+            background-color: #059669;
+            color: white;
+            transform: translateY(-1px);
+        }
 
-                    <abp-button id="UploadFolderButton"
-                                text="Subir carpeta"
-                                icon="folder-open"
-                                button-type="Outline_Primary" />
-                }
-            </abp-column>
-        </abp-row>
-    </abp-card-header>
+    .btn-outline-brand {
+        border: 1px solid #c71712;
+        color: #c71712;
+        background: white;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+    }
 
-    <abp-card-body>
-        <div id="DocumentFoldersExplorer"
-             class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-        </div>
-    </abp-card-body>
-</abp-card>
+        .btn-outline-brand:hover {
+            background: #fff5f5;
+            color: #a5130f;
+            border-color: #a5130f;
+        }
+
+    .btn-outline-custom {
+        border: 1px solid #cbd5e1;
+        color: #475569;
+        background: white;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+        border-radius: 0.5rem;
+        transition: all 0.2s;
+    }
+
+        .btn-outline-custom:hover {
+            background: #f8fafc;
+            color: #0f172a;
+            border-color: #94a3b8;
+        }
+
+    /* Contenedor del explorador */
+    #DocumentFoldersExplorer {
+        min-height: 200px;
+    }
+
+    /* --- ESTILOS PARA LAS TARJETAS INYECTADAS POR JS --- */
+    .modern-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+    }
+
+        .modern-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -8px rgba(0,0,0,0.08);
+            border-color: #cbd5e1;
+        }
+
+    /* Icono de Carpeta */
+    .folder-icon-wrapper {
+        width: 52px;
+        height: 52px;
+        background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        color: #3b82f6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        border: 1px solid rgba(59, 130, 246, 0.1);
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
+    }
+
+    /* Icono de Documento */
+    .doc-icon-wrapper {
+        width: 52px;
+        height: 52px;
+        background: #f8fafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        border: 1px solid #f1f5f9;
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
+    }
+
+    .modern-card:hover .folder-icon-wrapper,
+    .modern-card:hover .doc-icon-wrapper {
+        transform: scale(1.05);
+    }
+
+    /* Botones de acción dentro de la tarjeta */
+    .btn-action-main {
+        background-color: #1e293b;
+        color: white;
+        font-weight: 600;
+        font-size: 0.8rem;
+        flex-grow: 1;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        border: none;
+        transition: background-color 0.2s;
+        text-align: center;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+    }
+
+        .btn-action-main:hover {
+            background-color: #0f172a;
+            color: white;
+        }
+
+    .btn-action-download {
+        background-color: #f1f5f9;
+        color: #0f172a;
+    }
+
+        .btn-action-download:hover {
+            background-color: #e2e8f0;
+            color: #000;
+        }
+
+    .btn-action-icon {
+        background-color: #ffffff;
+        border: 1px solid #cbd5e1;
+        color: #475569;
+        border-radius: 8px;
+        width: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+    }
+
+        .btn-action-icon:hover {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            border-color: #94a3b8;
+        }
+
+    /* Badges de estado */
+    .status-badge {
+        font-size: 0.65rem;
+        font-weight: 700;
+        padding: 0.2rem 0.6rem;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .status-active {
+        background-color: #dcfce7;
+        color: #166534;
+        border: 1px solid #bbf7d0;
+    }
+
+    .status-inactive {
+        background-color: #f8fafc;
+        color: #64748b;
+        border: 1px solid #e2e8f0;
+    }
+</style>
+
+<!-- Cabecera de Página -->
+<div class="mb-4 d-flex flex-column flex-lg-row justify-content-between align-items-lg-center bg-white p-4 border rounded-4 shadow-sm gap-3">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-1 small text-uppercase fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">
+                <li class="breadcrumb-item text-muted">Administración</li>
+                <li class="breadcrumb-item text-muted">Máquinas</li>
+                <li class="breadcrumb-item" style="color: #c71712;">Documentación</li>
+            </ol>
+        </nav>
+
+        <h2 class="h4 font-weight-bold text-dark mb-0">
+            @Model.Title
+        </h2>
+
+        @if (!string.IsNullOrWhiteSpace(Model.CurrentFolderName))
+        {
+            <div class="text-secondary mt-2 d-flex align-items-center gap-2" style="font-size: 0.85rem;">
+                <div class="p-1 bg-light border rounded">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#94a3b8" viewBox="0 0 16 16">
+                        <path d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" />
+                    </svg>
+                </div>
+                <span>Carpeta actual: <strong class="text-dark">@Model.CurrentFolderName</strong></span>
+            </div>
+        }
+    </div>
+
+    <!-- Botonera de Acciones -->
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+        @if (Model.ParentFolderId.HasValue)
+        {
+            <a href="/DocumentFolders?machineId=@Model.MachineId" class="btn btn-outline-custom d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" /></svg>
+                Volver a raíz
+            </a>
+        }
+
+        <button type="button" id="NewDocumentFolderButton" class="btn btn-brand d-flex align-items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M.5 3l.04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2z" />
+                <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z" />
+            </svg>
+            Nueva carpeta
+        </button>
+
+        @if (Model.ParentFolderId.HasValue)
+        {
+            <button type="button" id="NewDocumentButton" class="btn btn-success-custom d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0z" /></svg>
+                Nuevo documento
+            </button>
+
+            <button type="button" id="UploadFolderButton" class="btn btn-outline-brand d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" /></svg>
+                Subir carpeta
+            </button>
+        }
+    </div>
+</div>
+
+<!-- Grid inyectado por tu archivo Index.js -->
+<div id="DocumentFoldersExplorer" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 px-1">
+    <!-- El contenido será cargado aquí dinámicamente -->
+</div>
