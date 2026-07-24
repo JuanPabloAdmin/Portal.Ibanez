@@ -252,6 +252,10 @@
 
 <!-- Cabecera de la Página -->
 <div class="mb-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center bg-white p-4 border rounded-4 shadow-sm gap-3">
+    @await Html.PartialAsync(
+    "~/Pages/Shared/_Breadcrumb.cshtml",
+        Model.Breadcrumbs
+        )
     <h2 class="h4 text-dark mb-0 d-flex align-items-center gap-2">
         <div class="p-2 bg-light rounded-3 text-secondary d-flex align-items-center justify-content-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">

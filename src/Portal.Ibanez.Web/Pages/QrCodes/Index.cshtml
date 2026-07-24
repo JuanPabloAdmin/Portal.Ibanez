@@ -223,13 +223,10 @@
 <!-- Cabecera -->
 <div class="mb-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center bg-white p-4 border rounded-4 shadow-sm gap-3">
     <div>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-1 small text-uppercase fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">
-                <li class="breadcrumb-item text-muted">Administración</li>
-                <li class="breadcrumb-item text-muted">Máquinas</li>
-                <li class="breadcrumb-item" style="color: #c71712;">Códigos QR</li>
-            </ol>
-        </nav>
+        @await Html.PartialAsync(
+        "~/Pages/Shared/_Breadcrumb.cshtml",
+                Model.Breadcrumbs
+                )
         <h2 class="h4 font-weight-bold text-dark mb-0 d-flex align-items-center gap-2">
             <div class="p-2 bg-light rounded-3 text-secondary d-flex align-items-center justify-content-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
@@ -307,17 +304,34 @@
 
                         @if (qr.DocumentFolderId.HasValue)
                         {
-                            <!-- Ir a la Carpeta Relacionada -->
-                            <a href="/MachineDocuments?machineId=@qr.MachineId&documentFolderId=@qr.DocumentFolderId" class="btn-action-primary d-flex align-items-center justify-content-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" /></svg>
+                            <a href="/DocumentFolders?machineId=@qr.MachineId&parentFolderId=@qr.DocumentFolderId"
+                               class="btn-action-primary d-flex align-items-center justify-content-center gap-2">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="14"
+                                     height="14"
+                                     fill="currentColor"
+                                     viewBox="0 0 16 16">
+                                    <path d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" />
+                                </svg>
+
                                 Abrir carpeta
                             </a>
                         }
                         else
                         {
-                            <!-- Botón que muestra la advertencia si no hay carpeta -->
-                            <button type="button" class="btn-action-primary no-folder-btn d-flex align-items-center justify-content-center gap-2" style="background-color: #64748b;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" /></svg>
+                            <button type="button"
+                                    class="btn-action-primary no-folder-btn d-flex align-items-center justify-content-center gap-2"
+                                    style="background-color: #64748b;">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="14"
+                                     height="14"
+                                     fill="currentColor"
+                                     viewBox="0 0 16 16">
+                                    <path d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" />
+                                </svg>
+
                                 Sin carpeta
                             </button>
                         }

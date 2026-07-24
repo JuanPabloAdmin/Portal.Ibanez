@@ -266,11 +266,14 @@
     uploadFolderModal.onResult(function () { location.reload(); });
 
     function toggleButtons(result) {
-        $('#NewDocumentFolderButton').toggle(result.canCreateFolder);
-        var newDocumentButton = $('#NewDocumentButton');
-        if (newDocumentButton.length > 0) newDocumentButton.toggle(result.canUploadDocuments);
-        var uploadFolderButton = $('#UploadFolderButton');
-        if (uploadFolderButton.length > 0) uploadFolderButton.toggle(result.canUploadFolder);
+        $('#NewDocumentFolderButton')
+            .toggleClass('d-none', !result.canCreateFolder);
+
+        $('#NewDocumentButton')
+            .toggleClass('d-none', !result.canUploadDocuments);
+
+        $('#UploadFolderButton')
+            .toggleClass('d-none', !result.canUploadFolder);
     }
 
     function escapeHtml(value) {

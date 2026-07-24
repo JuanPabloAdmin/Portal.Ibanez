@@ -4,11 +4,13 @@ using Portal.Ibanez.Customers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
+using Portal.Ibanez.Web.Models;
+using Volo.Abp.AspNetCore.Mvc.UI.Layout;
 
 namespace Portal.Ibanez.Web.Pages.Customers;
 
 [Authorize]
-public class IndexModel : PageModel
+public class IndexModel : IbanezPageModel
 {
     private readonly ICustomerAppService _customerAppService;
 
@@ -22,6 +24,20 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync()
     {
+        Breadcrumbs = new()
+{
+    new()
+    {
+        Text = "Inicio",
+        Url = "/"
+    },
+    new()
+    {
+        Text = "Clientes",
+        Url = "/Customers"
+    }
+    
+};
         // Recuperamos los datos directamente en la carga de la página
         // Nota: Le ponemos un MaxResultCount alto temporalmente. Si hay miles de clientes, luego implementamos paginación manual.
         var result = await _customerAppService.GetListAsync(new PagedAndSortedResultRequestDto

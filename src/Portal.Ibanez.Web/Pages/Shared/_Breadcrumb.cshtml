@@ -1,0 +1,31 @@
+﻿@model List<Portal.Ibanez.Web.Models.BreadcrumbItem>
+
+<nav aria-label="breadcrumb">
+
+    <ol class="breadcrumb mb-2 small fw-bold text-uppercase"
+        style="font-size:.70rem;letter-spacing:.5px;">
+
+        @foreach (var item in Model)
+        {
+            if (item.Active)
+            {
+                <li class="breadcrumb-item active"
+                    aria-current="page"
+                    style="color:#c71712;">
+                    @item.Text
+                </li>
+            }
+            else
+            {
+                <li class="breadcrumb-item">
+                    <a href="@item.Url"
+                       class="text-decoration-none text-muted">
+                        @item.Text
+                    </a>
+                </li>
+            }
+        }
+
+    </ol>
+
+</nav>

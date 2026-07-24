@@ -1,0 +1,94 @@
+﻿@page
+@model Portal.Ibanez.Web.Pages.MachineDownloadLinks.ManageModalModel
+
+@{
+    Layout = null;
+}
+
+<abp-modal size="Large">
+    <abp-modal-header title="Enlace público de documentación" />
+
+    <abp-modal-body>
+
+        @if (Model.DownloadLink == null)
+        {
+            <div class="alert alert-danger mb-0">
+                No ha sido posible generar el enlace público.
+            </div>
+        }
+        else
+        {
+            <div class="mb-3">
+                <span class="badge bg-success">
+                    Enlace activo
+                </span>
+            </div>
+
+            <div class="mb-3">
+                <label for="downloadUrl"
+                       class="form-label fw-bold">
+                    Enlace público
+                </label>
+
+                <div class="input-group">
+
+                    <input id="downloadUrl"
+                           type="text"
+                           class="form-control"
+                           readonly
+                           value="@Model.DownloadLink.DownloadUrl" />
+
+                    <button type="button"
+                            class="btn btn-success"
+                            onclick="copyDownloadLink()">
+
+                        <i class="fa fa-copy me-1"></i>
+                        Copiar enlace
+
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="alert alert-info mb-0">
+                Cualquier persona que disponga de este enlace podrá
+                descargar la documentación de esta máquina.
+            </div>
+        }
+
+    </abp-modal-body>
+
+    <abp-modal-footer>
+        <button type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal">
+            <i class="fa fa-times me-1"></i>
+            Cerrar
+        </button>
+    </abp-modal-footer>
+
+</abp-modal>
+
+<script>
+    function copyDownloadLink() {
+        const input = document.getElementById('downloadUrl');
+
+        if (!input || !input.value) {
+            abp.notify.error('No existe ningún enlace para copiar.');
+            return;
+        }
+
+        navigator.clipboard.writeText(input.value)
+            .then(function () {
+                abp.notify.success('Enlace copiado al portapapeles.');
+            })
+            .catch(function () {
+                input.select();
+                input.setSelectionRange(0, 99999);
+
+                document.execCommand('copy');
+
+                abp.notify.success('Enlace copiado al portapapeles.');
+            });
+    }
+</script>

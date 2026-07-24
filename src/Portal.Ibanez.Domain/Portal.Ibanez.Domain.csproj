@@ -25,8 +25,4 @@
     <PackageReference Include="Volo.Abp.PermissionManagement.Domain.OpenIddict" Version="9.3.6" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Documents\" />
-  </ItemGroup>
-
 </Project>
