@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Portal.Ibanez.Customers;
@@ -12,25 +13,28 @@ public class CreateUpdateCustomerDto
 
     [StringLength(200)]
     [DisplayName("Nombre fiscal")]
-    public string FiscalName { get; set; }
+    public string? FiscalName { get; set; }
 
     [StringLength(50)]
     [DisplayName("CIF")]
-    public string TaxId { get; set; }
+    public string? TaxId { get; set; }
 
     [StringLength(500)]
     [DisplayName("Dirección")]
-    public string Address { get; set; }
+    public string? Address { get; set; }
 
     [StringLength(50)]
     [DisplayName("Teléfono")]
-    public string Phone { get; set; }
+    public string? Phone { get; set; }
 
     [StringLength(200)]
     [DisplayName("Correo electrónico")]
-    public string Email { get; set; }
+    public string? Email { get; set; }
 
     [StringLength(200)]
     [DisplayName("Persona de contacto")]
-    public string ContactPerson { get; set; }
+    public string? ContactPerson { get; set; }
+
+    [DisplayName("País")]
+    public Guid? CountryId { get; set; }
 }

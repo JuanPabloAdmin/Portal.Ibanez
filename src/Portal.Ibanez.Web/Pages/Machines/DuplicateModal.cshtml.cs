@@ -69,7 +69,7 @@ public class DuplicateModalModel : IbanezPageModel
             $"Armario {machine.CabinetNumber}";
 
         var customers = await _customerAppService.GetListAsync(
-            new PagedAndSortedResultRequestDto
+            new GetCustomerListInput
             {
                 MaxResultCount = 1000,
                 Sorting = "CommercialName"

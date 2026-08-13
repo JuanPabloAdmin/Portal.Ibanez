@@ -58,12 +58,21 @@ public class IbanezMenuContributor : IMenuContributor
     )
 );
         context.Menu.AddItem(
+    new ApplicationMenuItem(
+        "Ibanez.Countries",
+        "Países",
+        url: "/Countries",
+        icon: "fa fa-globe",
+        order: 2
+    )
+);
+        context.Menu.AddItem(
 new ApplicationMenuItem(
 "Ibanez.MachineTypes",
 "Tipos de Maquinas",
 url: "/machinetypes",
 icon: "fa fa-bars",
-order: 2
+order: 3
 )
 );
 

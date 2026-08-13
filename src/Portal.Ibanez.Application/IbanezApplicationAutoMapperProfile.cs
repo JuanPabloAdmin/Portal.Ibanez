@@ -6,6 +6,7 @@ using Portal.Ibanez.Machines;
 using Portal.Ibanez.Documents;
 using Portal.Ibanez.QrCodes;
 using Portal.Ibanez.DocumentFolders;
+using Portal.Ibanez.Countries;
 
 public class IbanezApplicationAutoMapperProfile : Profile
 {
@@ -17,6 +18,9 @@ public class IbanezApplicationAutoMapperProfile : Profile
         CreateMap<Customer, CustomerDto>();
         CreateMap<CreateUpdateCustomerDto, Customer>();
         CreateMap<CustomerDto, CreateUpdateCustomerDto>();
+        CreateMap<Country, CountryDto>();
+        CreateMap<CreateUpdateCountryDto, Country>();
+        CreateMap<CountryDto, CreateUpdateCountryDto>();
         CreateMap<MachineType, MachineTypeDto>();
         CreateMap<CreateUpdateMachineTypeDto, MachineType>();
         CreateMap<MachineTypeDto, CreateUpdateMachineTypeDto>();

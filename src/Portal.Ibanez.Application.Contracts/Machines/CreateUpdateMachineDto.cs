@@ -21,13 +21,13 @@ public class CreateUpdateMachineDto
 
     [StringLength(100)]
     [DisplayName("Número de pedido")]
-    public string OrderNumber { get; set; }
+    public string? OrderNumber { get; set; }
 
     [StringLength(100)]
     [DisplayName("Número de armario")]
-    public string CabinetNumber { get; set; }
+    public string? CabinetNumber { get; set; }
 
     [StringLength(1000)]
     [DisplayName("Observaciones")]
-    public string Observations { get; set; }
+    public string? Observations { get; set; }
 }

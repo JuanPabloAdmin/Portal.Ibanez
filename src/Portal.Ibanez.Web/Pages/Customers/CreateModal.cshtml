@@ -1,4 +1,4 @@
-﻿@page
+@page
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Portal.Ibanez.Localization
 @using Portal.Ibanez.Web.Pages.Customers
@@ -9,15 +9,26 @@
     Layout = null;
 }
 
-<abp-dynamic-form abp-model="Customer" asp-page="/Customers/CreateModal">
+<form asp-page="/Customers/CreateModal">
     <abp-modal>
         <abp-modal-header title="Nuevo cliente" class="bg-light border-bottom"></abp-modal-header>
 
         <abp-modal-body class="pt-4">
-            <abp-form-content />
+            <abp-select asp-for="Customer.CountryId"
+                        asp-items="Model.Countries"
+                        label="País">
+                <option value="">-- Sin país --</option>
+            </abp-select>
+            <abp-input asp-for="Customer.CommercialName" />
+            <abp-input asp-for="Customer.FiscalName" />
+            <abp-input asp-for="Customer.TaxId" />
+            <abp-input asp-for="Customer.Address" />
+            <abp-input asp-for="Customer.Phone" />
+            <abp-input asp-for="Customer.Email" />
+            <abp-input asp-for="Customer.ContactPerson" />
         </abp-modal-body>
 
         <abp-modal-footer buttons="@(AbpModalButtons.Cancel | AbpModalButtons.Save)">
         </abp-modal-footer>
     </abp-modal>
-</abp-dynamic-form>
+</form>

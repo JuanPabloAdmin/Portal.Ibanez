@@ -48,7 +48,7 @@ public class CreateModalModel : IbanezPageModel
             Machine.CustomerId = CustomerId.Value;
         }
 
-        var customers = await _customerAppService.GetListAsync(new PagedAndSortedResultRequestDto
+        var customers = await _customerAppService.GetListAsync(new GetCustomerListInput
         {
             MaxResultCount = 1000
         });

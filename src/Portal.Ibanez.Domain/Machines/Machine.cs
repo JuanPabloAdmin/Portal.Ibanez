@@ -15,11 +15,11 @@ public class Machine : FullAuditedAggregateRoot<Guid>
 
     public DateTime? DeliveryDate { get; set; }
 
-    public string OrderNumber { get; set; }
+    public string? OrderNumber { get; set; }
 
-    public string CabinetNumber { get; set; }
+    public string? CabinetNumber { get; set; }
 
-    public string Observations { get; set; }
+    public string? Observations { get; set; }
 
     protected Machine()
     {

@@ -46,7 +46,7 @@ public class EditModalModel : IbanezPageModel
 
         Machine = ObjectMapper.Map<MachineDto, CreateUpdateMachineDto>(machineDto);
 
-        var customers = await _customerAppService.GetListAsync(new PagedAndSortedResultRequestDto
+        var customers = await _customerAppService.GetListAsync(new GetCustomerListInput
         {
             MaxResultCount = 1000
         });

@@ -1,0 +1,211 @@
+@page
+@using Portal.Ibanez.Localization
+@using Portal.Ibanez.Web.Pages.Countries
+@using Microsoft.Extensions.Localization
+@model IndexModel
+@inject IStringLocalizer<IbanezResource> L
+
+@section scripts {
+    <script>
+        $(function () {
+            var createModal = new abp.ModalManager(abp.appPath + 'Countries/CreateModal');
+            var editModal = new abp.ModalManager(abp.appPath + 'Countries/EditModal');
+
+            $('#NewCountryButton').click(function (e) {
+                e.preventDefault();
+                createModal.open();
+            });
+
+            $('.edit-country-btn').click(function (e) {
+                e.preventDefault();
+                editModal.open({ id: $(this).data('id') });
+            });
+
+            // Tras crear o editar recargamos para que la tabla muestre el cambio.
+            createModal.onResult(function () { window.location.href = '@Url.Page("/Countries/Index")'; });
+            editModal.onResult(function () { window.location.href = '@Url.Page("/Countries/Index")'; });
+
+            $('.delete-country-form').submit(function (e) {
+                if (!confirm('¿Seguro que quieres eliminar el país «' + $(this).data('name') + '»?')) {
+                    e.preventDefault();
+                }
+            });
+
+            $("#countrySearchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".country-row").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}
+
+<style>
+    body {
+        background-color: #f4f7f9;
+        font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .btn-brand {
+        background-color: #c71712;
+        color: white;
+        border: none;
+        padding: 0.5rem 1.25rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 6px -1px rgba(199, 23, 18, 0.2);
+    }
+
+        .btn-brand:hover {
+            background-color: #a5130f;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+    .search-wrapper {
+        position: relative;
+        width: 300px;
+    }
+
+        .search-wrapper svg {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            color: #94a3b8;
+        }
+
+        .search-wrapper input {
+            padding-left: 2.5rem;
+            border-radius: 0.5rem;
+            border-color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+
+    .country-table {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+        .country-table th {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            background-color: #fafbfc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .country-table td {
+            vertical-align: middle;
+            color: #334155;
+        }
+
+    .btn-icon {
+        background-color: #ffffff;
+        border: 1px solid #cbd5e1;
+        color: #475569;
+        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+    }
+
+        .btn-icon:hover {
+            background-color: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .btn-icon.danger {
+            color: #ef4444;
+        }
+
+            .btn-icon.danger:hover {
+                background-color: #fef2f2;
+                border-color: #fca5a5;
+            }
+</style>
+
+<div class="mb-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center bg-white p-4 border rounded-4 shadow-sm gap-3">
+    <h2 class="h4 text-dark mb-0 d-flex align-items-center gap-2">
+        <div class="p-2 bg-light rounded-3 text-secondary d-flex align-items-center justify-content-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z" />
+            </svg>
+        </div>
+        <div>
+            <span class="text-muted fw-normal fs-6 d-block" style="line-height: 1;">Administración /</span>
+            <span class="fw-bold">Países</span>
+        </div>
+    </h2>
+
+    <div class="d-flex flex-wrap gap-3">
+        <div class="search-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" /></svg>
+            <input type="text" id="countrySearchInput" class="form-control shadow-sm" placeholder="Buscar país...">
+        </div>
+        <button id="NewCountryButton" class="btn-brand d-flex align-items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" /></svg>
+            Nuevo país
+        </button>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger rounded-4 shadow-sm">@Model.ErrorMessage</div>
+}
+
+<div class="country-table shadow-sm">
+    <table class="table mb-0">
+        <thead>
+            <tr>
+                <th class="ps-4">País</th>
+                <th>Clientes</th>
+                <th class="text-end pe-4">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Countries.Count > 0)
+            {
+                foreach (var country in Model.Countries)
+                {
+                    <tr class="country-row">
+                        <td class="ps-4 fw-semibold">@country.Name</td>
+                        <td>
+                            <a href="@Url.Page("/Customers/Index", new { countryId = country.CountryId })" class="text-decoration-none">
+                                @country.CustomerCount @(country.CustomerCount == 1 ? "cliente" : "clientes")
+                            </a>
+                        </td>
+                        <td class="text-end pe-4">
+                            <div class="d-inline-flex gap-2">
+                                <button type="button" class="btn-icon edit-country-btn" data-id="@country.CountryId" title="Editar">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" /></svg>
+                                </button>
+                                <form method="post" asp-page-handler="Delete" asp-route-id="@country.CountryId" class="delete-country-form d-inline" data-name="@country.Name">
+                                    <button type="submit" class="btn-icon danger" title="Eliminar">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" /><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" /></svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" class="text-center text-muted py-5">
+                        Todavía no hay países dados de alta.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

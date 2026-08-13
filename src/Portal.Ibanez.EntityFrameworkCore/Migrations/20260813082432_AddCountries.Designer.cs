@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Portal.Ibanez.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Portal.Ibanez.Migrations
 {
     [DbContext(typeof(IbanezDbContext))]
-    partial class IbanezDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260813082432_AddCountries")]
+    partial class AddCountries
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,6 +66,10 @@ namespace Portal.Ibanez.Migrations
                         .HasDefaultValue(false)
                         .HasColumnName("IsDeleted");
 
+                    b.Property<string>("IsoCode")
+                        .HasMaxLength(3)
+                        .HasColumnType("character varying(3)");
+
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("LastModificationTime");
@@ -89,6 +96,7 @@ namespace Portal.Ibanez.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
@@ -105,6 +113,7 @@ namespace Portal.Ibanez.Migrations
                         .HasColumnName("ConcurrencyStamp");
 
                     b.Property<string>("ContactPerson")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
@@ -128,6 +137,7 @@ namespace Portal.Ibanez.Migrations
                         .HasColumnName("DeletionTime");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
@@ -137,6 +147,7 @@ namespace Portal.Ibanez.Migrations
                         .HasColumnName("ExtraProperties");
 
                     b.Property<string>("FiscalName")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
@@ -155,10 +166,12 @@ namespace Portal.Ibanez.Migrations
                         .HasColumnName("LastModifierId");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("TaxId")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -343,6 +356,7 @@ namespace Portal.Ibanez.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("CabinetNumber")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
@@ -401,10 +415,12 @@ namespace Portal.Ibanez.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Observations")
+                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
                     b.Property<string>("OrderNumber")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 

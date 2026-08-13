@@ -18,4 +18,8 @@ public class CustomerDto : FullAuditedEntityDto<Guid>
     public string Email { get; set; }
 
     public string ContactPerson { get; set; }
+
+    public Guid? CountryId { get; set; }
+
+    public string CountryName { get; set; }
 }

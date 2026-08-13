@@ -4,6 +4,7 @@ using Portal.Ibanez.Documents;
 using Portal.Ibanez.Machines;
 using Portal.Ibanez.QrCodes;
 using Portal.Ibanez.DocumentFolders;
+using Portal.Ibanez.Countries;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -54,6 +55,7 @@ public class IbanezDbContext :
     public DbSet<IdentityLinkUser> LinkUsers { get; set; }
     public DbSet<IdentityUserDelegation> UserDelegations { get; set; }
     public DbSet<IdentitySession> Sessions { get; set; }
+    public DbSet<Country> Countries { get; set; }
     public DbSet<Customer> Customers { get; set; }
     public DbSet<MachineType> MachineTypes { get; set; }
     public DbSet<Machine> Machines { get; set; }
@@ -95,6 +97,16 @@ public class IbanezDbContext :
         //    b.ConfigureByConvention(); //auto configure for the base class props
         //    //...
         //});
+        builder.Entity<Country>(b =>
+        {
+            b.ToTable(IbanezConsts.DbTablePrefix + "Countries", IbanezConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Name).IsRequired().HasMaxLength(100);
+
+            b.HasIndex(x => x.Name);
+        });
+
         builder.Entity<Customer>(b =>
         {
             b.ToTable(IbanezConsts.DbTablePrefix + "Customers", IbanezConsts.DbSchema);
@@ -107,6 +119,12 @@ public class IbanezDbContext :
             b.Property(x => x.Phone).HasMaxLength(50);
             b.Property(x => x.Email).HasMaxLength(200);
             b.Property(x => x.ContactPerson).HasMaxLength(200);
+
+            b.HasIndex(x => x.CountryId);
+            b.HasOne<Country>()
+                .WithMany()
+                .HasForeignKey(x => x.CountryId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         builder.Entity<MachineType>(b =>
