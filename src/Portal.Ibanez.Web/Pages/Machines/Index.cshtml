@@ -15,6 +15,9 @@
             var duplicateModal = new abp.ModalManager(
                 abp.appPath + 'Machines/DuplicateModal'
             );
+                    var manageDownloadLinkModal = new abp.ModalManager(
+            abp.appPath + 'MachineDownload/ManageModal'
+        );
 
             $('.duplicate-machine-btn').click(function (e) {
                 e.preventDefault();
@@ -34,11 +37,21 @@
                 var id = $(this).data('id');
                 editModal.open({ id: id });
             });
+            
+            $('.download-link-btn').click(function (e) {
+            e.preventDefault();
+
+            var id = $(this).data('id');
+
+            manageDownloadLinkModal.open({
+                machineId: id
+            });
+        });
 
             createModal.onResult(function () { window.location.href = window.location.pathname + window.location.search; });
             editModal.onResult(function () { window.location.href = window.location.pathname + window.location.search; });
             duplicateModal.onResult(function () { window.location.href = window.location.pathname + window.location.search; });
-
+            manageDownloadLinkModal.onResult(function () { window.location.reload();        });
             // Lógica Combinada de Búsqueda y Filtros en Tiempo Real
             var currentSearch = "";
             var currentFilter = "all";
@@ -267,12 +280,10 @@
 <!-- Cabecera de Página -->
 <div class="mb-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center bg-white p-4 border rounded-4 shadow-sm gap-3">
     <div>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-1 small text-uppercase fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">
-                <li class="breadcrumb-item text-muted">Administración</li>
-                <li class="breadcrumb-item" style="color: #c71712;">@Model.Title</li>
-            </ol>
-        </nav>
+        @await Html.PartialAsync(
+        "~/Pages/Shared/_Breadcrumb.cshtml",
+                Model.Breadcrumbs
+                )
         <h2 class="h4 font-weight-bold text-dark mb-0 d-flex align-items-center gap-2">
             Parque de Máquinas
             <span class="badge bg-light text-secondary border fw-normal fs-6" style="border-radius: 6px;">@Model.Machines.Count</span>
@@ -391,6 +402,17 @@
                                             <path d="M1 7a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H3z" />
                                         </svg>
                                         Duplicar máquina
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button"
+                                            class="dropdown-item d-flex align-items-center gap-2 download-link-btn py-2 rounded"
+                                            data-id="@machine.Id">
+
+                                        <i class="fa fa-link"></i>
+
+                                        Enlace público...
+
                                     </button>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>

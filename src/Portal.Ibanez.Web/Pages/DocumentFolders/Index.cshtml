@@ -222,13 +222,10 @@
 <!-- Cabecera de Página -->
 <div class="mb-4 d-flex flex-column flex-lg-row justify-content-between align-items-lg-center bg-white p-4 border rounded-4 shadow-sm gap-3">
     <div>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-1 small text-uppercase fw-bold" style="font-size: 0.65rem; letter-spacing: 0.5px;">
-                <li class="breadcrumb-item text-muted">Administración</li>
-                <li class="breadcrumb-item text-muted">Máquinas</li>
-                <li class="breadcrumb-item" style="color: #c71712;">Documentación</li>
-            </ol>
-        </nav>
+        @await Html.PartialAsync(
+        "~/Pages/Shared/_Breadcrumb.cshtml",
+                Model.Breadcrumbs
+                )
 
         <h2 class="h4 font-weight-bold text-dark mb-0">
             @Model.Title

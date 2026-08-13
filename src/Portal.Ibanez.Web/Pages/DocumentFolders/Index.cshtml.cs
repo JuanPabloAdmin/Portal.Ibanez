@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portal.Ibanez.DocumentFolders;
 using Portal.Ibanez.Machines;
-
+using Portal.Ibanez.Web.Models;
 namespace Portal.Ibanez.Web.Pages.DocumentFolders;
 
 [Authorize]
@@ -44,6 +44,43 @@ public class IndexModel : IbanezPageModel
             $"Documentación de {machine.MachineTypeName} - " +
             $"Pedido {machine.OrderNumber} - " +
             $"Armario {machine.CabinetNumber}";
+
+        var machineText = string.IsNullOrWhiteSpace(machine.OrderNumber)
+    ? machine.MachineTypeName
+    : $"{machine.MachineTypeName} · Pedido {machine.OrderNumber}";
+
+        Breadcrumbs = new()
+{
+    new BreadcrumbItem
+    {
+        Text = "Inicio",
+        Url = "/"
+    },
+
+    new BreadcrumbItem
+    {
+        Text = "Clientes",
+        Url = "/Customers"
+    },
+
+    new BreadcrumbItem
+    {
+        Text = machine.CustomerCommercialName,
+        Url = $"/Machines?customerId={machine.CustomerId}"
+    },
+
+    new BreadcrumbItem
+    {
+        Text = machineText,
+        Url = $"/DocumentFolders?machineId={machine.Id}"
+    },
+
+    new BreadcrumbItem
+    {
+        Text = "Documentación",
+        Active = true
+    }
+};
 
         if (ParentFolderId.HasValue)
         {

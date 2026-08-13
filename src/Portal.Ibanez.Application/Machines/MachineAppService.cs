@@ -96,6 +96,28 @@ public class MachineAppService :
             items
         );
     }
+
+    public override async Task<MachineDto> GetAsync(Guid id)
+    {
+        var machine = await Repository.GetAsync(id);
+
+        var customer = await _customerRepository.GetAsync(
+            machine.CustomerId
+        );
+
+        var machineType = await _machineTypeRepository.GetAsync(
+            machine.MachineTypeId
+        );
+
+        var dto = ObjectMapper.Map<Machine, MachineDto>(machine);
+
+        dto.CustomerCommercialName = customer.CommercialName;
+        dto.MachineTypeName = machineType.Name;
+
+        return dto;
+    }
+
+
     public async Task<DuplicateMachineResultDto> DuplicateAsync(
      Guid sourceMachineId,
      DuplicateMachineDto input)

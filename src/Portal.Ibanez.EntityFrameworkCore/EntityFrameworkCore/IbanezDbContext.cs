@@ -3,6 +3,7 @@ using Portal.Ibanez.Customers;
 using Portal.Ibanez.Documents;
 using Portal.Ibanez.Machines;
 using Portal.Ibanez.QrCodes;
+using Portal.Ibanez.MachineDownloadLinks;
 using Portal.Ibanez.DocumentFolders;
 using Portal.Ibanez.Countries;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -66,6 +67,7 @@ public class IbanezDbContext :
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
     public DbSet<DocumentFolder> DocumentFolders { get; set; }
+    public DbSet<MachineDownloadLink> MachineDownloadLinks { get; set; }
     #endregion
 
     public IbanezDbContext(DbContextOptions<IbanezDbContext> options)
@@ -88,7 +90,7 @@ public class IbanezDbContext :
         builder.ConfigureOpenIddict();
         builder.ConfigureFeatureManagement();
         builder.ConfigureTenantManagement();
-
+       
         /* Configure your own tables/entities inside here */
 
         //builder.Entity<YourEntity>(b =>
@@ -191,6 +193,33 @@ public class IbanezDbContext :
     .WithMany()
     .HasForeignKey(x => x.ParentFolderId)
     .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        builder.Entity<MachineDownloadLink>(b =>
+        {
+            b.ToTable(
+                IbanezConsts.DbTablePrefix + "MachineDownloadLinks",
+                IbanezConsts.DbSchema
+            );
+
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Code)
+                .IsRequired()
+                .HasMaxLength(64);
+
+            b.Property(x => x.IsActive)
+                .IsRequired();
+
+            b.HasIndex(x => x.Code)
+                .IsUnique();
+
+            b.HasIndex(x => x.MachineId)
+                .IsUnique();
+            b.HasOne<Machine>()
+    .WithOne()
+    .HasForeignKey<MachineDownloadLink>(x => x.MachineId)
+    .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

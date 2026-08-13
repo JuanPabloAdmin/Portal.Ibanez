@@ -226,9 +226,10 @@ public class DocumentFolderAppService :
             State = state,
             Items = result,
             Documents = currentDocuments,
-            CanCreateFolder = !state.HasDocuments,
-            CanUploadDocuments = !state.HasSubFolders,
-            CanUploadFolder = !state.HasSubFolders
+
+            CanCreateFolder = state.DocumentsCount == 0,
+            CanUploadDocuments = state.SubFoldersCount == 0,
+            CanUploadFolder = state.SubFoldersCount == 0
         };
     }
 }

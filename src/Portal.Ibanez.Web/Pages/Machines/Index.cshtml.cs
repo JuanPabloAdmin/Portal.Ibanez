@@ -7,11 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Portal.Ibanez.Web.Models;
+using Volo.Abp.AspNetCore.Mvc.UI.Layout;
 
 namespace Portal.Ibanez.Web.Pages.Machines;
 
 [Authorize]
-public class IndexModel : PageModel
+public class IndexModel : IbanezPageModel
 {
     [BindProperty(SupportsGet = true)]
     public Guid? CustomerId { get; set; }
@@ -34,11 +36,47 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync()
     {
-        // 1. Si venimos desde el directorio de un cliente, actualizamos el título
+        Breadcrumbs = new()
+    {
+        new()
+        {
+            Text = "Inicio",
+            Url = "/"
+        },
+        new()
+        {
+            Text = "Clientes",
+            Url = "/Customers"
+        }
+    };
+
         if (CustomerId.HasValue)
         {
             var customer = await _customerAppService.GetAsync(CustomerId.Value);
+
             Title = $"Máquinas de {customer.CommercialName}";
+
+            Breadcrumbs.Add(new BreadcrumbItem
+            {
+                Text = customer.CommercialName,
+                Url = $"/Machines?customerId={customer.Id}"
+            });
+
+            Breadcrumbs.Add(new BreadcrumbItem
+            {
+                Text = "Máquinas",
+                Active = true
+            });
+        }
+        else
+        {
+            Title = "Máquinas";
+
+            Breadcrumbs.Add(new BreadcrumbItem
+            {
+                Text = "Máquinas",
+                Active = true
+            });
         }
 
         // 2. Recuperamos las máquinas usando tu DTO de entrada personalizado

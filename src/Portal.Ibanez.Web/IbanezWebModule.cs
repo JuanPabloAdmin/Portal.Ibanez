@@ -1,17 +1,18 @@
-using System;
-using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Portal.Ibanez.EntityFrameworkCore;
-using Portal.Ibanez.Localization;
-using Portal.Ibanez.MultiTenancy;
-using Portal.Ibanez.Web.Menus;
 using Microsoft.OpenApi.Models;
 using OpenIddict.Validation.AspNetCore;
+using Portal.Ibanez.EntityFrameworkCore;
+using Portal.Ibanez.Localization;
+using Portal.Ibanez.MachineDownloadLinks;
+using Portal.Ibanez.MultiTenancy;
+using Portal.Ibanez.Web.Menus;
+using System;
+using System.IO;
 using Volo.Abp;
 using Volo.Abp.Account.Web;
 using Volo.Abp.AspNetCore.Mvc;
@@ -30,15 +31,15 @@ using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity.Web;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
+using Volo.Abp.OpenIddict;
 using Volo.Abp.PermissionManagement.Web;
 using Volo.Abp.Security.Claims;
 using Volo.Abp.SettingManagement.Web;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.TenantManagement.Web;
-using Volo.Abp.OpenIddict;
-using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
+using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 
 namespace Portal.Ibanez.Web;
@@ -112,6 +113,10 @@ public class IbanezWebModule : AbpModule
         ConfigureNavigationServices();
         ConfigureAutoApiControllers();
         ConfigureSwaggerServices(context.Services);
+
+        context.Services.AddTransient<
+    IMachineZipService,
+    MachineZipService>();
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)

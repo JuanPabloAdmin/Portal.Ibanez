@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Portal.Ibanez.Machines;
 using Portal.Ibanez.Documents;
+using Portal.Ibanez.MachineDownloadLinks;
 using Portal.Ibanez.QrCodes;
 using System;
 using System.Collections.Generic;
@@ -22,22 +23,30 @@ public class DetailModel : IbanezPageModel
     public MachineDto Machine { get; set; } = default!;
     public IReadOnlyList<MachineDocumentDto> Documents { get; set; } = new List<MachineDocumentDto>();
     public IReadOnlyList<QrCodeDto> QrCodes { get; set; } = new List<QrCodeDto>();
+    public MachineDownloadLinkDto? DownloadLink { get; set; }
+  
+
 
     // Diccionario para cargar los documentos enlazados de cada QR
-  //  public Dictionary<Guid, List<QrCodeDocumentDto>> QrLinkedDocuments { get; set; } = new();
+    //  public Dictionary<Guid, List<QrCodeDocumentDto>> QrLinkedDocuments { get; set; } = new();
 
     private readonly IMachineAppService _machineAppService;
     private readonly IMachineDocumentAppService _documentAppService;
     private readonly IQrCodeAppService _qrCodeAppService;
+    private readonly IMachineDownloadLinkAppService _machineDownloadLinkAppService;
+
+
 
     public DetailModel(
-        IMachineAppService machineAppService,
-        IMachineDocumentAppService documentAppService,
-        IQrCodeAppService qrCodeAppService)
+     IMachineAppService machineAppService,
+     IMachineDocumentAppService documentAppService,
+     IQrCodeAppService qrCodeAppService,
+     IMachineDownloadLinkAppService machineDownloadLinkAppService)
     {
         _machineAppService = machineAppService;
         _documentAppService = documentAppService;
         _qrCodeAppService = qrCodeAppService;
+        _machineDownloadLinkAppService = machineDownloadLinkAppService;
     }
 
     public async Task<IActionResult> OnGetDownloadQrAsync(Guid qrId)
@@ -72,7 +81,7 @@ public class DetailModel : IbanezPageModel
         // Carga de todos los códigos QR
         var qrResult = await _qrCodeAppService.GetListAsync(new GetQrCodeListInput { MachineId = Id, MaxResultCount = 1000 });
         QrCodes = qrResult.Items;
-
+        DownloadLink = await _machineDownloadLinkAppService.GetAsync(Id);
         // Carga de relaciones QR-Documento
         //foreach (var qr in QrCodes)
         //{
@@ -101,5 +110,34 @@ public class DetailModel : IbanezPageModel
       //  await _qrCodeAppService.RemoveDocumentAsync(linkId);
 
         return Redirect($"/Machines/Detail/{machineId}#collapse-{qrId}");
+    }
+    public async Task<IActionResult> OnPostGenerateDownloadLinkAsync(Guid machineId)
+    {
+        await _machineDownloadLinkAppService.GenerateAsync(machineId);
+
+        return RedirectToPage(
+            "/Machines/Detail",
+            new { id = machineId }
+        );
+    }
+
+    public async Task<IActionResult> OnPostRegenerateDownloadLinkAsync(Guid machineId)
+    {
+        await _machineDownloadLinkAppService.RegenerateAsync(machineId);
+
+        return RedirectToPage(
+            "/Machines/Detail",
+            new { id = machineId }
+        );
+    }
+
+    public async Task<IActionResult> OnPostDisableDownloadLinkAsync(Guid machineId)
+    {
+        await _machineDownloadLinkAppService.DisableAsync(machineId);
+
+        return RedirectToPage(
+            "/Machines/Detail",
+            new { id = machineId }
+        );
     }
 }

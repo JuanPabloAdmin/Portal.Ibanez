@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Portal.Ibanez.Web.Pages.Customers;
 
 [Authorize]
-public class IndexModel : PageModel
+public class IndexModel : IbanezPageModel
 {
     private readonly ICustomerAppService _customerAppService;
 
